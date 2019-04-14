@@ -1,0 +1,48 @@
+Assembling REG.XZAP.1
+Release: 16
+
+    64	Inserting J1FREQ.XZAP.7	   (620 bytes)
+   684	Inserting J1DAT.ZAP.1	 (22305 bytes)
+ 22989	Inserting MACROS.ZAP.1	   (104 bytes)
+ 23093	Inserting MAIN.ZAP.1	  (2259 bytes)
+ 25352	Inserting CLOCK.ZAP.1	   (186 bytes)
+ 25538	Inserting SUB.ZAP.3	 (16341 bytes)
+ 41879	Inserting BATTLE.ZAP.2	  (5651 bytes)
+ 47530	Inserting DOME.ZAP.1	  (9902 bytes)
+ 57432	Inserting PLACES.ZAP.1	  (4753 bytes)
+ 62185	Inserting PEOPLE.ZAP.1	 (15561 bytes)
+ 77746	Inserting THINGS.ZAP.1	  (2058 bytes)
+ 79804	Inserting GLOBAL.ZAP.1	  (5836 bytes)
+ 85640	Inserting PARSER.ZAP.1	  (5735 bytes)
+ 91375	Inserting SYNTAX.ZAP.1	   (778 bytes)
+ 92153	Inserting VERBS.ZAP.4	 (15692 bytes)
+107845	Inserting EVENTS.ZAP.1	  (7364 bytes)
+115209	Inserting J1STR.ZAP.1	  (2553 bytes)
+
+Symbols unused:
+SERIAL
+DIR-FROM
+V-SEND-FOR
+V-KICK
+LIT?
+NO-TOUCH
+FOLLOWED?
+NOT-IMPORTANT
+ZPROB
+BIGFIX
+GWIM-DISABLE
+
+
+255 objects.
+239 globals.
+911 word vocabulary.
+
+117762 bytes (116K).
+ 22989 bytes of preload.
+
+Total 4098 bytes too large for TI-99/4-A.
+Preload 461 bytes too large for TI-99/4-A.
+Preload 5581 bytes too large for BBC Acorn.
+Preload 461 bytes too large for TRS-80 CoCo 2.
+Pure 565 bytes too large for Atari.
+

@@ -1,0 +1,26 @@
+Assembling J1.XZAP.8
+
+
+Inserting J1FREQ.XZAP.7	(  620 bytes)
+Inserting J1DAT.ZAP.2	(22305 bytes)
+Inserting MACROS.ZAP.2	(  104 bytes)
+Inserting MAIN.ZAP.2	( 2259 bytes)
+Inserting CLOCK.ZAP.2	(  186 bytes)
+Inserting SUB.ZAP.4	(16333 bytes)
+Inserting BATTLE.ZAP.2	( 5651 bytes)
+Inserting DOME.ZAP.3	( 9902 bytes)
+Inserting PLACES.ZAP.2	( 4753 bytes)
+Inserting PEOPLE.ZAP.3	(15561 bytes)
+Inserting THINGS.ZAP.2	( 2058 bytes)
+Inserting GLOBAL.ZAP.2	( 5836 bytes)
+Inserting PARSER.ZAP.2	( 5735 bytes)
+Inserting SYNTAX.ZAP.3	(  778 bytes)
+Inserting VERBS.ZAP.3	(15666 bytes)
+Inserting EVENTS.ZAP.2	( 7364 bytes)
+Inserting J1STR.ZAP.1	( 2553 bytes)
+25538 bytes of preload.
+
+117728 bytes (115K).
+32736 bytes too large for one-disk game on ATARI.
+255 objects.
+239 globals.
