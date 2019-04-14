@@ -16,9 +16,9 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
  
 <SETG SIBREAKS ".,\"!?">
 
-<GLOBAL ALWAYS-LIT <>>   
+"<GLOBAL ALWAYS-LIT <>>"   
  
-<GLOBAL GWIM-DISABLE <>> 
+"<GLOBAL GWIM-DISABLE <>>" 
  
 <GLOBAL PRSA 0>
  
@@ -70,11 +70,11 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 <GLOBAL P-AADJ <>>
 "Parser variables and temporaries"
  
-<CONSTANT P-PHRLEN 3>    
+"<CONSTANT P-PHRLEN 3>    
  
 <CONSTANT P-ORPHLEN 7>   
  
-<CONSTANT P-RTLEN 3>
+<CONSTANT P-RTLEN 3>"
 
 "Byte offset to # of entries in LEXV"
 <CONSTANT P-LEXWORDS 1>
@@ -116,7 +116,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
  
 <CONSTANT P-PREP2 4>
  
-<CONSTANT P-PREP2N 5>    
+"<CONSTANT P-PREP2N 5>"    
  
 <CONSTANT P-NC1 6>  
  
@@ -144,14 +144,14 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 <ROUTINE I-PROMPT-2 ()
  <COND (,P-PROMPT
 	<SETG P-PROMPT <>>
-	%<XTELL CR
+	<TELL CR
 "(Are you tired of seeing \"What next?\" Well, you won't see it
 any more.)" CR>
 	<COND (<VERB? ;WAIT WAIT-FOR WAIT-UNTIL> <CRLF>)>
 	<DISABLE <INT I-PROMPT-2>>
 	<RFALSE>)>>
 
-<ROUTINE PARSER ("AUX" (PTR ,P-LEXSTART) WORD (VAL 0) (VERB <>)
+<ROUTINE PARSER ("AUX" (PTR ,P-LEXSTART) WRD (VAL 0) (VERB <>) (OF-FLAG <>)
 		       LEN (DIR <>) (NW 0) (LW 0) NUM SCNT (CNT -1)) 
 	<REPEAT ()
 		<COND (<G? <SET CNT <+ .CNT 1>> ,P-ITBLLEN> <RETURN>)
@@ -211,26 +211,26 @@ any more.)" CR>
 		<COND (<L? <SETG P-LEN <- ,P-LEN 1>> 0>
 		       <SETG QUOTE-FLAG <>>
 		       <RETURN>)
-		      (<BUZZER-WORD? <SET WORD <GET ,P-LEXV .PTR>>>
+		      (<BUZZER-WORD? <SET WRD <GET ,P-LEXV .PTR>>>
 		       <RFALSE>)
-		      (<OR .WORD
-			   <SET WORD <NUMBER? .PTR>>
-			   <SET WORD <NAME? .PTR>>>
-		       <COND (<AND <==? .WORD ,W?TO>
+		      (<OR .WRD
+			   <SET WRD <NUMBER? .PTR>>
+			   <SET WRD <NAME? .PTR>>>
+		       <COND (<AND <==? .WRD ,W?TO>
 				   <EQUAL? .VERB ,ACT?TELL ,ACT?ASK>>
 			      <SET VERB ,ACT?TELL>
-			      <SET WORD ,W?QUOTE>)
-			     (<AND <==? .WORD ,W?THEN>
+			      <SET WRD ,W?QUOTE>)
+			     (<AND <==? .WRD ,W?THEN>
 				   <NOT .VERB>>
 			      <PUT ,P-ITBL ,P-VERB ,ACT?TELL>
 			      <PUT ,P-ITBL ,P-VERBN 0>
-			      <SET WORD ,W?QUOTE>)>
-		       <COND ;(<AND <EQUAL? .WORD ,W?.>
+			      <SET WRD ,W?QUOTE>)>
+		       <COND ;(<AND <EQUAL? .WRD ,W?PERIOD>
 				   <EQUAL? .LW ,W?MRS ,W?MR>>
 			      <SET LW 0>)
-			     (<OR <EQUAL? .WORD ,W?THEN ,W?.>
-				  <EQUAL? .WORD ,W?QUOTE>> 
-			      <COND (<EQUAL? .WORD ,W?QUOTE>
+			     (<OR <EQUAL? .WRD ,W?THEN ,W?PERIOD>
+				  <EQUAL? .WRD ,W?QUOTE>> 
+			      <COND (<EQUAL? .WRD ,W?QUOTE>
 				     <COND (,QUOTE-FLAG
 					    <SETG QUOTE-FLAG <>>)
 					   (T <SETG QUOTE-FLAG T>)>)>
@@ -239,7 +239,7 @@ any more.)" CR>
 			      <PUTB ,P-LEXV ,P-LEXWORDS ,P-LEN>
 			      <RETURN>)
 			     (<AND <SET VAL
-					<WT? .WORD
+					<WT? .WRD
 					     ,PS?DIRECTION
 					     ,P1?DIRECTION>>
 				   <OR <==? .LEN 1>
@@ -250,7 +250,7 @@ any more.)" CR>
 					            ,W?THEN
 					            ,W?QUOTE>
 					    <G? .LEN 2>>
-				       <AND <EQUAL? .NW ,W?.>
+				       <AND <EQUAL? .NW ,W?PERIOD>
 					    <G? .LEN 1>>
 				       <AND ,QUOTE-FLAG
 					    <==? .LEN 2>
@@ -265,7 +265,7 @@ any more.)" CR>
 			      <COND (<NOT <G? .LEN 2>>
 				     <SETG QUOTE-FLAG <>>
 				     <RETURN>)>)
-			     (<AND <SET VAL <WT? .WORD ,PS?VERB ,P1?VERB>>
+			     (<AND <SET VAL <WT? .WRD ,PS?VERB ,P1?VERB>>
 				   <OR <NOT .VERB>
 				       <EQUAL? .VERB ,ACT?NAME>>>
 			      <COND (<EQUAL? .VERB ,ACT?NAME>
@@ -273,58 +273,68 @@ any more.)" CR>
 			      <SET VERB .VAL>
 			      <PUT ,P-ITBL ,P-VERB .VAL>
 			      <PUT ,P-ITBL ,P-VERBN ,P-VTBL>
-			      <PUT ,P-VTBL 0 .WORD>
+			      <PUT ,P-VTBL 0 .WRD>
 			      <PUTB ,P-VTBL 2 <GETB ,P-LEXV
 						    <SET NUM
 							 <+ <* .PTR 2> 2>>>>
 			      <PUTB ,P-VTBL 3 <GETB ,P-LEXV <+ .NUM 1>>>)
-			     (<OR <SET VAL <WT? .WORD ,PS?PREPOSITION 0>>
-				  <AND <OR <EQUAL? .WORD ;,W?ALL ,W?ONE ,W?A>
-					   <WT? .WORD ,PS?ADJECTIVE>
-					   <WT? .WORD ,PS?OBJECT>>
-				       <SET VAL 0>>>
-			      <COND (<AND <G? ,P-LEN 0>
+			     (<OR <SET VAL <WT? .WRD ,PS?PREPOSITION 0>>
+				  <AND <OR <EQUAL? .WRD ;,W?ALL ,W?ONE ,W?A>
+					   <WT? .WRD ,PS?ADJECTIVE>
+					   <WT? .WRD ,PS?OBJECT>>
+				       ;<SET VAL 0>>>
+			      <COND (<AND <G? ,P-LEN 1 ;0>
 					  <==? <GET ,P-LEXV
 						    <+ .PTR ,P-LEXELEN>>
 					       ,W?OF>
 					  <NOT <EQUAL? .VERB
 						       ,ACT?MAKE>>
 					  <0? .VAL>
-					  <NOT <EQUAL? .WORD
-						       ;,W?ALL ,W?ONE ,W?A>>>)
+					  <NOT <EQUAL? .WRD
+						       ;,W?ALL ,W?ONE ,W?A>>>
+				     <SET OF-FLAG T>)
 				    (<AND <NOT <0? .VAL>>
 				          <OR <0? ,P-LEN>
 					      <EQUAL? <GET ,P-LEXV <+ .PTR 2>>
-						      ,W?THEN ,W?.>>>
+						      ,W?THEN ,W?PERIOD>>>
 				     <COND (<L? ,P-NCN 2>
 					    <PUT ,P-ITBL ,P-PREP1 .VAL>
-					    <PUT ,P-ITBL ,P-PREP1N .WORD>)>)
+					    <PUT ,P-ITBL ,P-PREP1N .WRD>)>)
 				    (<==? ,P-NCN 2>
 				     <TELL
 "(I found too many nouns in that sentence!)" CR>
 				     <RFALSE>)
 				    (T
 				     <SETG P-NCN <+ ,P-NCN 1>>
-				     <OR <SET PTR <CLAUSE .PTR .VAL .WORD>>
+				     <OR <SET PTR <CLAUSE .PTR .VAL .WRD>>
 					 <RFALSE>>
 				     <COND (<L? .PTR 0>
 					    <SETG QUOTE-FLAG <>>
 					    <RETURN>)>)>)
-			     (<==? .WORD ,W?CLOSELY>
+			     (<==? .WRD ,W?CLOSELY>
 			      <SETG P-ADVERB ,W?CAREFULLY>)
-			     (<OR <EQUAL? .WORD
+			     (<OR <EQUAL? .WRD
 					 ,W?CAREFULLY ,W?QUIETLY ,W?PRIVATELY>
-				  <EQUAL? .WORD
+				  <EQUAL? .WRD
 					  ,W?SLOWLY ,W?QUICKLY ,W?BRIEFLY>>
-			      <SETG P-ADVERB .WORD>)
-			     (<WT? .WORD ,PS?BUZZ-WORD>)
+			      <SETG P-ADVERB .WRD>)
+			     (<EQUAL? .WRD ,W?OF>
+			      <COND (<OR <NOT .OF-FLAG>
+					 <EQUAL?
+					  <GET ,P-LEXV <+ .PTR ,P-LEXELEN>>
+					  ,W?PERIOD ,W?THEN>>
+				     <CANT-USE .PTR>
+				     <RFALSE>)
+				    (T
+				     <SET OF-FLAG <>>)>)
+			     (<WT? .WRD ,PS?BUZZ-WORD>)
 			     (T
 			      <CANT-USE .PTR>
 			      <RFALSE>)>)
 		      (T
 		       <UNKNOWN-WORD .PTR>
 		       <RFALSE>)>
-		<SET LW .WORD>
+		<SET LW .WRD>
 		<SET PTR <+ .PTR ,P-LEXELEN>>>
 	<COND (.DIR
 	       <SETG PRSA ,V?WALK>
@@ -354,13 +364,13 @@ any more.)" CR>
 		      <GETB .PTR .OFFSET>)>)>>
 " Scan through a noun clause, leave a pointer to its starting location"
  
-<ROUTINE CLAUSE (PTR VAL WORD "AUX" OFF NUM (ANDFLG <>) (FIRST?? T) NW (LW 0))
-	#DECL ((PTR VAL OFF NUM) FIX (WORD NW) <OR FALSE FIX TABLE>
+<ROUTINE CLAUSE (PTR VAL WRD "AUX" OFF NUM (ANDFLG <>) (FIRST?? T) NW (LW 0))
+	#DECL ((PTR VAL OFF NUM) FIX (WRD NW) <OR FALSE FIX TABLE>
 	       (ANDFLG FIRST??) <OR ATOM FALSE>)
 	<SET OFF <* <- ,P-NCN 1> 2>>
 	<COND (<NOT <==? .VAL 0>>
 	       <PUT ,P-ITBL <SET NUM <+ ,P-PREP1 .OFF>> .VAL>
-	       <PUT ,P-ITBL <+ .NUM 1> .WORD>
+	       <PUT ,P-ITBL <+ .NUM 1> .WRD>
 	       <SET PTR <+ .PTR ,P-LEXELEN>>)
 	      (T <SETG P-LEN <+ ,P-LEN 1>>)>
 	<COND (<0? ,P-LEN> <SETG P-NCN <- ,P-NCN 1>> <RETURN -1>)>
@@ -371,27 +381,27 @@ any more.)" CR>
 		<COND (<L? <SETG P-LEN <- ,P-LEN 1>> 0>
 		       <PUT ,P-ITBL <+ .NUM 1> <REST ,P-LEXV <* .PTR 2>>>
 		       <RETURN -1>)>
-		<COND (<BUZZER-WORD? <SET WORD <GET ,P-LEXV .PTR>>>
+		<COND (<BUZZER-WORD? <SET WRD <GET ,P-LEXV .PTR>>>
 		       <RFALSE>)
-		      (<OR .WORD
-			   <SET WORD <NUMBER? .PTR>>
-			   <SET WORD <NAME? .PTR>>>
+		      (<OR .WRD
+			   <SET WRD <NUMBER? .PTR>>
+			   <SET WRD <NAME? .PTR>>>
 		       <COND (<0? ,P-LEN> <SET NW 0>)
 			     (T <SET NW <GET ,P-LEXV <+ .PTR ,P-LEXELEN>>>)>
-		       <COND (<AND <==? .WORD ,W?OF>
+		       <COND (<AND <==? .WRD ,W?OF>
 				   <EQUAL? <GET ,P-ITBL ,P-VERB> ,ACT?MAKE>>
 			      <PUT ,P-LEXV .PTR ,W?WITH>
-			      <SET WORD ,W?WITH>)>
-		       <COND ;(<AND <EQUAL? .WORD ,W?.>
+			      <SET WRD ,W?WITH>)>
+		       <COND ;(<AND <EQUAL? .WRD ,W?PERIOD>
 				   <EQUAL? .LW ,W?MRS ,W?MR>>
 			      <SET LW 0>)
-			     (<EQUAL? .WORD ,W?AND ,W?COMMA> <SET ANDFLG T>)
-			     (<EQUAL? .WORD ;,W?ALL ,W?ONE>
+			     (<EQUAL? .WRD ,W?AND ,W?COMMA> <SET ANDFLG T>)
+			     (<EQUAL? .WRD ;,W?ALL ,W?ONE>
 			      <COND (<==? .NW ,W?OF>
 				     <SETG P-LEN <- ,P-LEN 1>>
 				     <SET PTR <+ .PTR ,P-LEXELEN>>)>)
-			     (<OR <EQUAL? .WORD ,W?THEN ,W?.>
-				  <AND <WT? .WORD ,PS?PREPOSITION>
+			     (<OR <EQUAL? .WRD ,W?THEN ,W?PERIOD>
+				  <AND <WT? .WRD ,PS?PREPOSITION>
 				       <NOT .FIRST??>>>
 			      <SETG P-LEN <+ ,P-LEN 1>>
 			      <PUT ,P-ITBL
@@ -402,13 +412,13 @@ any more.)" CR>
 			     (<AND .ANDFLG
 				   <OR ;"3/25/83: next statement added."
 				       <EQUAL? <GET ,P-ITBL ,P-VERBN> 0>
-				       <WT? .WORD ,PS?DIRECTION>
-				       <WT? .WORD ,PS?VERB>>>
+				       <WT? .WRD ,PS?DIRECTION>
+				       <WT? .WRD ,PS?VERB>>>
 			      <SET PTR <- .PTR 4>>
 			      <PUT ,P-LEXV <+ .PTR 2> ,W?THEN>
 			      <SETG P-LEN <+ ,P-LEN 2>>)
-			     (<WT? .WORD ,PS?OBJECT>
-			      <COND (<AND <WT? .WORD
+			     (<WT? .WRD ,PS?OBJECT>
+			      <COND (<AND <WT? .WRD
 					       ,PS?ADJECTIVE
 					       ,P1?ADJECTIVE>
 					  <NOT <==? .NW 0>>
@@ -421,14 +431,14 @@ any more.)" CR>
 					  <REST ,P-LEXV <* <+ .PTR 2> 2>>>
 				     <RETURN .PTR>)
 				    (T <SET ANDFLG <>>)>)
-			     (<OR <WT? .WORD ,PS?ADJECTIVE>
-				  <WT? .WORD ,PS?BUZZ-WORD>>)
-			     (<WT? .WORD ,PS?PREPOSITION> T)
+			     (<OR <WT? .WRD ,PS?ADJECTIVE>
+				  <WT? .WRD ,PS?BUZZ-WORD>>)
+			     (<WT? .WRD ,PS?PREPOSITION> T)
 			     (T
 			      <CANT-USE .PTR>
 			      <RFALSE>)>)
 		      (T <UNKNOWN-WORD .PTR> <RFALSE>)>
-		<SET LW .WORD>
+		<SET LW .WRD>
 		<SET FIRST?? <>>
 		<SET PTR <+ .PTR ,P-LEXELEN>>>> 
 
@@ -477,8 +487,12 @@ any more.)" CR>
     (<==? <GET ,P-OTBL ,P-NC1> 1>
      <COND (<OR <==? <SET TEMP <GET ,P-ITBL ,P-PREP1>> <GET ,P-OTBL ,P-PREP1>>
 		<0? .TEMP>>
-	    <PUT ,P-OTBL ,P-NC1 <GET ,P-ITBL ,P-NC1>>
-	    <PUT ,P-OTBL ,P-NC1L <GET ,P-ITBL ,P-NC1L>>)
+	    <COND (.ADJ
+		   <PUT ,P-OTBL ,P-NC1 <REST ,P-LEXV 2>>
+		   <PUT ,P-OTBL ,P-NC1L <REST ,P-LEXV 6>>)
+		  (T
+		   <PUT ,P-OTBL ,P-NC1 <GET ,P-ITBL ,P-NC1>>
+		   <PUT ,P-OTBL ,P-NC1L <GET ,P-ITBL ,P-NC1L>>)>)
 	   (T <RFALSE>)>)
     (<==? <GET ,P-OTBL ,P-NC2> 1>
      <COND (<OR <==? <SET TEMP <GET ,P-ITBL ,P-PREP1>> <GET ,P-OTBL ,P-PREP2>>
@@ -520,6 +534,7 @@ any more.)" CR>
    T>
 
 <ROUTINE ACLAUSE-WIN (ADJ)
+	 <PUT ,P-ITBL ,P-VERB <GET ,P-OTBL ,P-VERB>>
 	 <SETG P-CCSRC ,P-OTBL>
 	 <CLAUSE-COPY ,P-ACLAUSE <+ ,P-ACLAUSE 1> .ADJ>
 	 <AND <NOT <==? <GET ,P-OTBL ,P-NC2> 0>>
@@ -537,20 +552,18 @@ any more.)" CR>
 			<PRINTC <GETB ,P-INBUF .BUF>>
 			<SET BUF <+ .BUF 1>>)>>>
 
-<GLOBAL UNKNOWN-MSGS <TABLE "(I don't know the word \"" "\".)">>
-
 <ROUTINE UNKNOWN-WORD (PTR "AUX" BUF) 
 	#DECL ((PTR BUF) FIX)
-	<TELL <GET ,UNKNOWN-MSGS 0>>
+	<TELL "(I don't know the word \"">
 	<WORD-PRINT <GETB <REST ,P-LEXV <SET BUF <* .PTR 2>>> 2>
 		    <GETB <REST ,P-LEXV .BUF> 3>>
 	<SETG QUOTE-FLAG <>>
 	<SETG P-OFLAG <>>
-	<TELL <GET ,UNKNOWN-MSGS 1> CR>>
+	<TELL "\".)" CR>>
 
 <ROUTINE CANT-USE (PTR "AUX" BUF) 
 	#DECL ((PTR BUF) FIX)
-	%<XTELL "(Sorry, but I don't understand the word \"">
+	<TELL "(Sorry, but I don't understand the word \"">
 	<WORD-PRINT <GETB <REST ,P-LEXV <SET BUF <* .PTR 2>>> 2>
 		    <GETB <REST ,P-LEXV .BUF> 3>>
 	<TELL "\" when you use it that way.)" CR>
@@ -635,13 +648,13 @@ CR>
 	       <PUT ,P-PRSI 1 .OBJ>
 	       <SYNTAX-FOUND .DRIVE2>)
 	      (<EQUAL? .VERB ,ACT?FIND ,ACT?NAME>
-	       %<XTELL "(Sorry, but I can't answer that question.)" CR>
+	       <TELL "(Sorry, but I can't answer that question.)" CR>
 	       <RFALSE>)
 	      (T
 	       <COND (<EQUAL? ,WINNER ,PLAYER>
 		      <ORPHAN .DRIVE1 .DRIVE2>
 		      <TELL "(Wh"
-			    <COND (<EQUAL? .VERB ,ACT?WALK ,ACT?CRAWL> "ere")
+			    <COND (<EQUAL? .VERB ,ACT?WALK> "ere")
 				  (T "at")>
 			    " do you want to ">)
 		     (T
@@ -697,7 +710,8 @@ CR>
 		      (T
 		       <COND (.NOSP <SET NOSP <>>)
 			     (T <TELL " ">)>
-		       <COND (<==? <SET WRD <GET .BEG 0>> ,W?.> <SET NOSP T>)
+		       <COND (<==? <SET WRD <GET .BEG 0>> ,W?PERIOD>
+			      <SET NOSP T>)
 			     (<==? .WRD ,W?DR> <TELL "Dr."> <SET PN T>)
 			     (<EQUAL? .WRD ,W?HIM ,W?HER ,W?ME> <SET PN T>)
 			     (<CAPITAL-NOUN? .WRD>
@@ -877,31 +891,31 @@ CR>
 
 <GLOBAL P-CSPTR <>>
 <GLOBAL P-CEPTR <>>
+<GLOBAL P-AND <>>
 
-<ROUTINE SNARFEM (PTR EPTR TBL "AUX" (AND <>) (BUT <>) LEN WV WORD NW) 
-   #DECL ((TBL) TABLE (PTR EPTR) <PRIMTYPE VECTOR> (AND) <OR ATOM FALSE>
-	  (BUT) <OR FALSE TABLE> (WV) <OR FALSE FIX>)
+<ROUTINE SNARFEM (PTR EPTR TBL "AUX" (BUT <>) LEN WV WRD NW) 
+   <SETG P-AND <>>
    <SETG P-GETFLAGS 0>
    <SETG P-CSPTR .PTR>
    <SETG P-CEPTR .EPTR>
    <PUT ,P-BUTS ,P-MATCHLEN 0>
    <PUT .TBL ,P-MATCHLEN 0>
-   <SET WORD <GET .PTR 0>>
+   <SET WRD <GET .PTR 0>>
    <REPEAT ()
 	   <COND (<==? .PTR .EPTR> <RETURN <GET-OBJECT <OR .BUT .TBL>>>)
 		 (T
 		  <SET NW <GET .PTR ,P-LEXELEN>>
-		  <COND ;(<==? .WORD ,W?ALL>
+		  <COND ;(<==? .WRD ,W?ALL>
 			 <SETG P-GETFLAGS ,P-ALL>
 			 <COND (<==? .NW ,W?OF>
 				<SET PTR <REST .PTR ,P-WORDLEN>>)>)
-			;(<EQUAL? .WORD ,W?BUT ,W?EXCEPT>
+			;(<EQUAL? .WRD ,W?BUT ,W?EXCEPT>
 			 <OR <GET-OBJECT <OR .BUT .TBL>> <RFALSE>>
 			 <SET BUT ,P-BUTS>
 			 <PUT .BUT ,P-MATCHLEN 0>)
-			(<BUZZER-WORD? .WORD>
+			(<BUZZER-WORD? .WRD>
 			 <RFALSE>)
-			(<EQUAL? .WORD ,W?A ,W?ONE>
+			(<EQUAL? .WRD ,W?A ,W?ONE>
 			 <COND (<NOT ,P-ADJ>
 				<SETG P-GETFLAGS ,P-ONE>
 				<COND (<==? .NW ,W?OF>
@@ -910,25 +924,26 @@ CR>
 				<SETG P-NAM ,P-ONEOBJ>
 				<OR <GET-OBJECT <OR .BUT .TBL>> <RFALSE>>
 				<AND <0? .NW> <RTRUE>>)>)
-			(<AND <EQUAL? .WORD ,W?AND ,W?COMMA>
+			(<AND <EQUAL? .WRD ,W?AND ,W?COMMA>
 			      <NOT <EQUAL? .NW ,W?AND ,W?COMMA>>>
+			 <SETG P-AND T>
 			 <OR <GET-OBJECT <OR .BUT .TBL>> <RFALSE>>
 			 T)
-			(<WT? .WORD ,PS?BUZZ-WORD>)
-			(<EQUAL? .WORD ,W?AND ,W?COMMA>)
-			(<==? .WORD ,W?OF>
+			(<WT? .WRD ,PS?BUZZ-WORD>)
+			(<EQUAL? .WRD ,W?AND ,W?COMMA>)
+			(<==? .WRD ,W?OF>
 			 <COND (<0? ,P-GETFLAGS>
 				<SETG P-GETFLAGS ,P-INHIBIT>)>)
-			(<AND <SET WV <WT? .WORD ,PS?ADJECTIVE ,P1?ADJECTIVE>>
+			(<AND <SET WV <WT? .WRD ,PS?ADJECTIVE ,P1?ADJECTIVE>>
 			      <NOT ,P-ADJ>>
 			 <SETG P-ADJ .WV>
-			 <SETG P-ADJN .WORD>)
-			(<WT? .WORD ,PS?OBJECT ,P1?OBJECT>
-			 <SETG P-NAM .WORD>
-			 <SETG P-ONEOBJ .WORD>)>)>
+			 <SETG P-ADJN .WRD>)
+			(<WT? .WRD ,PS?OBJECT ,P1?OBJECT>
+			 <SETG P-NAM .WRD>
+			 <SETG P-ONEOBJ .WRD>)>)>
 	   <COND (<NOT <==? .PTR .EPTR>>
 		  <SET PTR <REST .PTR ,P-WORDLEN>>
-		  <SET WORD .NW>)>>>   
+		  <SET WRD .NW>)>>>   
  
 <CONSTANT SH 128>   
  
@@ -1028,6 +1043,7 @@ CR>
 		<RFALSE>)>)
 	(<AND <0? .LEN> .GCHECK>
 	 <COND (.VRB
+		<SETG P-SLOCBITS .XBITS>
 		<COND (,LIT
 		       ;"Changed 6/10/83 - MARC"
 		       <OBJ-FOUND ,NOT-HERE-OBJECT .TBL>
@@ -1040,7 +1056,7 @@ CR>
 		       <SETG P-ADJ <>>
 		       <SETG P-ADJN <>>
 		       <RTRUE>)
-		      (T %<XTELL "(It's too dark to see!)" CR>)>)>
+		      (T <TELL "(It's too dark to see!)" CR>)>)>
 	 <SETG P-NAM <>>
 	 <SETG P-ADJ <>>
 	 <RFALSE>)
@@ -1088,7 +1104,7 @@ CR>
 <ROUTINE WHICH-PRINT (TLEN LEN TBL "AUX" OBJ RLEN)
 	 <SET RLEN .LEN>
 	 <TELL "(Which">
-         <COND (<OR ,P-OFLAG ,P-MERGED> <TELL " "> <PRINTB ,P-NAM>)
+         <COND (<OR ,P-OFLAG ,P-MERGED ,P-AND> <TELL " "> <PRINTB ,P-NAM>)
 	       (<==? .TBL ,P-PRSO>
 		<CLAUSE-PRINT ,P-NC1 ,P-NC1L <>>)
 	       (T <CLAUSE-PRINT ,P-NC2 ,P-NC2L <>>)>
@@ -1123,6 +1139,7 @@ CR>
 	       ;<COND (,DEBUG <TELL "[GLBCHK: (PS) RMGL=" N .RMGL "]" CR>)>
 	       <REPEAT ()
 		       <COND (<==? ,P-NAM <GET .RMG <* .CNT 2>>>
+			      <SETG LAST-PSEUDO-LOC ,HERE>
 			      <PUTP ,PSEUDO-OBJECT
 				    ,P?ACTION
 				    <GET .RMG <+ <* .CNT 2> 1>>>
@@ -1254,9 +1271,9 @@ CR>
 		    <NOT <BTST <GETB ,P-SYNTAX ,P-SLOC2> ,SMANY>>>
 	       <SET LOSS 2>)>
 	<COND (.LOSS
-	       %<XTELL "(You can't use more than one ">
+	       <TELL "(You can't use more than one ">
 	       <COND (<==? .LOSS 2> <TELL "in">)>
-	       %<XTELL "direct object with \"">
+	       <TELL "direct object with \"">
 	       <SET TMP <GET ,P-ITBL ,P-VERBN>>
 	       <COND (<0? .TMP> <TELL "tell">)
 		     (,P-OFLAG
@@ -1287,9 +1304,9 @@ CR>
 		<COND (<FSET? <SET X <GETB .TBL .CNT>> .ITM> <RETURN .X>)
 		      (<IGRTR? CNT .SIZE> <RFALSE>)>>>  
 
-<SETG ALWAYS-LIT <>>
+"<SETG ALWAYS-LIT <>>"
  
-<ROUTINE LIT? (RM "AUX" OHERE (LIT <>)) 
+;<ROUTINE LIT? (RM "AUX" OHERE (LIT <>)) 
 	#DECL ((RM OHERE) OBJECT (LIT) <OR ATOM FALSE>)
 	<SETG P-GWIMBIT ,ONBIT>
 	<SET OHERE ,HERE>

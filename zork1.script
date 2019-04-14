@@ -1,0 +1,201 @@
+
+ZORK I: The Great Underground Empire
+Copyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Revision 64 / Serial number 830915
+
+The Troll Room
+This is a small room with passages to the east and south and a forbidding
+hole leading west. Bloodstains and deep scratches (perhaps made by
+an axe) mar the walls.
+A nasty-looking troll, brandishing a bloody axe, blocks all passages
+out of the room.
+Your sword has begun to glow very brightly.
+
+>TROLL, HELLO
+
+The troll isn't much of a conversationalist.
+
+>STAB TROLL
+
+Clang! Crash! The troll parries.
+The axe gets you right in the side. Ouch!
+
+>ATTACK TROLL
+
+(with the sword)
+Clang! Crash! The troll parries.
+The troll neatly removes your head.
+It appears that that last blow was too much for you. I'm afraid you
+are dead.
+ 
+   ****  You have died  **** 
+
+The Troll Room
+This is a small room with passages to the east and south and a forbidding
+hole leading west. Bloodstains and deep scratches (perhaps made by
+an axe) mar the walls.
+A nasty-looking troll, brandishing a bloody axe, blocks all passages
+out of the room.
+Your sword has begun to glow very brightly.
+The axe crashes against the rock, throwing sparks!
+
+>ATTACK TROLL WITH SWORD
+
+Clang! Crash! The troll parries.
+The troll swings his axe, but it misses.
+
+>THRUST
+
+(sword)
+Whoosh!
+The troll swings, you parry, but the force of his blow knocks your
+sword away.
+
+>GET SWORD
+
+Taken.
+The troll's axe barely misses your ear.
+
+>HIT TROLL
+
+(with the sword)
+You charge, but the troll jumps nimbly aside.
+The axe sweeps past as you jump aside.
+
+>STAB IT
+
+You charge, but the troll jumps nimbly aside.
+The troll swings his axe, and it nicks your arm as you dodge.
+
+>DIAGNOSE
+
+You have a light wound, which will be cured after 30 moves.
+You can be killed by one more light wound.
+The axe crashes against the rock, throwing sparks!
+
+>ATTACK TROLL WITH SWORD
+
+The troll is battered into unconsciousness.
+
+>TAKE THE AXE
+
+Taken.
+
+>WAKE UP TROLL
+
+The troll is rudely awakened.
+The troll stirs, quickly resuming a fighting stance.
+The troll, disarmed, cowers in terror, pleading for his life in the
+guttural tongue of the trolls.
+
+>GIVE THE AXE TO THE TROLL
+
+The troll scratches his head in confusion, then takes the axe.
+The troll neatly removes your head.
+It appears that that last blow was too much for you. I'm afraid you
+are dead.
+ 
+   ****  You have died  **** 
+
+The Troll Room
+This is a small room with passages to the east and south and a forbidding
+hole leading west. Bloodstains and deep scratches (perhaps made by
+an axe) mar the walls.
+A nasty-looking troll, brandishing a bloody axe, blocks all passages
+out of the room.
+Your sword has begun to glow very brightly.
+The axe gets you right in the side. Ouch!
+
+>STAB TROLL
+
+The troll's weapon is knocked to the floor, leaving him unarmed.
+The troll, angered and humiliated, recovers his weapon. He appears
+to have an axe to grind with you.
+
+>FIGHT TROLL
+
+(with the sword)
+The fatal blow strikes the troll square in the heart:  He dies.
+Almost as soon as the troll breathes his last breath, a cloud of sinister
+black fog envelops him, and when the fog lifts, the carcass has disappeared.
+Your sword is no longer glowing.
+
+>TAKE AXE
+
+Taken.
+
+The Troll Room
+This is a small room with passages to the east and south and a forbidding
+hole leading west. Bloodstains and deep scratches (perhaps made by
+an axe) mar the walls.
+A nasty-looking troll, brandishing a bloody axe, blocks all passages
+out of the room.
+Your sword has begun to glow very brightly.
+
+>THROW LANTERN AT TROLL
+
+The troll, who is remarkably coordinated, catches the brass lantern
+and not having the most discriminating tastes, gleefully eats it.
+You are left in the dark...
+
+>STAB TROLL
+
+It's too dark to see!
+
+>FIND TROLL
+
+It's too dark to see!
+
+>EXAMINE SWORD
+
+Your sword is glowing very brightly.
+
+>ATTACK TROLL
+
+(with the sword)
+It's too dark to see!
+
+>FIND LIGHT
+
+It's too dark to see!
+
+>S
+
+Oh, no! A lurking grue slithered into the room and devoured you!
+ 
+   ****  You have died  **** 
+
+The Troll Room
+This is a small room with passages to the east and south and a forbidding
+hole leading west. Bloodstains and deep scratches (perhaps made by
+an axe) mar the walls.
+A nasty-looking troll, brandishing a bloody axe, blocks all passages
+out of the room.
+Your sword has begun to glow very brightly.
+
+>KNOCK AXE
+
+That sentence isn't one I recognize.
+
+>THROW SWORD
+
+(at the troll)
+The troll, who is remarkably coordinated, catches the sword and, being
+for the moment sated, throws it back. Fortunately, the troll has poor
+control, and the sword falls to the floor. He does not look pleased.
+The axe gets you right in the side. Ouch!
+
+>TAKE SWORD
+
+Taken.
+The axe hits your sword and knocks it spinning.
+
+>AGAIN
+
+Taken.
+The troll neatly removes your head.
+It appears that that last blow was too much for you. I'm afraid you
+are dead.
+ 
+   ****  You have died  **** 

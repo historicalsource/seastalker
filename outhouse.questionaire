@@ -1,0 +1,114 @@
+.c;Seastalker Testing Questionnaire
+.s
+.c;(If you need more room, use the back or another sheet.)
+.s 3
+.ts 40
+Tester's Name	Parent's Name
+.s 2 
+Address
+.s 3 
+.ts 50,60
+Telephone number (include Area Code)	Age	Grade
+.s
+.s 
+What brand of computer are you using?
+.ts 20
+	Apple II 
+	Apple IIe
+        Apple IIe with Apple 80-column option
+	IBM-PC
+	Other __________________
+.s
+How much memory does the computer have?
+	32K
+	48K
+	64K
+	more
+.s
+Have you ever played an Infocom game before?
+	Yes
+	No
+.s
+If you have, which ones?
+.s 4
+Have you ever played any other "adventure" games before?
+	Yes
+	No
+.s
+If you have, which ones?
+.s 4
+Do you think the Logbook in Seastalker was helpful?  YES  NO
+.s
+Do you think the Infocards were helpful?  YES  NO
+.s
+Do you think the nautical chart was helpful?  YES  NO
+.s
+ 	What would you change?
+.s 4
+Do you think the vocabulary in Seastalker is:
+	Too easy
+	Easy
+	Just right
+	Hard
+	Too hard
+.s
+What words didn't you understand?
+.s 4
+Do you think the descriptions in Seastalker are:
+	Very clear
+	Clear enough
+	A little confusing
+	Difficult to understand
+	Too difficult to understand
+.s
+Which descriptions are not clear?
+.s 
+.s
+.s
+.s
+.s
+.s     
+After you finished the game, did you understand most of the story  
+or only some parts?
+.s 2
+Did you understand what happened at the beginning, in the lab?
+What parts didn't you understand?
+.s 6
+Did you think operating the submarine was hard?      Was it fun?     What parts didn't you understand?
+.s 6
+Did you understand the things that happened in the Aquadome?     What parts
+didn't you understand?
+.s 6
+Did you understand the final battle?     What parts didn't
+you understand?
+.s 6
+Did the story make sense to you? If not, why didn't it make sense?
+.s 6
+Are there any things you would put in or take out to make the story
+clearer or better or more fun? Are there things you would not take out,
+no matter what? 
+.s 6
+Overall, did you think the game was:
+	Excellent
+	Very good
+	Good
+	Fair
+	Bad
+.s
+Which of the following "thank you" games would you like? (Check two if you are
+sending a transcript of your playing):
+	Zork 1
+	Zork 2
+	Zork 3
+	Enchanter
+	Sorcerer
+	Deadline
+	Witness
+	Starcross
+	Suspended
+	Planetfall
+	Infidel
+	Seastalker
+.s
+What brand of computer do you want these game(s) for?
+(Sorry, we cannot send a TRS-80 version of Zork I)

@@ -1,7 +1,6 @@
 
 	.INSERT "J1DAT"			; DATA IS IN THIS FILE
 
-
 	.INSERT "MACROS"
 
 

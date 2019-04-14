@@ -97,7 +97,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
  <COND (<VERB? FIND> <TELL "It's not far away!" CR>)
        (<VERB? MOVE PUSH> <TELL "It's too big!" CR>)
        (<VERB? SHOOT KILL ATTACK>
-	%<XTELL
+	<TELL
 "You have to shoot" THE-PRSO " with a weapon." CR>)
        (<VERB? WALK-TO> <TELL "You're the pilot!" CR>)>>
 
@@ -131,7 +131,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 		      <TELL "[T-HLon=" N ,THORPE-HLON
 			   ", T-HLat=" N ,THORPE-HLAT "]" CR>)>)
 	      (T
-	       %<XTELL
+	       <TELL
 "Thorpe zeroed in on you and fired his rocket! It streaks through the
 water toward the " D ,SUB "! In an instant your sub will be just twisted
 metal, trapping you and Tip forever in Davy Jones's locker!">
@@ -179,6 +179,9 @@ metal, trapping you and Tip forever in Davy Jones's locker!">
  <COND (<NOT ,SUB-IN-DOME> <RFALSE>)
        (<AND <EQUAL? ,PRSO .OBJ>
 	     <OR <VERB? USE>
+		 <AND <VERB? SHOW>
+		      <DOBJ? BLY>
+		      <IOBJ? BAZOOKA>>
 		 <AND <VERB? PUT-UNDER>
 		      <DOBJ? ESCAPE-POD-UNIT>
 		      <IOBJ? CHAIR PILOT-SEAT>>
@@ -191,8 +194,7 @@ metal, trapping you and Tip forever in Davy Jones's locker!">
 	<RTRUE>)>>
 
 <ROUTINE NO-GOOD-MUNGED ()
-	%<XTELL
-"Doc Horvak has to fix it first." CR>>
+	<TELL D ,HORVAK " has to fix it first." CR>>
 
 <ROUTINE WEAPON-F (OBJ "AUX" (WHICH 0) O (NOT-ON-SUB <>) (SOMEONE <>))
  <COND (<BAD-AIR?>	;<FSET? ,BLY ,MUNGBIT>
@@ -205,7 +207,7 @@ metal, trapping you and Tip forever in Davy Jones's locker!">
  <COND (<NOT <==? .OBJ <GET ,ON-SUB .WHICH>>>
 	<SET NOT-ON-SUB T>)>
  <COND (<AND <NOT ,SUB-IN-DOME> .NOT-ON-SUB>
-	%<XTELL "You can't use" THE .OBJ " now!" CR>
+	<TELL "You can't use" THE .OBJ " now!" CR>
 	<RTRUE>)>
  <COND (.NOT-ON-SUB
 	<COND (<VERB? FIND SEARCH-FOR>
@@ -231,7 +233,7 @@ metal, trapping you and Tip forever in Davy Jones's locker!">
 			     <RTRUE>)>)>
 	       <COND (<0? .WHICH>
 		      <COND (<AND .SOMEONE <NOT <==? ,HERE ,AIRLOCK>>>
-			     %<XTELL
+			     <TELL
 "\"Good idea! That should stop the " D ,SNARK "! It could disable an
 enemy sub, too! Shall I ">
 			     <COND (<VERB? PUT> <TELL "do it">)
@@ -255,7 +257,7 @@ enemy sub, too! Shall I ">
 		     (T
 		      <MOUNT-WEAPON ,DART>
 		      <COND (<AND .SOMEONE <NOT <==? ,HERE ,AIRLOCK>>>
-			     %<XTELL
+			     <TELL
 D .SOMEONE " promptly mounts the " D ,DART " on an " D ,CLAW "." CR>)
 			    (T
 			     <OKAY ,DART "mounted">)>
@@ -264,16 +266,16 @@ D .SOMEONE " promptly mounts the " D ,DART " on an " D ,CLAW "." CR>)
 		      <RTRUE>)>)>)
        (T
 	<COND (<VERB? FIND EXAMINE>
-	       %<XTELL
+	       <TELL
 "It's mounted on one of the " D ,SUB "'s " D ,CLAW "s." CR>)
 	      (<OR <VERB? TAKE> <MOUNTING-VERB? .OBJ>>
-	       %<XTELL "You'd better leave it mounted on the " D ,CLAW "."CR>)
+	       <TELL "You'd better leave it mounted on the " D ,CLAW "."CR>)
 	      (<REMOTE-VERB?> <RFALSE>)
 	      ;(,SUB-IN-DOME	;<NOT <EQUAL? ,HERE ,SUB>>
-	       %<XTELL
+	       <TELL
 "You shouldn't do that inside the " D ,AQUADOME "!" CR>)
 	      (<VERB? MOVE MOVE-DIR>
-	       %<XTELL "You should type where you want to aim it." CR>)
+	       <TELL "You should type where you want to aim it." CR>)
 	      (<VERB? AIM>
 	       <COND (<FSET? ,CLAW ,MUNGBIT>
 		      <TELL
@@ -296,21 +298,21 @@ when you rammed the " D ,SNARK "!" CR>
 		     (T <RFALSE>)>
 	       ;<COND (<AND ,DEBUG <GET ,OBJ-AIMED-AT .WHICH>>
 		      <TELL "[at: " D <GET ,OBJ-AIMED-AT .WHICH> "] ">)>
-	       %<XTELL "Aimed." CR>)
+	       <TELL "Aimed." CR>)
 	      (<VERB? SHOOT KILL ATTACK>
 	       <SET O <GET ,OBJ-AIMED-AT .WHICH>>
 	       <COND (<GET ,ALREADY-SHOT .WHICH>
-		      %<XTELL "You already shot" THE-PRSI "!" CR>
+		      <TELL "You already shot" THE-PRSI "!" CR>
 		      <RTRUE>)
 		     (<NOT .O>
-		      %<XTELL "You have to aim it first!" CR>
+		      <TELL "You have to aim it first!" CR>
 		      <RTRUE>)>
 	       ;<COND (<0? .I> <SET I ,PRSO>)>
 	       <COND (<OR <AND <==? ,THORPE-SUB .O>
 			       <NOT <DOBJ? THORPE-SUB GLOBAL-THORPE>>>
 			  <AND <==? ,SNARK .O>
 			       <NOT <DOBJ? SNARK GLOBAL-SNARK>>>>
-		      %<XTELL "You didn't aim it at" THE-PRSO "." CR>
+		      <TELL "You didn't aim it at" THE-PRSO "." CR>
 		      <RTRUE>)>
 	       <COND (<DOBJ? THORPE-SUB GLOBAL-THORPE>
 		      <COND (<AND <==? <GET ,LON-AIMED-AT .WHICH> ,THORPE-LON>
@@ -318,9 +320,9 @@ when you rammed the " D ,SNARK "!" CR>
 			     <PUT ,ALREADY-SHOT .WHICH T>
 			     <COND (<0? .WHICH> <MUNG-TARGET>)
 				   (T
-				    %<XTELL
-"Fudge! Your tranquilizer dart hit the " D ,THORPE-SUB ", and its metal hull can't
-be put to sleep! Tough luck, "FN"." CR>)>)
+				    <TELL
+"Fudge! Your tranquilizer dart hit the " D ,THORPE-SUB ", and its metal
+hull can't be put to sleep! Tough luck, "FN"." CR>)>)
 			    (T
 			     <TOO-BAD-BUT ,PRSO>
 			     <TELL " moved since you aimed." CR>)>)
@@ -332,7 +334,7 @@ be put to sleep! Tough luck, "FN"." CR>)>)
 			     <SETG SNARK-HLON ,THORPE-HLON>
 			     <SETG SNARK-HLAT ,THORPE-HLAT>
 			     <COND (<0? .WHICH>
-				    %<XTELL
+				    <TELL
 "KA-VOOOM! The " D ,SNARK " shudders and stops moving! You scored a
 clean hit with your " D ,BAZOOKA "!|
 ">
@@ -342,7 +344,7 @@ clean hit with your " D ,BAZOOKA "!|
 Even though you've saved the " D ,AQUADOME " from further danger of
 monster attack, the " D ,SUB " is now exposed to the " D ,THORPE-SUB
 "'s rocket weapon!" CR>)
-				   (T %<XTELL
+				   (T <TELL
 "Right on! The dart hits the " D ,SNARK " and sticks out of its side.
 The tranquilizer spreads through the " D ,SNARK ", sending it to Slumberland.|
 But this may have been a bad move. With the " D ,SNARK " fast asleep, its
@@ -356,7 +358,7 @@ CR>)>)
 <ROUTINE MUNG-TARGET ()
 	<SCORE-UPD 5>
 	<FSET ,PRSO ,MUNGBIT>
-	%<XTELL
+	<TELL
 "Great! You and Tip can see" THE-PRSI " slam into the " D ,THORPE-SUB"'s power
 pod!|
 \"Hooray! That crippled the " D ,THORPE-SUB " for keeps!\" Tip cheers.|
@@ -364,7 +366,7 @@ You hear a voice come over the " D ,SONARPHONE ": ">
 	<REPEAT ()
 		<TELL "\"" FN ", this is Sharon! Do you read me?\"">
 		<COND (<YES?> <RETURN>)>>
-	%<XTELL
+	<TELL
 "\"Something hit us, and Thorpe's out cold! He cracked his skull on the
 bulkhead! I was waking up when I saw it all happen. I'll tie him up so
 he can't cause any trouble.|
@@ -380,7 +382,7 @@ you like, I'll guide the monster to its cavern.\"|
 	<TELL "|
 CONGRATULATIONS, ">
 	<PRINT-NAME ,FIRST-NAME T>
-	%<XTELL
+	<TELL
 "! YOU'VE COMPLETED YOUR MISSION!!">
 	<FINISH>>
 
@@ -421,11 +423,11 @@ CONGRATULATIONS, ">
 	      (<READY-FOR-SNARK?>
 	       <RFALSE>)>
 	<MOVE-HERE-NOT-SUB ,BLY>
-	%<XTELL "\"Are you ready to take off now, "FN"?\" Zoe Bly "
+	<TELL "\"Are you ready to take off now, "FN"?\" Zoe Bly "
 		<COND (<IN? ,BLY ,HERE> "ask") (T "shout")>
 		"s anxiously.">
 	<COND (<NOT <YES?>> <RFALSE>)>
-	%<XTELL "\"Wait!\" Tip cuts in. ">
+	<TELL "\"Wait!\" Tip cuts in. ">
 	<SETG WINNER ,PLAYER>
 	<PERFORM ,V?ASK-ABOUT ,TIP ,FINE-GRID>>
 
@@ -448,27 +450,30 @@ CONGRATULATIONS, ">
 	    <NOT <==? ,SUB-DEPTH ,AIRLOCK-DEPTH>>>
 	<COND (<L? 40 <- ,MOVES ,LEFT-DOME>>
 	       <SETG LEFT-DOME ,MOVES>
-	       %<XTELL "Suddenly ">
+	       <TELL "Suddenly ">
 	       <TIP-SAYS>
-	       <TELL
-;"Say, " FN ", what " D ,INTDIR " do you think the " D
-,SNARK " went, anyway?\"" CR>)>)
+	       <TELL FN>
+	       <COND (<==? ,SUB-DEPTH ,AIRLOCK-DEPTH>
+		      <TELL
+", what " D ,INTDIR " do you think the " D ,SNARK " went, anyway?\"" CR>)
+		     (T <TELL
+", I wonder if we're at the right depth?\"" CR>)>)>)
        (T
 	<QUEUE I-SNARK-ATTACKS 0>
 	<QUEUE I-THORPE-APPEARS 0>
 	<ENABLE <QUEUE I-THORPE-AWAKES 9 ;-1>>
 	<FSET ,SEARCH-BEAM ,ONBIT>
-	%<XTELL
+	<TELL
 "\"Holy halibut!\" cries Tip. \"There's a big cloud of silt ahead in the "
 D ,SEARCH-BEAM ". It's out of sonar range. This
 could be the " D ,SNARK "! Want to hold course till we find out?\"">
 	<YES?>
-	%<XTELL
+	<TELL
 "However you steer, the cloud holds steady.
 You may be on a collision course with the behemoth
 that almost wrecked the " D ,AQUADOME "!|
 ">
-	%<XTELL
+	<TELL
 "Your " D ,SEARCH-BEAM " reveals TWO
 objects dead ahead!|
 One is the " D ,SNARK ". To the left of the tentacled
@@ -481,7 +486,7 @@ crawling along the ocean floor.|
 A voice crackles over the " D ,SONARPHONE ": \"This is " D ,GLOBAL-THORPE
 ", " FN "! Do you read me?\"">
 	<YES?>
-	%<XTELL
+	<TELL
 "Your answer brings a rasping laugh. \"Of course
 you read me, or you wouldn't be answering!
 Your " D ,LAB-ASSISTANT
@@ -491,14 +496,13 @@ Would you like to hear what's in store for you?\"">
 	<COND (<NOT <YES?>>
 	       <TELL "\"You'll soon find out -- like it or not! ">)
 	      (T <TELL "\"">)>
-	%<XTELL
+	<TELL
 "I'll blast your sub with a rocket! Then I'll guide my
 synthetic monster to the " D ,AQUADOME " to destroy it! Can you guess
 what sealed your doom, " FN "?\"">
 	<COND (<NOT <YES?>> <TELL "\"">)
 	      (T <TELL "\"I'll tell you anyhow. ">)>
-	%<XTELL
-;"Your undersea research station must be eliminated, so I'll have"
+	<TELL
 "I want to own the " D ,ORE-NODULES " near the " D ,AQUADOME
 "! Sharon and I consider it a wedding present from you and your dad ...\"|
 Thorpe breaks off with a sudden gulp, followed by some noise and
@@ -517,7 +521,7 @@ then a soft female voice:|
 	<SETG SNARK-LON <+ ,THORPE-LON ,THORPE-HLON>>
 	<SETG SNARK-LAT ,THORPE-LAT>
 	<FSET ,THORPE ,MUNGBIT>
-	%<XTELL
+	<TELL
 "\"Thank goodness! I conked Thorpe with a wrench! He fell onto the
 microphone, and he's too heavy for me to move!\"" CR>
 	<SCORE-OBJ ,SNARK>
@@ -531,13 +535,15 @@ microphone, and he's too heavy for me to move!\"" CR>
 	<TELL "\"Can I interrupt, "FN"?\" asks Tip.">
 	<COND (<NOT <YES?>>
 	       <TIP-SAYS>
-	       %<XTELL
+	       <TELL
 "Sorry, but I have to. This is important.\"|
 ">)>
-	%<XTELL
+	<TELL
 "\"Sharon, how does Thorpe control the monster?\"|
-\"By sonar pulse signals,\" she replies. " ,SHARON-ABOUT-MONSTER "|
-\"Is the transducer sending out signals now?\" Tip asks her.|
+\"By sonar pulse signals,\" she replies. ">
+	<SHARON-ABOUT-MONSTER>
+	<TELL
+"\"Is the transducer sending out signals now?\" Tip asks her.|
 \"Yes, it operates all the time. Can you make out our position on your "
 D ,SONARSCOPE "?\"|
 \"Thanks to the " D ,FINE-GRID "!\" says Tip.">
@@ -549,16 +555,17 @@ Tip uses his dual-control throttle to stop your sub.
 Then he adds apologetically:
 \"This isn't mutiny, "FN"! I just figured we should stop now.\"">)>
 	<CRLF>
-	%<XTELL ,SHARON-ABOUT-CAT "|
-\"Was it out of control when it attacked the " D ,AQUADOME "?\" asks Tip.|
+	<SHARON-ABOUT-CAT>
+	<TELL
+"\"Was it out of control when it attacked the " D ,AQUADOME "?\" asks Tip.|
 \"Oh no!\" Sharon replies. ">
 	<REPEAT ()
-		%<XTELL
+		<TELL
 "\"Thorpe has a helper at the " D ,AQUADOME " who put a
 " D ,BLACK-BOX " on the " D ,SONAR-EQUIPMENT ", which made it emit signals to
 ATTRACT the monster and make it attack. Do you follow me so far, " FN "?\"">
 		<COND (<YES?> <RETURN>)>>
-	%<XTELL
+	<TELL
 "\"Good. Before that first attack, Thorpe got the monster close enough
 for the " D ,BLACK-BOX " to take over. Then he surfaced near " D ,BAY
 " to get me.
@@ -566,22 +573,22 @@ By the time we went back to the ocean floor, something had gone wrong: the " D
 ,AQUADOME " was okay, and the monster had wandered off to its cavern.
 That reminds me, "FN". ">
 	<REPEAT ()
-		%<XTELL
+		<TELL
 "Do you want to take the monster to its cavern peacefully? (With no
-more sonar pulse input, it'll stay there till you're ready to study it
+more sonar pulse input, it'll stay there until you're ready to study it
 scientifically.)\"">
 		<COND (<YES?> <RETURN>)>
-		%<XTELL
+		<TELL
 "(Better listen, "FN". Sharon's trying to show you how to deal with
 this threat to the " D ,AQUADOME ".)|
 \"">>
-	%<XTELL
+	<TELL
 "\"First tell me, "FN": do you have any tranquilizer or weapon
 to use against it?\"">
 	<COND (<YES?>
-	       %<XTELL "\"Do you want to capture it for scientific study?\"">
+	       <TELL "\"Do you want to capture it for scientific study?\"">
 	       <COND (<YES?>
-		      %<XTELL
+		      <TELL
 "\"Then try the following:|
 Position your sub on the other side of the monster -- on the monster's
 LEFT side -- just 5 meters from it. If anything goes wrong and it gets out
@@ -590,7 +597,7 @@ of control, you can tranquilize it immediately.\"" CR>)
 	<RTRUE>>
 
 <ROUTINE SHARON-ABOUT-THORPE ()
-	%<XTELL
+	<TELL
 "\"I'm not in on Thorpe's plot, "FN". I'm playing along, trying to wreck
 his plans. I know it was risky for me to leave that " D
 ,CATALYST-CAPSULE " out of the " D ,SUB>
@@ -600,25 +607,27 @@ his plans. I know it was risky for me to leave that " D
 ", but it was part of my plan, and you got to the " D ,AQUADOME " anyway.\""
 CR>>
 
-<GLOBAL SHARON-ABOUT-MONSTER
+<ROUTINE SHARON-ABOUT-MONSTER ()
+	<TELL
 "\"It's sensitive to the signals on its RIGHT side.
 Thorpe has installed a sonar transducer on the LEFT or
 PORT side of this sub. He has to stay on the same side of
-the monster all the time.\"">
+the monster all the time.\"">>
 
-<GLOBAL SHARON-ABOUT-CAT
+<ROUTINE SHARON-ABOUT-CAT ()
+	<TELL
 "Sharon says, \"Notice how we keep 5 meters to the monster's right and 5
 meters behind its nose.
 The Sea Cat is programmed that way, so the signals reach
-the monster with enough strength to keep it in control.\"">
+the monster with enough strength to keep it in control.\"">>
 
 <ROUTINE I-THORPE-AWAKES ()
 	<FCLEAR ,THORPE ,MUNGBIT>
 	<SETG SUB-IN-BATTLE T>
 	<PHONE-OFF>
 	<PHONE-ON ,GLOBAL-THORPE ,THORPE-SUB ,SONARPHONE>
-	%<XTELL CR
-"Suddenly the sonarphone gets louder.|
+	<TELL "|
+Suddenly the sonarphone gets louder.|
 ">
 	<TIP-SAYS>
 	<TELL
@@ -631,7 +640,7 @@ Kingdom Come as soon as you're in my sights!\"|
 ">
 	<COND (<NOT <STARBOARD-OF-THORPE? ,SUB-LON ,SUB-LAT>>
 	       <TIP-SAYS>
-	       %<XTELL
+	       <TELL
 "He'll have to go around the " D ,SNARK " to fire at us, "FN"!
 And we'll have to go around its tail to shoot at HIM!\"|
 ">)>

@@ -1,13 +1,13 @@
 "MAIN for SEASTALKER
-Copyright (C) 1984 Infocom, Inc.  All rights reserved."
+Copyright (C) 1984, 1985 Infocom, Inc.  All rights reserved."
 
 <GLOBAL P-WON <>>
 
 <CONSTANT M-FATAL 2>
 
-<CONSTANT M-HANDLED 1>   
+"<CONSTANT M-HANDLED 1>   
 
-<CONSTANT M-NOT-HANDLED <>>   
+<CONSTANT M-NOT-HANDLED <>>"   
 
 <CONSTANT M-BEG 1>  
 
@@ -22,13 +22,11 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 <CONSTANT M-OBJDESC 5>
 
 <ROUTINE GO ()
-	%<COND (<NOT <GASSIGNED? PREDGEN>>
-		'(<SETG XTELLCHAN <OPEN "READB" ,XTELLFILE>>
-		  <SETG LIT T>))
-	       ('<SETG LIT T>)>
+	<SETG LIT T>
 	<PUTB ,P-LEXV 0 59>
 	<PUTB ,YES-LEXV 0 4>
 	<SETG SCORE 0>
+	<SETG HERE ,GAME>
 	<PUTB ,FIRST-NAME 0 3>
 	<PUTB ,FIRST-NAME 1 %<ASCII !\->>
 	<PUTB ,FIRST-NAME 2 %<ASCII !\->>
@@ -48,26 +46,23 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	<PUTB  ,GAME-NAME 9 %<ASCII !\E>>
 	<PUTB  ,GAME-NAME 10 %<ASCII !\R>>"
 	<SETG WINNER ,PLAYER>
-	<SETG HERE ,CENTER-OF-LAB>
 	<THIS-IS-IT ,VIDEOPHONE>
-	<MOVE ,TIP ,HERE>
 	<THIS-IS-IT ,TIP>
 	<THIS-IS-IT ,SHARON>
-	%<COND (<GASSIGNED? PREDGEN>
-		'<COND (<NOT <FSET? ,HERE ,TOUCHBIT>>
-			<QUEUE-MAIN-EVENTS>
-			<INTRO>)>)
-	       (T '<NULL-F>)>
+	<COND (<NOT <FSET? ,CENTER-OF-LAB ,TOUCHBIT>>
+	       <INTRO>
+	       <QUEUE-MAIN-EVENTS>)>
+	<SETG HERE ,CENTER-OF-LAB>
+	<MOVE ,TIP ,HERE>
 	<MOVE ,PLAYER ,HERE>
-	<COND (<NOT ,RESTORED-DURING-NAME-INPUT> <V-LOOK>)>
 	<MAIN-LOOP>
 	<AGAIN>>    
 
 <ROUTINE INTRO ("AUX" N)
-	%<XTELL
-"Copyright (c) 1984 Infocom, Inc.  All rights reserved.|
+	<TELL
+"Copyright (c) 1984, 1985 Infocom, Inc.  All rights reserved.|
 |
-Welcome to junior-level interactive fiction from Infocom!|
+Welcome to interactive fiction from Infocom!|
 |
 In this story, you're the hero or heroine, so
 we'll use your name!" CR>
@@ -75,17 +70,17 @@ we'll use your name!" CR>
 		<TELL CR>
 		<SET N <READ-NAME ,FIRST-NAME "Please type your first name.">>
 		<COND (<==? .N ,M-FATAL> <RFALSE>)>
-		%<XTELL "Hello " FN "! ">
+		<TELL "Hello " FN "! ">
 		<SET N <READ-NAME ,LAST-NAME "Now type your last name.">>
 		<COND (<==? .N ,M-FATAL> <RFALSE>)>
-		%<XTELL "Is " FN " " LN " right?">
+		<TELL "Is " FN " " LN " right?">
 		<COND (<YES?> <RETURN>)>>
-	%<XTELL "Then let the story begin!">
+	<TELL "Then let the story begin!">
 	<SET N 24>
 	<REPEAT () <COND (<DLESS? N 0> <RETURN>) (T <CRLF>)>>
 	<V-VERSION>
 	<CRLF>
-	%<XTELL
+	<TELL
 "\"" FN ", snap out of it!\" cries " D ,GLOBAL-TIP ", bursting into
 " D ,YOUR-LABORATORY ". \"The alert signal is on!\"|
 You look up from your plans for the " D ,SUB ", a top-secret submarine
@@ -101,7 +96,7 @@ ringing. Someone's trying to reach you over the private " D ,VIDEOPHONE
 	<QUEUE I-SHOW-SONAR 0>
 	<QUEUE I-UPDATE-FREIGHTER 0>
 	<QUEUE I-UPDATE-SUB-POSITION 0>
-	<SETG OLD-HERE ,HERE>
+	<SETG OLD-HERE ,CENTER-OF-LAB>
 	<SETG TIP-FOLLOWS-YOU? T>
 	<ENABLE <QUEUE I-SNARK-ATTACKS <+ 250 <RANDOM 250>>>>
 	<ENABLE <QUEUE I-LAMP-ON-SCOPE 5>>
@@ -110,10 +105,13 @@ ringing. Someone's trying to reach you over the private " D ,VIDEOPHONE
 	<ENABLE <QUEUE I-SHARON-GONE 25>>>
 
 
-<ROUTINE MAIN-LOOP ("AUX" ICNT OCNT NUM CNT OBJ TBL V PTBL OBJ1 TMP) 
+<ROUTINE MAIN-LOOP ("AUX" TRASH)
+	<REPEAT ()
+	     <SET TRASH <MAIN-LOOP-1>>>>
+
+<ROUTINE MAIN-LOOP-1 ("AUX" ICNT OCNT NUM CNT OBJ TBL V PTBL OBJ1 TMP) 
    #DECL ((CNT OCNT ICNT NUM) FIX (V) <OR 'T FIX FALSE> (OBJ)<OR FALSE OBJECT>
 	  (OBJ1) OBJECT (TBL) TABLE (PTBL) <OR FALSE ATOM>)
-   <REPEAT ()
      <SET CNT 0>
      <SET OBJ <>>
      <SET PTBL T>
@@ -191,7 +189,7 @@ ringing. Someone's trying to reach you over the private " D ,VIDEOPHONE
 	   (T
 	    <SETG P-CONT <>>)>
      <COND (,P-WON
-	    <COND (<NOT <GAME-VERB?>> <SET V <CLOCKER>>)>)>>>
+	    <COND (<NOT <GAME-VERB?>> <SET V <CLOCKER>>)>)>>
 
 <ROUTINE QCONTEXT-CHECK (PRSO "AUX" OTHER (WHO <>) (N 0))
 	 <COND (<OR <VERB? ;FIND HELP WHAT>
@@ -235,7 +233,7 @@ ringing. Someone's trying to reach you over the private " D ,VIDEOPHONE
 <ROUTINE OBJECT-PAIR-F ("AUX" P1 P2)
  <COND (<L? 2 <GET ,P-PRSO ,P-MATCHLEN>>
 	<COND (<VERB? COMPARE>
-	       %<XTELL
+	       <TELL
 "That's too many things to compare all at once!" CR>)>
 	<RTRUE>)
        (<VERB? COMPARE>
@@ -279,17 +277,16 @@ ringing. Someone's trying to reach you over the private " D ,VIDEOPHONE
 	      (<IN? .OBJ ,ROOMS>		<TELL "(rm)">)>>
 
 <ROUTINE FIX-HIM-HER (HEM-OBJECT "AUX" V)
-	<COND (<NOT-ACCESSIBLE? .HEM-OBJECT>
+	<SET V <GETP .HEM-OBJECT ,P?CHARACTER>>
+	<COND (<NOT <ACCESSIBLE? .HEM-OBJECT>>
 	       ;<COND (,DEBUG <TELL "[" D .HEM-OBJECT ":NA]" CR>)>
-	       <RETURN <GET ,GLOBAL-CHARACTER-TABLE
-			    <GETP .HEM-OBJECT ,P?CHARACTER>>>)>
-	<SET V <GET ,CHARACTER-TABLE <GETP .HEM-OBJECT ,P?CHARACTER>>>
+	       <RETURN <GET ,GLOBAL-CHARACTER-TABLE .V>>)>
+	<SET V <GET ,CHARACTER-TABLE .V>>
 	<COND (<EQUAL? ,HERE <LOC .V>>
 	       ;<COND (,DEBUG <TELL "[" D .HEM-OBJECT ":LO]" CR>)>
 	       <RETURN .V>)>>
 
 <ROUTINE PERFORM (A "OPTIONAL" (O <>) (I <>) "AUX" V OA OO OI) 
-	#DECL ((A) FIX (O) <OR FALSE OBJECT FIX> (I) <OR FALSE OBJECT> (V)ANY)
 	<COND (,DEBUG
 	       <TELL "[Perform: ">
 	       %<COND (<GASSIGNED? PREDGEN> '<TELL N .A>)
@@ -308,7 +305,7 @@ ringing. Someone's trying to reach you over the private " D ,VIDEOPHONE
 	<SETG PRSA .A>
 	<COND (<NOT <EQUAL? .A ,V?WALK>>
 	       <COND (<AND <EQUAL? ,IT .I .O>
-			   <NOT-ACCESSIBLE? ,P-IT-OBJECT>>
+			   <NOT <ACCESSIBLE? ,P-IT-OBJECT>>>
 		      <COND (<NOT .I> <FAKE-ORPHAN>)
 			    (T <TELL
 "(Sorry, but" THE ,P-IT-OBJECT " isn't here!)" CR>)>
@@ -329,47 +326,46 @@ ringing. Someone's trying to reach you over the private " D ,VIDEOPHONE
 		     (<==? .I ,HIM> <SET I ,P-HIM-OBJECT>)>)>
 	<SETG PRSI .I>
 	<SETG PRSO .O>
+	<SET V <>>
 	<COND (<AND <NOT <EQUAL? .A ,V?WALK>>
-		    <EQUAL? ,NOT-HERE-OBJECT ,PRSO ,PRSI>
-		    <SET V <D-APPLY "Not Here" ,NOT-HERE-OBJECT-F>>>
-	       <SETG P-WON <>>
-	       .V)
-	      (<AND <THIS-IS-IT ,PRSI>
-		    <THIS-IS-IT ,PRSO>
-		    <SET O ,PRSO>
-		    <SET I ,PRSI>
-		    <NULL-F>>
-	       <NULL-F>)		;"[in case last clause changed PRSx]"
-	      (<SET V <DD-APPLY "Actor" ,WINNER <GETP ,WINNER ,P?ACTION>>> .V)
-	      (<SET V <D-APPLY "Room (M-BEG)"
+		    <EQUAL? ,NOT-HERE-OBJECT ,PRSO ,PRSI>>
+	       <SET V <D-APPLY "Not Here" ,NOT-HERE-OBJECT-F>>
+	       <COND (.V
+		      <SETG P-WON <>>)>)>
+	<THIS-IS-IT ,PRSI>
+	<THIS-IS-IT ,PRSO>
+	<SET O ,PRSO>
+	<SET I ,PRSI>
+	<COND (<ZERO? .V>
+	       <SET V <DD-APPLY "Actor" ,WINNER <GETP ,WINNER ,P?ACTION>>>)>
+	<COND (<ZERO? .V>
+	       <SET V <D-APPLY "Room (M-BEG)"
 			       <GETP <LOC ,WINNER> ,P?ACTION>
-			       ,M-BEG>> .V)
-	      (<SET V <D-APPLY "Preaction"
-			       <GET ,PREACTIONS .A>>> .V)
-	      (<AND .I
-		    <SETG NOW-PRSI T>
-		    <SET V <D-APPLY "PRSI" <GETP .I ,P?ACTION>>>>
-	       .V)
-	      (<AND <NOT <SETG NOW-PRSI <>>>
+			       ,M-BEG>>)>
+	<COND (<ZERO? .V>
+	       <SET V <D-APPLY "Preaction" <GET ,PREACTIONS .A>>>)>
+	<SETG NOW-PRSI T>
+	<COND (<AND <ZERO? .V>
+		    .I>
+	       <SET V <D-APPLY "PRSI" <GETP .I ,P?ACTION>>>)>
+	<SETG NOW-PRSI <>>
+	<COND (<AND <ZERO? .V>
 		    .O
 		    <NOT <==? .A ,V?WALK>>
-		    <LOC .O>
-		    <GETP <LOC .O> ,P?CONTFCN>
-		    <SET V <DD-APPLY "Container" <LOC .O>
-				    <GETP <LOC .O> ,P?CONTFCN>>>>
-	       .V)
-	      (<AND .O
-		    <NOT <==? .A ,V?WALK>>
-		    <SET V <D-APPLY "PRSO"
-				    <GETP .O ,P?ACTION>>>>
-	       .V)
-	      (<SET V <D-APPLY <>
-			       <GET ,ACTIONS .A>>> .V)>
+		    <LOC .O>>
+	       <SET V <GETP <LOC .O> ,P?CONTFCN>>
+	       <COND (.V
+		      <SET V <DD-APPLY "Container" <LOC .O> .V>>)>)>
+	<COND (<AND <ZERO? .V>
+		    .O
+		    <NOT <==? .A ,V?WALK>>>
+	       <SET V <D-APPLY "PRSO" <GETP .O ,P?ACTION>>>)>
+	<COND (<ZERO? .V>
+	       <SET V <D-APPLY <> <GET ,ACTIONS .A>>>)>
 	<COND (<NOT <==? .V ,M-FATAL>>
-	       <COND (<==? <LOC ,WINNER> ,PRSO>	;"was not in compiled PERFORM"
-		      <SETG PRSO <>>)>
-	       <SET V <D-APPLY "Room (M-END)"
-			       <GETP <LOC ,WINNER> ,P?ACTION> ,M-END>>)>
+	       <COND (<NOT <GAME-VERB?>>
+		      <SET V <D-APPLY "Room (M-END)"
+				   <GETP <LOC ,WINNER> ,P?ACTION> ,M-END>>)>)>
 	<SETG PRSA .OA>
 	<SETG PRSO .OO>
 	<SETG PRSI .OI>

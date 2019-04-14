@@ -1,0 +1,305 @@
+Here begins a transcript of interaction with
+SEASTALKER: JIM LAWRENCE AND THE ULTRAMARINE BIOCEPTOR
+Junior-level interactive fiction from Infocom
+Copyright (c) 1984 Infocom, Inc. All rights reserved.
+SEASTALKER is a trademark of Infocom, Inc.
+Release number 17 / Serial number 850208
+
+Okay, Jim, what do you want to do now?
+>ANSWER THE ALARM
+
+Why not turn on the videophone?
+The alarm bell continues to ring.
+
+What next?
+>TURN ON THE VIDEOPHONE
+
+As the alarm bell stops ringing, a picture of a woman holding a microphone
+appears, and you can hear her voice from the speaker. But both sound and
+picture are fuzzy.
+(Your score just went up by 1 point!)
+
+What next?
+>TUNE IT
+
+Ah, that's better! You recognize the woman as Commander Bly, who's in charge of
+the Undersea Research Station of Inventions Unlimited, called the Aquadome,
+just off the Atlantic coast. "Jim! Jim!" she's saying. "This is the Aquadome
+calling the Lawrence Research Lab! We have an urgent problem!"
+(Your score just went up by 1 point!)
+
+What next?
+>TALK TO HER
+
+She can't hear you unless you pick up your microphone and switch it on.
+
+What next?
+>PICK UP THE MIKE AND SWITCH IT ON
+
+(Your score just went up by 1 point!)
+You are now holding the microphone.
+
+Okay, the microphone is now on.
+
+What next?
+>TALK TO COMMANDER BLY
+
+"Jim! Jim! Our transparent dome enclosing the Undersea Research Station is
+being battered by a huge monster!"
+
+What next?
+>BLY, SHOW ME THE MONSTER
+
+The Aquadome's camera pans, and the monster comes into view on your videophone
+screen. It resembles a huge sea slug, about 5 meters tall. Its clawed tentacles
+pound and scratch at the dome.
+
+What next?
+>BLY, TELL ME ABOUT THE MONSTER
+
+"Some of our divers saw it while exploring the undersea environment. They
+nicknamed it the Snark. This is the first time it has approached the Aquadome,
+and it may be the last time, Jim! I'm not sure how long our plastic dome
+enclosure can withstand such a battering!"
+
+What next?
+>BLY, ATTACK THE MONSTER
+
+"Jim, this is a peaceful research facility. We have no weapons."
+
+What next?
+>BLY, LEAVE THE AQUADOME
+
+"Our emergency escape bell would be vulnerable to a monster as big as the
+Snark. Ditto for SCUBA gear, deep-sea diving suits, or jet-propelled
+observation bubbles."
+
+What next?
+>BLY, WAIT THERE FOR ME
+
+"Okay, Jim, but hurry!"
+
+(Are you tired of seeing "What next?" Well, you won't see it any more.)
+
+
+>HANG UP
+
+"I hope to see you soon, Jim."
+
+Something's wrong! The picture vanished from your videophone screen, and the
+sound conked out!
+Tip says, "That's strange! Maybe you should use the Computestor."
+(Oh no! Your score just went down by 3 points!)
+
+>GO TO THE COMPUTESTOR
+
+You can't walk away while you are holding the microphone!
+
+>PUT IT ON THE TABLE
+
+Okay.
+
+>GO TO THE COMPUTESTOR
+
+It's in the north part.
+(north part)
+You're in the north part of your laboratory. A Computestor stands here to help
+test your inventions.
+
+>USE IT
+
+The Computestor is off!
+
+>TURN IT ON
+
+The Computestor is ready for questions.
+
+>ASK IT ABOUT THE VIDEOPHONE
+
+"Symptoms: no picture, no sound.
+Possible causes:
+1) Failure of the transmitter at source.
+2) A short in the undersea coaxial cable linking transmitter to the Lawrence
+Research Lab, if signal is coming from Aquadome.
+3) Sunspot interference or satellite malfunction if transmitter is at earth's
+surface.
+4) Failure of the video receiver.
+5) Overload in the Electrical Panel (circuit breaker popped).
+6) Sabotage (circuit breaker open)."
+
+>GO TO THE CIRCUIT BREAKER
+
+It's in the corridor.
+(corridor)
+You're in a corridor, with your laboratory to the west, a storage closet to the
+south, and Kemp's office to the east. An Electrical Panel fills most of the
+north wall.
+
+Tip follows you into the corridor.
+(If you want a clue, find Infocard #3 in your SEASTALKER package. Read hidden
+clue #1 and put "Electrical Panel" in the blank space.)
+
+>CHECK THE BREAKER
+
+(If you want a clue, find Infocard #3 in your SEASTALKER package. Read hidden
+clue #1 and put "Electrical Panel" in the blank space.)
+
+>CLOSE IT
+
+Okay, the circuit breaker is now closed.
+(Your score just went up by 3 points!)
+
+>GO BACK TO THE LAB
+
+(lab center)
+You're at your workbench in the center of your laboratory, a small part of the
+Lawrence Research Lab in the town of Frobton. The videophone screen looms
+overhead.
+
+Tip follows you into the lab center.
+Sitting on the workbench is:
+  a microphone
+  a diagram
+As you re-enter the lab, Tip says, "Look, Jim! The videophone's working again!
+There's a normal test pattern on the screen!"
+
+>TIP, GO TO THE SUBMARINE
+
+"I think you can do that better yourself."
+
+>GO TO THE SUB
+
+(SCIMITAR)
+You're in the pilot's seat of the SCIMITAR, its operating control panel before
+you.
+A wraparound viewport, both fore and aft, provides a view ahead and astern. You
+can also observe your surroundings with a sonarscope and a hydrophone listening
+device. There's a sonarphone for communication. You'll discover other features
+when you need them.
+Tip is sitting behind you, reading a magazine.
+The power reactor is off and open.
+(Your score just went up by 1 point!)
+
+>TURN IT ON
+
+(If you want a clue, find Infocard #3 in your SEASTALKER package. Read hidden
+clue #3 and put "catalyst capsule" in the blank space.)
+
+>GO TO THE CAPSULE
+
+It's in the west walkway.
+(west walkway)
+You're at a work counter, next to the control gear used to operate the test
+tank.
+The test tank (which is now empty of sea water) is located in a large work
+room, just south of your laboratory, with concrete-block walls on three sides
+and a high metal roof. Most of its floor is dug out and lined with steel, to
+form the huge tank used for developing and testing underwater gear and the
+pilot models of your submarine craft.
+There's a walkway around the tank on three sides -- north, west and south. On
+the east side, a steel gate forms the wall of the room.
+
+Tip follows you into the west walkway.
+Sitting on the work counter is:
+  a catalyst capsule
+
+>TAKE IT
+
+(Your score just went up by 5 points!)
+You are now holding the catalyst capsule.
+
+>GET IN THE SUB
+
+You have to go north to board the SCIMITAR.
+
+>GO NORTH
+
+(north walkway)
+Tip is off to the south.
+
+>BOARD THE SCIMITAR
+
+(SCIMITAR)
+Tip is sitting behind you, reading a magazine.
+The power reactor is off and open.
+
+>PUT THE CAPSULE IN THE REACTOR
+
+Okay.
+
+>CLOSE THE REACTOR THEN TURN IT ON
+
+Okay, the reactor is now closed.
+
+Electrical systems now activated.
+(Your score just went up by 5 points!)
+
+>READ THE INSTRUMENTS
+
+Main instruments:
+depth finder, hydrophone, sonarscope, and temperature gauge.
+
+>LEAVE THE TANK
+
+The tank is empty!
+
+>FILL IT
+
+The sea water quickly fills the tank, up to the level of the walkway.
+
+>LEAVE IT
+
+The gate is closed!
+
+>OPEN IT
+
+Opened (by remote control).
+
+>LEAVE THE TANK
+
+The engine is off!
+
+>TURN IT ON
+
+You can immediately hear the powerful thrum of the hydrojet turbine.
+(Your score just went up by 5 points!)
+
+>LEAVE THE TANK
+
+You can do this by setting the throttle to the speed you want (slow, medium, or
+fast) and by moving the joystick in the compass direction you wish to go.
+
+>SET THE THROTTLE TO SLOW SPEED
+
+(I found too many nouns in that sentence!)
+
+>SET THE THROTTLE TO SLOW
+
+You shouldn't leave the tank with the hatch open!
+
+>CLOSE IT
+
+Okay, the entry hatch is now closed.
+
+>SLOW
+
+Okay, now that the throttle is set, try pushing the joystick to the east.
+
+>PUSH THE STICK EAST
+
+The SCIMITAR glides smoothly out of the tank onto the surface of Frobton Bay.
+You're heading east at 1 sea square per turn.
+(Your score just went up by 5 points!)
+(This might be a good time to use the command: SAVE.)
+
+A speedboat came out of nowhere and almost hit you! It's dangerous on the
+surface of the bay.
+
+>Q
+
+Your score is 24 points out of 100, in 44 turns.
+This score gives you the rank of a fair adventurer.
+(If you want to continue from this point at another time, you must "SAVE"
+first.)
+Do you want to stop playing now? >Y
+

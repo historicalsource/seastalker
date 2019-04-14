@@ -19,17 +19,17 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	       <PERFORM ,V?FIND ,PLAYER>
 	       <RTRUE>)
 	      (,SUB-IN-OPEN-SEA
-	       %<XTELL
+	       <TELL
 "Its location is stored in the " D ,AUTO-PILOT "'s computer memory." CR>)
 	      (<AND <NOT ,SUB-IN-DOME>
 		    <NOT <==? ,NOW-TERRAIN ,SEA-TERRAIN>>>
-	       %<XTELL
+	       <TELL
 "\"The " D ,AQUADOME " encloses the " ,URS " of " D
 ,IU-GLOBAL ", on the ocean floor off the Atlantic coast. Most " LN "
 subs can reach it by " D ,AUTO-PILOT ".\"" CR>)>)
        (<AND <VERB? EXAMINE> <NOT <L? ,DISTANCE-FROM-BAY ,AQUADOME-VISIBLE>>>
 	<SETG P-WON <>>
-	%<XTELL <GETP ,LOCAL-SUB ,P?TEXT> CR>)
+	<TELL <GETP ,LOCAL-SUB ,P?TEXT> CR>)
        (<VERB? LOOK-INSIDE LOOK-OUTSIDE>
 	<PERFORM ,PRSA ,WINDOW>
 	<RTRUE>)
@@ -46,14 +46,14 @@ subs can reach it by " D ,AUTO-PILOT ".\"" CR>)>)
 	       <PERFORM ,V?FIND ,PLAYER>
 	       <RTRUE>)
 	      (,SUB-IN-DOME
-	       %<XTELL "You're in it!" CR>)
+	       <TELL "You're in it!" CR>)
 	      (,SUB-IN-OPEN-SEA	;<FSET? ,AUTO-PILOT ,ONBIT>
-	       %<XTELL "Let the " D ,AUTO-PILOT " handle that." CR>)
-	      (T %<XTELL "First you must reach the open sea." CR>)>)>>
+	       <TELL "Let the " D ,AUTO-PILOT " handle that." CR>)
+	      (T <TELL "First you must reach the open sea." CR>)>)>>
 
 <ROUTINE IN-DOME? (RM)
-	<OR <AND ,SUB-IN-DOME <EQUAL? .RM ,SUB ,CRAWL-SPACE>>
-	    <ZMEMQ .RM ,IN-DOME-AROUND>>>
+ <COND (<EQUAL? .RM ,SUB ,CRAWL-SPACE> ,SUB-IN-DOME)
+       (<ZMEMQ .RM ,IN-DOME-AROUND> T)>>
 
 <ROUTINE AIR-ROOM? (RM)
 	<OR <EQUAL? .RM ,FOOT-OF-RAMP ,AIRLOCK ,AIRLOCK-WALL>
@@ -75,29 +75,29 @@ subs can reach it by " D ,AUTO-PILOT ".\"" CR>)>)
 
 <ROUTINE WINDOW-F ("AUX" ;(RM <WINDOW-ROOM ,HERE ,PRSO>) POP)
 	 <COND (<VERB? BRUSH>
-		%<XTELL
+		<TELL
 "The window is clean enough without your interference." CR>)
 	       (<VERB? EXAMINE>
-		%<XTELL
+		<TELL
 "The window is a simple plastic sheet, giving a view of the dome outside."
 CR>)
 	       (<VERB? LOOK-INSIDE LOOK-OUTSIDE>
 		<COND (<0? ,SNARK-ATTACK-COUNT>
-		       %<XTELL "You can see the dome outside." CR>)
+		       <TELL "You can see the dome outside." CR>)
 		      (T
 		       ;<MOVE-HERE-NOT-SUB ,BLY>
 		       <MOVE ,BLY ,HERE>
-		       %<XTELL	;" to the southeast"
+		       <TELL	;" to the southeast"
 "The " D ,AQUADOME "'s search lights probe the ocean, but
 the " D ,GLOBAL-WATER " is too murky for the beams to penetrate.|
 \"Tip's right!\" " D ,BLY " says. \"That must be the " D ,SNARK " out there.
 Its tentacles churned up silt from the seabed that way during its first
 attack, "FN"!\"" CR>)>)
 	       (<VERB? MUNG>
-		%<XTELL
+		<TELL
 "Vandalism is for vandals, not famous inventors!" CR>)
 	       (<VERB? OPEN CLOSE LOCK UNLOCK>
-		%<XTELL "The window can't be opened." CR>)>>
+		<TELL "The window can't be opened." CR>)>>
 
 <OBJECT EXERCISE-TRACK
 	(IN GLOBAL-OBJECTS)
@@ -134,10 +134,12 @@ attack, "FN"!\"" CR>)>)
 	<COND (<OR ,GREENUP-ESCAPE ,GREENUP-TRAPPED>
 	       <MOVE ,LOWELL ,HERE>
 	       <MOVE ,ANTRIM ,HERE>
-	       %<XTELL "Two of the crew are with you." CR>)>)
+	       <TELL "Two of the crew are with you." CR>)>)
        (<==? .RARG ,M-LOOK>
 	<TELL "You're now in the " D ,AIRLOCK", at the foot of the ramp." CR>)
        (.RARG <RFALSE>)
+       (<AND <REMOTE-VERB?> <NOT <VERB? THROUGH WALK-TO>>>
+	<RFALSE>)
        (<AND <NOT ,SUB-IN-DOME> <NOT <SUB-OUTSIDE-AIRLOCK?>>>
 	<NOT-HERE ,AIRLOCK>)
        (<VERB? EMPTY>
@@ -148,7 +150,7 @@ attack, "FN"!\"" CR>)>)
 	      (<OR <EQUAL? ,HERE ,SUB ,CRAWL-SPACE>
 		   <EQUAL? ,HERE ,BLY-OFFICE ,FOOT-OF-RAMP>>
 	       <ENABLE <QUEUE I-AIRLOCK-EMPTY 2>>
-	       %<XTELL "This will take 1 turn." CR>
+	       <TELL "This will take 1 turn." CR>
 	       ;<COND (,GREENUP-ESCAPE
 		      <COND (<G? 4 ,GREENUP-ESCAPE>
 			     <TELL
@@ -193,11 +195,11 @@ CR>
 	       <COND (<FSET? ,AIRLOCK-ROOF ,OPENBIT>
 		      ;<ENABLE <QUEUE I-DOME-FLOODED 2>>
 		      <THIS-IS-IT ,AIRLOCK-ROOF>
-		      %<XTELL
+		      <TELL
 "A safety mechanism prevents it. The " D ,AIRLOCK-ROOF " is open!" CR>
 		      <RTRUE>)>)>
 	<COND (<AND ,GREENUP-ESCAPE <G? 4 ,GREENUP-ESCAPE>>
-	       %<XTELL
+	       <TELL
 "Greenup is frantically scrambling back up the ladder to avoid being
 swept off and drowned! ">
 	       <GREENUP-CUFF>
@@ -206,7 +208,7 @@ swept off and drowned! ">
 	      (<OR <EQUAL? ,HERE ,SUB ,CRAWL-SPACE>
 		   <EQUAL? ,HERE ,BLY-OFFICE ,FOOT-OF-RAMP>>
 	       <ENABLE <QUEUE I-AIRLOCK-EMPTY 2>>
-	       %<XTELL "This will take 1 turn." CR>
+	       <TELL "This will take 1 turn." CR>
 	       <RTRUE>)>)
        (<VERB? OPEN CLOSE>
 	;<COND (<VERB? FILL>
@@ -228,14 +230,14 @@ swept off and drowned! ">
 	     <ZMEMQ ,HERE ,IN-DOME-AROUND>
 	     <NOT <EQUAL? ,HERE ,AIRLOCK ,AIRLOCK-WALL>>>
 	<COND (<READY-FOR-SNARK?>
-	       %<XTELL
+	       <TELL
 "Cheers follow as you start up the ladder into the " D ,AIRLOCK "." CR>)>)>>
 
 <ROUTINE I-AIRLOCK-EMPTY ()
  <COND (,AIRLOCK-FULL
 	<COND (<FSET? ,AIRLOCK-HATCH ,OPENBIT> <RFALSE>)>
 	<SETG AIRLOCK-FULL <>>
-	%<XTELL CR
+	<TELL CR
 "The " D ,AIRLOCK " is now clear of " D ,GLOBAL-WATER " and filled with
 air at sea-level pressure.">
 	<COND (<FSET? ,ENGINE ,ONBIT>
@@ -244,7 +246,7 @@ air at sea-level pressure.">
 	<COND (T ;<EQUAL? ,HERE ,SUB>
 	       <FSET ,AIRLOCK-ROOF ,OPENBIT>
 	       <THIS-IS-IT ,SUB-DOOR>
-	       %<XTELL CR
+	       <TELL CR
 "The roof of the " D ,AIRLOCK " is sliding open, and the " D ,SUB
 " is in dry dock.|
 A ramp swings down from the top of the " D ,AIRLOCK "'s north wall to your "
@@ -252,7 +254,7 @@ D ,SUB-DOOR "." CR>
 	       <RFATAL>)>)
        (T
 	<SETG AIRLOCK-FULL T>
-	%<XTELL CR
+	<TELL CR
 "The " D ,AIRLOCK " is now filled with " D ,GLOBAL-WATER "." CR>
 	<COND (,SUB-IN-DOME
 	       <TELL
@@ -269,7 +271,7 @@ grip." CR>)>)>>
 
 <ROUTINE GREENUP-LADDER-F ()
  <COND (<VERB? BOARD ;ENTER CLIMB-DOWN CLIMB-ON CLIMB-UP THROUGH>
-	%<XTELL "The " D ,GREENUP-LADDER " is only for emergencies." CR>)>>
+	<TELL "The " D ,GREENUP-LADDER " is only for emergencies." CR>)>>
 ]
 <OBJECT AIRLOCK-RAMP
 	(IN LOCAL-GLOBALS)
@@ -306,10 +308,10 @@ grip." CR>)>)>>
 
 <ROUTINE AIRLOCK-WALL-F ("OPTIONAL" (ARG <>))
 	<COND (<==? .ARG ,M-LOOK>
-	       %<XTELL
+	       <TELL
 "You're now atop the north wall of the " D ,AQUADOME "'s " D ,AIRLOCK "."
 CR>
-	       %<XTELL
+	       <TELL
 "This gives you a bird's-eye view of the whole " ,URS " of "
 D ,IU-GLOBAL ".|
 |
@@ -334,10 +336,10 @@ outside the " D ,AIRLOCK "'s north wall.|
 	       <COND (<AND <CREW-5-TOGETHER?>
 			   <IN? ,CREW ,FOOT-OF-RAMP>
 			   <NOT <FSET? ,BLY ,MUNGBIT>>>
-		      %<XTELL D ,BLY " and her five " D ,CREW " are">
+		      <TELL D ,BLY " and her five " D ,CREW " are">
 		      <COND (<NOT <FSET? ,FOOT-OF-RAMP ,TOUCHBIT>>
 			     <TELL " waiting to greet you">)>
-		      %<XTELL " at the foot of this ladder." CR>)>)>>
+		      <TELL " at the foot of this ladder." CR>)>)>>
 
 <OBJECT AIRLOCK-LADDER
 	(IN LOCAL-GLOBALS)
@@ -371,7 +373,7 @@ outside the " D ,AIRLOCK "'s north wall.|
 		      <IOBJ? CREW CREW-GLOBAL>>
 		 <AND <VERB? WHAT> <DOBJ? CREW CREW-GLOBAL>>
 		 <AND <VERB? TELL-ABOUT> <DOBJ? PLAYER>>>>
-	%<XTELL
+	<TELL
 "\"The crew consists of:|
 Doctor Walt Horvak, marine biologist and first-aid medic;|
 " D ,ANTRIM ", laser expert and frogman;|
@@ -386,10 +388,10 @@ Doctor Walt Horvak, marine biologist and first-aid medic;|
 	<TELL D ,PRSO " nods at you." CR>)
        (<VERB? DIAGNOSE EXAMINE>
 	<COND (,DOME-AIR-BAD?
-	       %<XTELL
+	       <TELL
 D ,BLY " and the two divers, Greenup and Lowell, are without
 oxygen." CR>)
-	      (T %<XTELL "All the crew members are okay now." CR>)>)>>
+	      (T <TELL "All the crew members are okay now." CR>)>)>>
 
 <OBJECT CREW-GLOBAL
 	(IN GLOBAL-OBJECTS)
@@ -448,11 +450,11 @@ oxygen." CR>)
 <ROUTINE EXAMINE-BADGE ()
 	<COND (,DOME-AIR-BAD?
 	       <COND (<FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>
-		      %<XTELL
+		      <TELL
 "The badge is turning red! The air is becoming unbreathable!">)
-		     (T %<XTELL
+		     (T <TELL
 "The badge is less red now. The air is improving.">)>)
-	      (T %<XTELL
+	      (T <TELL
 "When a badge turns red, the air is no longer breathable.
 It's not red now.">)>>
 
@@ -470,17 +472,17 @@ It's not red now.">)>>
        (<NOT <FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>> <RFALSE>)
        (<AIR-SUPPLY-VERB?> <RFALSE>)
        (T
-	%<XTELL "Shouldn't you fix the " D ,AIR-SUPPLY-SYSTEM " first?" CR>)>>
+	<TELL "Shouldn't you fix the " D ,AIR-SUPPLY-SYSTEM " first?" CR>)>>
 
 <ROUTINE TROUBLE-BREATHING? ()
 	<COND (<VERB? WAIT-FOR WAIT-UNTIL>
 	       <RFALSE>)
 	      (<OR <NOT <IN? ,OXYGEN-GEAR ,PLAYER>>
 		   <NOT <FSET? ,OXYGEN-GEAR ,ONBIT>>>
-	       <TELL "You are having">
+	       <TELL "You are having ">
 	       <COND (<NOT <G? 13 ,DOME-AIR-BAD?>>
-		      <TELL " real">)>
-	       <TELL " trouble breathing." CR>)>>
+		      <TELL "real ">)>
+	       <TELL "trouble breathing." CR>)>>
 
 <ROUTINE TIP-REPORTS? ()
  <COND (<AND <NOT <==? ,HERE ,CENTER-OF-DOME>>
@@ -517,17 +519,17 @@ Everyone">
 	<SETG DOME-AIR-BAD? <+ 1 ,DOME-AIR-BAD?>>
 	;<COND (,DEBUG <TELL "[Air=" N ,DOME-AIR-BAD? "]" CR>)>
 	<COND (<==? 7 ,DOME-AIR-BAD?>
-	       %<XTELL CR
+	       <TELL CR
 "In 10 turns Bly, Greenup and Lowell, who were not carrying "
 D ,OXYGEN-GEAR ", will suffocate from
 lack of oxygen. In 20 turns, ">
 	       <COND (<IN? ,OXYGEN-GEAR ,PLAYER> <TELL "you and the others">)
 		     (T <TELL "those">)>
-	       %<XTELL
+	       <TELL
 " who do have " D ,OXYGEN-GEAR " will have exhausted their supply of
 oxygen. Need we say more?" CR>)
 	      (<==? 13 ,DOME-AIR-BAD?>
-	       %<XTELL CR
+	       <TELL CR
 "Zoe Bly and the two crew members without " D ,OXYGEN-GEAR " now
 have only 4 TURNS left to live! Their lives depend on you, " FN "!" CR>
 	       <COND (<AND <NOT <FSET? ,ACCESS-PLATE ,OPENBIT>>
@@ -539,12 +541,12 @@ have only 4 TURNS left to live! Their lives depend on you, " FN "!" CR>
 		      <COND (<NOT <IN? ,TIP ,HERE>>
 			     <MOVE ,TIP ,HERE>
 			     <TELL " runs up and">)>
-		      %<XTELL
+		      <TELL
 " gives you a " D ,UNIVERSAL-TOOL " and says, \"Here, " FN>
 		      <COND (<FSET? ,CENTER-OF-DOME ,TOUCHBIT>
-			     %<XTELL
+			     <TELL
 ", open the cylinder with this! It'll fit anything!\"" CR>)
-			    (T %<XTELL
+			    (T <TELL
 ", maybe you can use this somehow.\"" CR>)>)>
 	       <RTRUE>)
 	      (<==? 17 ,DOME-AIR-BAD?>
@@ -564,7 +566,7 @@ At this desperate moment, ">
 		      <REMOVE ,SPECIAL-TOOL-GLOBAL>
 		      <FIX-AIR-SUPPLY>
 		      <SETG HORVAK-FIXED-AIR T>
-		      %<XTELL
+		      <TELL
 ". He's clutching an oddly-shaped gadget.|
 ">
 		      <TIP-SAYS>
@@ -582,7 +584,7 @@ D ,ACCESS-PLATE ". ">)>
 fallen out of its socket. Horvak">
 		      <COND (<NOT <IN? ,ELECTROLYTE-RELAY ,HORVAK>>
 			     <TELL " takes it and">)>
-		      %<XTELL
+		      <TELL
 " screws it back in place; and within seconds, a fresh supply of oxygen
 is flowing out into the " D ,AQUADOME "." CR>)
 		     (T
@@ -617,7 +619,7 @@ point in continuing your mission.">
 				    <TELL CR
 D ,HORVAK " has just returned from the " D ,BLY-OFFICE ", where he went
 to get Bly's " D ,OXYGEN-GEAR ", but it's no longer needed." CR>)>
-			     %<XTELL CR
+			     <TELL CR
 D ,BLY " is sitting up and her normal color has returned. Ditto
 for Greenup and Lowell, who collapsed. All are recovering from their
 temporary lack of air." CR>
@@ -657,9 +659,9 @@ temporary lack of air." CR>
 		      <MOVE ,SIEGEL ,HERE>
 		      <MOVE ,LOWELL ,HERE>
 		      <COND (<OR ,GREENUP-ESCAPE ,GREENUP-TRAPPED>
-			     %<XTELL
+			     <TELL
 "The rest of the " D ,CREW " are with you." CR>)
-			    (T %<XTELL
+			    (T <TELL
 D ,BLY " and the others gather to shake your hand and wish you
 luck on your perilous mission." CR>)>)
 		     (<NOT ,BLY-WELCOMED>
@@ -674,16 +676,16 @@ luck on your perilous mission." CR>)>)
 		      <COND (<NOT <FSET? ,CREW ,TOUCHBIT>>
 			     <FSET ,CREW ,TOUCHBIT>
 			     <ENABLE <QUEUE I-BLY-PRIVATELY 15>>
-			     %<XTELL
+			     <TELL
 "You're now face-to-face with Zoe Bly and the " D ,CREW ". They are wearing
 badges which show the air quality in the " D ,AQUADOME "." CR>)
 			    (T
-			     %<XTELL "You're at the foot of the ladder. ">
+			     <TELL "You're at the foot of the ladder. ">
 			     <COND (<IN? ,BLY ,FOOT-OF-RAMP>
 				    <TELL "Zoe Bly and t">)
 				   (T <TELL "T">)>
-			     %<XTELL "he " D ,CREW " are still here." CR>)>)
-		     (T %<XTELL
+			     <TELL "he " D ,CREW " are still here." CR>)>)
+		     (T <TELL
 "You're now at the foot of the ladder." CR>)>)
 	      (<AND <==? .ARG ,M-END>
 		    <==? ,EXCLAM-DOME-AIR-BAD ,DOME-AIR-BAD?>
@@ -697,7 +699,7 @@ badges which show the air quality in the " D ,AQUADOME "." CR>)
 	<COND (<NOT ,BADGES-RED-SAID?>
 	       <SETG BADGES-RED-SAID? T>
 	       <COND (.SHOUT? <TELL "Someone shouts, ">)>
-	       %<XTELL
+	       <TELL
 "\"Our badges are turning red! The air's bad! Everyone use your "
 D ,OXYGEN-GEAR "!\"" CR>)>>
 
@@ -829,7 +831,7 @@ bunk and locker. In the center of the room are a table and chairs." CR>>
 
 <ROUTINE HORVAK-LOCKER-F ()
  <COND (<AND <VERB? LOOK-INSIDE> <FSET? ,HORVAK-LOCKER ,OPENBIT>>
-	%<XTELL
+	<TELL
 "The locker contains mostly clothing, toilet articles and books.">
 	<COND (<IN? ,DIARY ,HORVAK-LOCKER>
 	       <TELL " One of the books is labeled DIARY.">
@@ -843,7 +845,7 @@ bunk and locker. In the center of the room are a table and chairs." CR>>
 	      (<AND <FSET? ,HORVAK-LOCKER ,LOCKED>
 		    <NOT <IOBJ? UNIVERSAL-TOOL>>>
 	       <THIS-IS-IT ,HORVAK-KEY>
-	       %<XTELL
+	       <TELL
 "It's locked. The normal way to open its lock (which you yourself designed, " FN ") is with a key." CR>
 	       <RTRUE>)>
 	<FCLEAR ,HORVAK-LOCKER ,LOCKED>
@@ -864,14 +866,14 @@ bunk and locker. In the center of the room are a table and chairs." CR>>
  <COND (<OR <AND <IOBJ? HORVAK> <VERB? TAKE>>
 	    <AND <DOBJ? HORVAK> <VERB? ASK-FOR SEARCH-FOR>>>
 	<COND (<==? ,WINNER ,PLAYER>
-	       %<XTELL
+	       <TELL
 "Be warned, " FN ", that he will never willingly surrender it.
 You have no right to demand it without a search warrant.
 The " D ,AQUADOME " is neither a military establishment
 nor a ship at sea, so you could get in legal trouble." CR>)
 	      (T
 	       <HE-SHE-IT ,WINNER T "refuse">
-	       %<XTELL
+	       <TELL
 ", " FN ". Do not pursue this any further, or you will lose the
 respect and cooperation of the " D ,CREW ", and thereby abort your rescue
 mission. If you attempt to use force, they may even mutiny and place you
@@ -891,12 +893,12 @@ under arrest." CR>)>)>>
 	;<ENABLE <QUEUE I-TIP-SONAR-PLAN -1>>
 	<FSET ,DIARY ,OPENBIT>
 	<MOVE ,PHOTO ,HERE>
-	%<XTELL
+	<TELL
 "As you do so, a picture falls out. Oh, oh! It's a snapshot of Zoe Bly!" CR>)
        (<VERB? READ LOOK-INSIDE>
 	<COND (<NOT <FSET? ,DIARY ,OPENBIT>>
-	       %<XTELL "You must open it first." CR>)
-	      (T %<XTELL
+	       <TELL "You must open it first." CR>)
+	      (T <TELL
 "You quickly discover references to Zoe Bly. It seems clear that "
 D ,HORVAK " has fallen for Zoe. But her unsentimental manner is a
 large obstacle.|
@@ -911,7 +913,7 @@ only a human being, but a warm, desirable woman...!\"|
 ">
 	       <COND (<FSET? ,SPECIAL-TOOL ,TOUCHBIT>	;,DOME-AIR-CRIME
 		      <TELL "|
-Well! Sounds as if " D ,HORVAK " found the answer to his problem
+Well! It sounds as if " D ,HORVAK " found the answer to his problem
 by sabotaging the " D ,AIR-SUPPLY-SYSTEM " -- at a time when " D ,BLY
 " was breaking regulations by not wearing her " D ,OXYGEN-GEAR
 "!" CR>)>
@@ -988,7 +990,7 @@ It contains assorted hand tools, machine tools, and spare parts." CR>)>>
 
 <ROUTINE WORKSHOP-STUFF-F ()
  <COND (<VERB? MAKE>
-	%<XTELL
+	<TELL
 "That's too difficult, even for a famous young inventor." CR>)>>
 
 <OBJECT DOME-LAB-DOOR 
@@ -1034,26 +1036,26 @@ research. ">
 		   <FSET? ,HORVAK ,BUSYBIT>>
 	       <RTRUE>)>
 	<SETG HORVAK-TOLD-AH T>
-	%<XTELL CR
+	<TELL CR
 D ,HORVAK " says:|
 \"" FN ", right after the Snark ceased
-its attack, I detected a high concentration of AH molecules in the
+its attack, I detected a high concentration of A.H. molecules in the
 " D ,GLOBAL-WATER " around the " D ,AQUADOME ". Have you ever heard of such a
 phenomenon before?\"">
 	<COND (<NOT <YES?>>
-	       %<XTELL
+	       <TELL
 "\"I can make up an intense tranquilizer to subdue the " D ,SNARK ",\" "
 D ,HORVAK " continues. \"You could use one of our aquatic dart
 guns to inject it into the creature. You could mount the gun
 on one of the " D ,SUB "'s " D ,CLAW "s.|
 But without knowing the creature's biochemistry, there's no guarantee the
 'trank' will work. Shall I go ahead and make some up, anyhow?\"">
-	       <YES?>)>
+	       <SET MAGLOC <YES?>>)>
 	<SET MAGLOC <META-LOC ,MAGAZINE>>
 	<COND (<NOT <IN-DOME? .MAGLOC>> <RTRUE>)>
 	<TIP-SAYS>
-	%<XTELL
-"Wait a minute! Wasn't there something about AH
+	<TELL
+"Wait a minute! Wasn't there something about A.H.
 molecules in that " D ,MAGAZINE "? Shall ">
 	<COND (<EQUAL? .MAGLOC ,HERE>
 	       <TELL "we">)
@@ -1066,8 +1068,8 @@ molecules in that " D ,MAGAZINE "? Shall ">
 		      <MOVE ,MAGAZINE ,PLAYER>
 		      <TELL "Tip ">
 		      <COND (<NOT <EQUAL? .MAGLOC ,HERE>>
-			     %<XTELL "returns quickly and ">)>
-		      <TELL "hands you the magazine. ">)>
+			     <TELL "returns quickly and ">)>
+		      <TELL "hands you the " D ,MAGAZINE ". ">)>
 	       <THIS-IS-IT ,HORVAK>
 	       <TELL
 D ,HORVAK " looks interested. \"I'd like to see that.\"" CR>)>
@@ -1128,7 +1130,7 @@ detecting objects in the " D ,GLOBAL-WATER " around the dome." CR>)>>
 	(DESC "Aquadome sonar equipment")
 	(ADJECTIVE AQUADOME SONAR)
 	(SYNONYM SONAR SYSTEM EQUIPM SCREEN ;TRANSDUCER)
-	(FLAGS SURFACEBIT ;CONTBIT OPENBIT ONBIT ;ON?BIT VOWELBIT NDESCBIT NARTICLEBIT)
+	(FLAGS SURFACEBIT OPENBIT ONBIT ;ON?BIT VOWELBIT NDESCBIT NARTICLEBIT)
 	(CAPACITY 19)
 	(ACTION SONAR-EQUIPMENT-F)>
 
@@ -1236,20 +1238,20 @@ and a good view of the ocean through the " D ,WINDOW "." CR>)
 		    <NOT ,GREENUP-CUFFED>
 		    <NOT ,ZOE-MENTIONED-EVIDENCE>>
 	       <FCLEAR ,BLY ,NDESCBIT>
-	       %<XTELL "As you enter the office, ">
+	       <TELL "As you enter the office, ">
 	       <ZOE-MENTIONS-EVIDENCE>)
 	      (<AND ,GREENUP-ESCAPE <NOT <IN? ,BLY ,BLY-OFFICE>>>
 	       <MOVE ,BLY ,BLY-OFFICE>
-	       %<XTELL "Zoe comes with you." CR>)>)
+	       <TELL "Zoe comes with you." CR>)>)
        (<AND <==? .ARG ,M-BEG> <EXIT-VERB?>>
 	<COND (,GREENUP-ESCAPE
 	       <HE-SHE-IT ,WINNER T>
-	       %<XTELL "'d better stay here and trap Greenup." CR>)
+	       <TELL "'d better stay here and trap Greenup." CR>)
 	      (<AND <FSET? ,SPECIAL-TOOL ,INVISIBLE> <==? ,WINNER ,PLAYER>>
-	       <TELL "As you start to leave, you notice">
+	       <TELL "As you start to leave, you notice ">
 	       <SPECIAL-TOOL-VISIBLE>)>)
        (<AND <VERB? SEARCH SEARCH-FOR> <FSET? ,SPECIAL-TOOL ,INVISIBLE>>
-	<TELL "You find">
+	<TELL "You find ">
 	<SPECIAL-TOOL-VISIBLE>)>>
 
 <ROUTINE SPECIAL-TOOL-VISIBLE ()
@@ -1257,8 +1259,8 @@ and a good view of the ocean through the " D ,WINDOW "." CR>)
 	<FSET ,SPECIAL-TOOL ,TOUCHBIT>
 	<REMOVE ,SPECIAL-TOOL-GLOBAL>
 	<THIS-IS-IT ,SPECIAL-TOOL>
-	%<XTELL
-" an oddly shaped metallic object lying under Zoe's desk. It must
+	<TELL
+"an oddly shaped metallic object lying under Zoe's desk. It must
 be the " D ,SPECIAL-TOOL "!" CR>>
 
 <ROUTINE ZOE-MENTIONS-EVIDENCE ()
@@ -1272,13 +1274,13 @@ be the " D ,SPECIAL-TOOL "!" CR>>
 	<COND (<FSET? ,BLY-DOOR ,OPENBIT>
 	       <FCLEAR ,BLY-DOOR ,OPENBIT>
 	       <TELL " closes the door and">)>
-	%<XTELL " says:|
-\"There's a " D ,TRAITOR " here at the " D ,AQUADOME ", " FN "!">
+	<TELL " says:|
+\"There's a " D ,TRAITOR " here at the " D ,AQUADOME ", " FN "! ">
 	<COND (,DOME-AIR-CRIME
-	       %<XTELL
-" I'm not saying that just because the " D ,AIR-SUPPLY-SYSTEM
-" had been sabotaged.">)>
-	<TELL " I discovered "
+	       <TELL
+"I'm not saying that just because the " D ,AIR-SUPPLY-SYSTEM
+" was sabotaged. ">)>
+	<TELL "I discovered "
 	      <COND (,DOME-AIR-CRIME "other ") (T "the ")>
 	      D ,EVIDENCE " after we talked on the " D ,VIDEOPHONE
 	      "!\"" CR>>
@@ -1296,7 +1298,7 @@ be the " D ,SPECIAL-TOOL "!" CR>>
 <ROUTINE BLY-DESK-F ()
  <COND (<VERB? LOOK-UNDER>
 	<COND (<NOT <FSET? ,SPECIAL-TOOL ,TOUCHBIT>>
-	       <TELL "There's">
+	       <TELL "There's ">
 	       <SPECIAL-TOOL-VISIBLE>
 	       ;<RFALSE>)>)>>
 
@@ -1315,13 +1317,13 @@ be the " D ,SPECIAL-TOOL "!" CR>>
  <COND (<VERB? EXAMINE LOOK-INSIDE>
 	<COND (<FSET? ,BLACK-BOX ,OPENBIT>
 	       <SETG BLACK-BOX-EXAMINED T>
-	       %<XTELL
+	       <TELL
 "After a brief study of the " D ,BLACK-CIRCUITRY
 ", you deduce its purpose: it was
 designed to change the sonar output so the ultrasonic pulses make a more
-complex pattern (for example BURPETY-BURP-B'DURP) instead of just a simple,
+complex pattern (for example BURPETY BURP B'DURP) instead of just a simple,
 clear-cut BURP. This would also make fuzzier blips." CR>)
-	      (T %<XTELL
+	      (T <TELL
 "You'll need a suitable tool to open its cover." CR>)>)
        (<VERB? OPEN OPEN-WITH>
 	<COND (<FSET? ,BLACK-BOX ,OPENBIT>
@@ -1357,13 +1359,13 @@ clear-cut BURP. This would also make fuzzier blips." CR>)
 	<COND (,GREENUP-ESCAPE
 	       <ENABLE <QUEUE I-GREENUP-ESCAPE -1>>
 	       <COND (<EQUAL? ,GREENUP-ESCAPE 1>
-		      %<XTELL
+		      <TELL
 "The monitor screen shows Greenup's head just coming into view
 above the top of the " D ,AIRLOCK
 "'s west wall, as he climbs the outside ladder.|
 ">
 		      <COND (<NOT <FSET? ,AIRLOCK-ROOF ,OPENBIT>>
-			     %<XTELL
+			     <TELL
 "But since the " D ,AIRLOCK-ROOF " is closed,
 Greenup can't get into the " D ,SUB " to escape. ">
 			     <GREENUP-CUFF>
@@ -1372,7 +1374,7 @@ Greenup can't get into the " D ,SUB " to escape. ">
 "Once he reaches the top of this wall, he will come down the inside
 ladder to the " D ,SUB "." CR>)>)
 		     (T <RTRUE>	;"output from I-GREENUP-ESCAPE")>)
-	      (T %<XTELL
+	      (T <TELL
 D ,BLY " uses this monitor to check on activities in the " D ,AQUADOME "."
 CR>)>)>>
 
@@ -1391,7 +1393,7 @@ CR>)>)>>
        (<VERB? LAMP-OFF>
 	<COND (<AND ,GREENUP-ESCAPE ;<G? 5 ,GREENUP-ESCAPE>>
 	       <FCLEAR ,AIRLOCK-ELECTRICITY ,ONBIT>
-	       %<XTELL
+	       <TELL
 "Very good, " FN "! With the " D ,AIRLOCK-ELECTRICITY " off, the " D
 ,AIRLOCK-HATCH " won't respond to command signals from the " D ,SUB "
 and will remain closed.|
@@ -1412,7 +1414,7 @@ and will remain closed.|
 	<PERFORM ,V?LAMP-OFF ,AIRLOCK-ELECTRICITY>
 	<RTRUE>)
        (<VERB? ANALYZE EXAMINE READ>
-	%<XTELL
+	<TELL
 "MAIN OPERATING CONTROLS:|
 ">
 	<FIXED-FONT-ON>
@@ -1480,7 +1482,7 @@ want to find something, you'll have to search for it." CR>>
 	<NOT-HERE ,ESCAPE-POD-UNIT>)
        (<IN? ,ESCAPE-POD-UNIT ,SUB>
 	<COND (<VERB? ANALYZE EXAMINE>
-	       %<XTELL
+	       <TELL
 "A brief inspection under your seat leads to a horrifying discovery! A
 body-heat sensor was substituted for the electronic monitor, and a wire
 leads from the sensor to ">
@@ -1571,7 +1573,7 @@ But is this output good, breathable oxygen?" CR>)>)>>
 <OBJECT AIR-SUPPLY-SYSTEM-GLOBAL
 	(IN LOCAL-GLOBALS)
 	(DESC "Air Supply System")
-	(ADJECTIVE	AIR OXYGEN SUPPLY)
+	(ADJECTIVE	AIR OXYGEN SUPPLY AQUADOME DOME STATION)
 	(SYNONYM	SUPPLY SYSTEM CYLINDER HOUSING)
 	(FLAGS VOWELBIT)
 	(ACTION AIR-SUPPLY-SYSTEM-F)>
@@ -1579,7 +1581,7 @@ But is this output good, breathable oxygen?" CR>)>)>>
 <OBJECT AIR-SUPPLY-SYSTEM
 	(IN CENTER-OF-DOME)
 	(DESC "Air Supply System")
-	(ADJECTIVE	AIR OXYGEN SUPPLY)
+	(ADJECTIVE	AIR OXYGEN SUPPLY AQUADOME DOME STATION)
 	(SYNONYM	SUPPLY SYSTEM CYLINDER SIGN ;HOUSING)
 	(FLAGS NDESCBIT VOWELBIT CONTBIT ;SEARCHBIT MUNGBIT READBIT)
 	(CAPACITY 9)
@@ -1598,16 +1600,14 @@ But is this output good, breathable oxygen?" CR>)>)>>
 Something has been unscrewed from this space!" CR>
 			     <COND(<IN? ,ELECTROLYTE-RELAY ,AIR-SUPPLY-SYSTEM>
 				   <THIS-IS-IT ,ELECTROLYTE-RELAY>
-				   %<XTELL
+				   <TELL
 "Something is lying at the base of the cylinder, just inside the
 housing." CR>)>)
 			    (T <TELL
 "There's a lot of complicated machinery inside." CR>)>)
 		     (T <TELL
-"The first thing you notice is a stenciled sign saying: \"To repair "
-D ,AIR-SUPPLY-SYSTEM ", first open " D ,ACCESS-PLATE " with "
-D ,SPECIAL-TOOL " hanging on hook at right.\" An arrow points to this
-hook." CR>)>)
+"The first thing you notice is a stenciled sign saying: ">
+		      <READ-AIR-SUPPLY>)>)
 	      (T <TOO-FAR-AWAY ,AIR-SUPPLY-SYSTEM>)>)
        (<VERB? FIND WALK-TO>
 	<COND (<DOBJ? AIR-SUPPLY-SYSTEM-GLOBAL>
@@ -1624,6 +1624,12 @@ CR>)
 	<TELL
 "May we suggest that the best way to find out about the system is to
 examine it." CR>)>>
+
+<ROUTINE READ-AIR-SUPPLY ()
+	<TELL
+"\"To repair " D ,AIR-SUPPLY-SYSTEM ", first open " D ,ACCESS-PLATE "
+with " D ,SPECIAL-TOOL " hanging on hook at right.\" An arrow points to
+this hook." CR>>
 
 <ROUTINE AIR-SUPPLY-VERB? ()
  <COND (<VERB? GIVE FIND TAKE YELL-FOR>
@@ -1645,20 +1651,22 @@ examine it." CR>)>>
 	(ACTION ACCESS-PLATE-F)>
 
 <ROUTINE ACCESS-PLATE-F ()
- <COND (<VERB? EXAMINE>
+ <COND (<VERB? READ>
+	<READ-AIR-SUPPLY>)
+       (<VERB? EXAMINE ANALYZE>
 	<COND (<FSET? ,ACCESS-PLATE ,OPENBIT> <TELL "It's open." CR>)
 	      (T
 	       <TELL
 "It's held in place on the cylinder by curiously-shaped fram bolts, which
 no ordinary wrench will fit.">
-	       <COND (<NOT <FSET ,AIR-SUPPLY-SYSTEM ,TOUCHBIT>>
+	       <COND (<NOT <FSET? ,AIR-SUPPLY-SYSTEM ,TOUCHBIT>>
 		      <TELL
 " To open it, you need a " D ,SPECIAL-TOOL ", or something like it." CR>)>
 	       <RTRUE>)>)
        (<VERB? LOOK-INSIDE>
 	<PERFORM ,PRSA ,AIR-SUPPLY-SYSTEM ,PRSI>
 	<RTRUE>)
-       (<AND <VERB? CLOSE>>
+       (<VERB? CLOSE>
 	<COND (<FSET? ,ACCESS-PLATE ,OPENBIT>
 	       <FCLEAR ,ACCESS-PLATE ,OPENBIT>
 	       <OKAY ,AIR-SUPPLY-SYSTEM "closed">)
@@ -1678,7 +1686,7 @@ no ordinary wrench will fit.">
 	<COND (<FSET? ,ACCESS-PLATE ,OPENBIT>
 	       <ALREADY ,ACCESS-PLATE "open">)
 	      (<IOBJ? SPECIAL-TOOL-GLOBAL> <NOT-HERE ,PRSI> <RTRUE>)
-	      (T %<XTELL
+	      (T <TELL
 "You can't remove" THE-PRSO " with your bare hands!" CR>)>)>>
 
 <OBJECT HOOK
@@ -1692,14 +1700,14 @@ no ordinary wrench will fit.">
 <ROUTINE HOOK-F ()
  <COND (<NOT <FIRST? ,HOOK>>
 	<COND (<VERB? EXAMINE LOOK-ON>
-	       %<XTELL "There's nothing hanging on the " D ,HOOK "." CR>)
+	       <TELL "There's nothing hanging on the " D ,HOOK "." CR>)
 	      (<VERB? PUT>
 	       <COND (<DOBJ? SPECIAL-TOOL ;UNIVERSAL-TOOL>
 		      <MOVE ,PRSO ,HOOK>
 		      <TELL "Okay." CR>)
 		     (T <TELL "It won't fit on the " D ,HOOK "." CR>)>)>)
        (<VERB? EXAMINE LOOK-ON>
-	%<XTELL "There's " A ,SPECIAL-TOOL " hanging on the " D ,HOOK"."CR>)>>
+	<TELL "There's " A ,SPECIAL-TOOL " hanging on the " D ,HOOK"."CR>)>>
 
 <OBJECT ARROW
 	(IN CENTER-OF-DOME)
@@ -1709,7 +1717,7 @@ no ordinary wrench will fit.">
 	(ACTION ARROW-F)>
 
 <ROUTINE ARROW-F ()
- <COND (<VERB? FOLLOW> <TELL "It points to the hook." CR>)>>
+ <COND (<VERB? FOLLOW EXAMINE ANALYZE> <TELL "It points to the hook." CR>)>>
 
 <OBJECT SPECIAL-TOOL-GLOBAL
 	(DESC "special Fram Bolt Wrench")
@@ -1737,7 +1745,7 @@ no ordinary wrench will fit.">
 <ROUTINE ELECTROLYTE-RELAY-F ()
  <COND (<VERB? TAKE>
 	<COND (<NOT <FSET? ,PRSO ,TAKEBIT>>
-	       %<XTELL
+	       <TELL
 "What!? You don't want to spoil the " D ,AIR-SUPPLY-SYSTEM " again!" CR>)>)
        (<REMOTE-VERB?> <RFALSE>)
        (<NOT-HOLDING? ,ELECTROLYTE-RELAY>
@@ -1749,7 +1757,7 @@ no ordinary wrench will fit.">
 "It looks as if the " D ,ELECTROLYTE-RELAY " fits perfectly into the "
 D ,EMPTY-SPACE "." CR>)
        (<VERB? EXAMINE>
-	%<XTELL
+	<TELL
 "It has screw threads and, judging by its size and shape, it should
 screw very neatly into that " D ,EMPTY-SPACE " in the "
 D ,AIR-SUPPLY-SYSTEM " assembly." CR>)
@@ -1759,8 +1767,7 @@ D ,AIR-SUPPLY-SYSTEM " assembly." CR>)
 	       <TOO-BAD-BUT ,ACCESS-PLATE "closed">
 	       <RTRUE>)>
 	<FIX-AIR-SUPPLY>
-	%<XTELL
-"It fits!" ;" (And, by the way, congratulations, ' FN '!)" CR>
+	<TELL "It fits!" CR>
 	<SCORE-OBJ ,ACCESS-PLATE>
 	<RTRUE>)>>
 
@@ -1788,7 +1795,7 @@ D ,AIR-SUPPLY-SYSTEM " assembly." CR>)
 "Sorry, but" THE-PRSO " won't stay unless you screw it in." CR>)>>
 
 <GLOBAL IN-DOME-AROUND
- <LTABLE FOOT-OF-RAMP OUTSIDE-ADMIN-BLDG OUTSIDE-COMM-BLDG OUTSIDE-WORKSHOP
+ <PLTABLE FOOT-OF-RAMP OUTSIDE-ADMIN-BLDG OUTSIDE-COMM-BLDG OUTSIDE-WORKSHOP
 	 OUTSIDE-DORM FOOT-OF-RAMP	;"preceding for WALK AROUND DOME"
 	AIRLOCK AIRLOCK-WALL CENTER-OF-DOME BLY-OFFICE DOME-STORAGE
 	COMM-BLDG GALLEY WORKSHOP DOME-LAB WOMENS-QUARTERS MENS-QUARTERS>>

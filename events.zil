@@ -18,7 +18,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 
 <ROUTINE TELL-HINT (CARDNUM OBJ "OPTIONAL" (CR? T))
 	<COND (.CR? <CRLF>)>
-	%<XTELL
+	<TELL
 "(If you want a clue, find Infocard #" N </ .CARDNUM 10> " in your
 " D ,GAME " package. Read hidden clue #" N <MOD .CARDNUM 10> " and put
 \"" D .OBJ "\" in the blank space.)" CR>>
@@ -61,17 +61,17 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	       <FCLEAR ,TIP ,TOUCHBIT>)>
 	<MOVE ,TIP .RM>)>>
 
-<ROUTINE DIR-FROM (HERE THERE "AUX" (P 0) L T O)
+;<ROUTINE DIR-FROM (HERE THERE "AUX" (P 0) L TBL O)
 	 #DECL ((HERE THERE O) OBJECT (P L) FIX)
  <REPEAT ()
 	 <COND (<0? <SET P <NEXTP .HERE .P>>>
 		<RFALSE>)
 	       (<EQUAL? .P ,P?IN ,P?OUT> T)
 	       (<NOT <L? .P ,LOW-DIRECTION>>
-		<SET T <GETPT .HERE .P>>
-		<SET L <PTSIZE .T>>
+		<SET TBL <GETPT .HERE .P>>
+		<SET L <PTSIZE .TBL>>
 		<COND (<AND <EQUAL? .L ,DEXIT ,UEXIT ,CEXIT>
-			    <==? <GETB .T ,REXIT> .THERE>>
+			    <==? <GETB .TBL ,REXIT> .THERE>>
 		       <RETURN .P>)>)>>>
 
 <ROUTINE I-SHARON-GONE ("AUX" L)
@@ -87,7 +87,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	       <SUDDENLY-SHARON .L>
 	       <TELL "really must go now, "FN". I'll see you later.\"" CR>
 	       <COND (<EQUAL? ,HERE ,OFFICE>
-		      %<XTELL
+		      <TELL
 "She leaves through the " D ,OFFICE-DOOR "." CR>)>
 	       <RTRUE>)>>
 
@@ -137,7 +137,7 @@ Suddenly Sharon ">
 		      ;<COND (,DEBUG<TELL"[circuit breaker just opened]" CR>)>
 		      <SETG MONSTER-GONE T>
 		      <COND (<IN-LAB? ,HERE>
-			     %<XTELL CR
+			     <TELL CR
 "Something's wrong! The picture vanished from your
 " D ,VIDEOPHONE " screen, and the sound conked out!|
 ">
@@ -166,6 +166,8 @@ Suddenly Sharon ">
 	<RTRUE>)>>
 
 <ROUTINE I-BLY-PRIVATELY ()
+	<COND (<NOT <0? ,SNARK-ATTACK-COUNT>>
+	       <RFALSE>)>
 	<COND (<READY-FOR-SNARK?>
 	       <RFALSE>)>
 	<COND (,ZOE-MENTIONED-EVIDENCE
@@ -182,7 +184,7 @@ Suddenly Sharon ">
 	       <TELL "comes over and ">)>
 	<COND (<0? ,BLY-PRIVATELY-COUNT> <TELL "say">)
 	      (T <TELL "repeat">)>
-	%<XTELL
+	<TELL
 "s, \"" FN ", can we discuss a " D ,PRIVATE-MATTER " now?\"">
 	<INC BLY-PRIVATELY-COUNT>
 	<COND (<NOT <YES?>> <QUEUE I-BLY-PRIVATELY 7 ;3> <RFALSE>)>
@@ -204,23 +206,23 @@ Suddenly Sharon ">
 	    <AND <EQUAL? .L ,BLY-OFFICE>
 		 <EQUAL? .L ,HERE>>>
 	<COND (<NOT .ASKED?> <CRLF>)>
-	%<XTELL
+	<TELL
 "\"" FN ",\" says Zoe, \"we could be in danger!
 The Snark may attack again any time! Would you answer some questions?\"">
 	<COND (<NOT <YES?>>
 	       <COND (.ASKED? <RTRUE>)
 		     (T <ENABLE <QUEUE I-BLY-SAYS 3>> <RFALSE>)>)>
-	%<XTELL
+	<TELL
 "\"Can you use the " D ,SUB " to hunt the " D ,GLOBAL-SNARK
 ", instead of waiting for it to attack?\"">
 	<COND (<YES?>
-	       %<XTELL
+	       <TELL
 "\"Do you wish to arm the " D ,SUB " for attacking?\"">
 	       <COND (<YES?>
 		      <TELL-HINT 73 ;22 ,CLAW <>>
 		      <TELL-HINT 72 ;23 ,DART ;<>>
 		      <COND (<NOT <==? ,HERE ,DOME-LAB>>
-			     %<XTELL
+			     <TELL
 "|
 \"If you want to think it over, we should go to the " D ,DOME-LAB ". Shall we
 go now?\"">
@@ -251,7 +253,8 @@ go now?\"">
  <COND (<FSET? ,TIP ,BUSYBIT>
 	<QUEUE I-TIP-SONAR-PLAN 3>
 	<RFALSE>)
-       (<READY-FOR-SNARK?>
+       (<OR <NOT <0? ,SNARK-ATTACK-COUNT>>
+	    <READY-FOR-SNARK?>>
 	<QUEUE I-TIP-SONAR-PLAN 0>
 	<RFALSE>)>
  <SET P <FIND-FLAG ,HERE ,PERSON ,PLAYER>>
@@ -295,27 +298,27 @@ go now?\"">
 	<COND (<NOT ,BLACK-BOX-EXAMINED> <TELL-HINT 11 ;13 ,BLACK-BOX>)>
 	<MOVE ,TIP ,HERE>
 	<TIP-SAYS T>
-	%<XTELL
+	<TELL
 FN ", did " D ,BLY " mention any troublemakers among the " D ,CREW "?\"">
 	<COND (<YES?>
 	       <TELL
 "\"Do you suspect " D ,ANTRIM " or " D ,HORVAK " or " D ,SIEGEL "?\"">
 	       <COND (<YES?>
-		      %<XTELL "\"Marv maintains the "D ,SONAR-EQUIPMENT",\" ">
+		      <TELL "\"Marv maintains the "D ,SONAR-EQUIPMENT",\" ">
 		      <TIP-SAYS>
 		      <TELL
 "and we'll
 need it to warn us if the " D ,SNARK " comes back. Didn't Zoe say something is
 wrong with it?\"">
 		      <COND (<YES?>
-			     %<XTELL
+			     <TELL
 "\"" FN ", do you think someone tampered with it?\"">
 			     <COND (<YES?>
-				    %<XTELL
+				    <TELL
 "\"Does Marv suspect you've discovered signs of tampering?\"">
 				    <COND (<NOT <YES?>>
 					   <THIS-IS-IT ,TIP-IDEA>
-					   %<XTELL
+					   <TELL
 "\"Then I have an idea how to trap Marv and find out if he's the " D ,TRAITOR
 "!\"" CR>)>)>)>)>)>
 	<RTRUE>>
@@ -338,7 +341,7 @@ But you'll have to decide for yourself." CR>>
 	<COND (<NOT <IN? ,SIEGEL ,COMM-BLDG>> <RFALSE>)>
 	<MOVE-HERE-NOT-SUB ,SIEGEL>
 	<COND (<NOT <IN? ,BLACK-BOX ,SONAR-EQUIPMENT>>
-	       %<XTELL
+	       <TELL
 "Suddenly " D ,SIEGEL " reports: \"The " D ,SONAR-EQUIPMENT " looks okay
 to me, "FN".\"" CR>
 	       <RTRUE>)>
@@ -347,10 +350,10 @@ to me, "FN".\"" CR>
 	      (T
 	       <COND (<IN? ,TIP ,HERE>
 		      <TIP-SAYS>
-		      %<XTELL FN ", here comes Marv, and he looks excited!\"|
+		      <TELL FN ", here comes Marv, and he looks excited!\"|
 ">)>
 	       <TELL "Marv comes running up to you">)>
-	%<XTELL " with the " D ,BLACK-BOX " and says: \"Look">
+	<TELL " with the " D ,BLACK-BOX " and says: \"Look">
 	<MOVE ,BLACK-BOX ,SIEGEL>
 	<COND (,SIEGEL-TESTED
 	       <TELL
@@ -358,13 +361,13 @@ to me, "FN".\"" CR>
 CR>)
 	      (T
 	       <SETG SIEGEL-TESTED T>
-	       %<XTELL
+	       <TELL
 " what I found attached to the " D ,SONAR-EQUIPMENT ", " FN "! ">
 	       <SIEGEL-BOX>
 	       <COND (<IN? ,TIP ,HERE>
 		      <TIP-FLASHES>
 		      <REACTION-MAY-BE ,SIEGEL>
-		      %<XTELL
+		      <TELL
 "|
 Tip snaps his fingers and says: \"" FN "! Didn't that article in the "
 D ,MAGAZINE "
@@ -387,12 +390,12 @@ a special way?\"">
 	       <ENABLE <QUEUE I-TIP-PRIVATELY 3>>
 	       <RFALSE>)>
 	<MOVE ,TIP ,HERE>
-	%<XTELL
+	<TELL
 CR "Tip draws you aside. \"Could I speak to you privately, " FN "?\"">
 	<COND (<NOT <YES?>> <ENABLE <QUEUE I-TIP-PRIVATELY 3>> <RFALSE>)>
-	%<XTELL
+	<TELL
 "\"The Snark could be a synthetic monster created by " D ,THORPE "!\" he
-says when you're alone. \"I read about them in that magazine. If I'm
+says when you're alone. \"I read about them in that " D ,MAGAZINE ". If I'm
 right, whoever attached the " D ,BLACK-BOX " to the " D ,SONAR-EQUIPMENT
 " could be working for Thorpe! That way the " D ,GLOBAL-SNARK
 " would be lured into attacking the " D ,AQUADOME
@@ -401,12 +404,12 @@ right, whoever attached the " D ,BLACK-BOX " to the " D ,SONAR-EQUIPMENT
 	       <TELL ,RECONSIDER? "\"" CR>)>
 	<MIKE-1-F ,ANTRIM T>
 	<COND (<NOT <YES?>>
-	       %<XTELL ,RECONSIDER? " In fact ">)
+	       <TELL ,RECONSIDER? " In fact ">)
 	      (T <TELL "\"Then ">)>
 	<TELL "why not test him">
 	<COND (,SIEGEL-TESTED
 	       <TELL ", since you tested " D ,SIEGEL>)>
-	%<XTELL
+	<TELL
 "?\" Tip
 asks. \"Mick is a laser expert in charge of maintenance on subs at the " D
 ,AQUADOME ".\"" CR>
@@ -439,7 +442,7 @@ Suddenly " D ,ANTRIM>
 	       <COND (<NOT <IN? ,ANTRIM ,HERE>> <TELL " appears and">)>
 	       <TELL
 " says, \"I'm going to check out your new " D ,SUB ", ">)>
-	%<XTELL FN "!\" Mick turns and ">
+	<TELL FN "!\" Mick turns and ">
 	<MOVE ,ANTRIM ,CRAWL-SPACE>
 	<FSET ,ENGINE-ACCESS-HATCH ,OPENBIT>
 	<COND (<EQUAL? ,HERE ,SUB ,CRAWL-SPACE>
@@ -452,9 +455,10 @@ Suddenly " D ,ANTRIM>
 
 <GLOBAL  TIP-FLASHED <>>
 <ROUTINE TIP-FLASHES ()
+	<COND (<NOT <IN? ,TIP ,HERE>> <RFALSE>)>
 	<COND (,TIP-FLASHED <TELL "Once again ">)>
 	<SETG TIP-FLASHED T>
-	%<XTELL "Tip flashes you a meaningful glance. ">>
+	<TELL "Tip flashes you a meaningful glance. ">>
 
 <ROUTINE I-ANTRIM-REPORTS ()
 	;<COND (,DEBUG <TELL "[time for Mick to report?]" CR>)>
@@ -466,16 +470,16 @@ Suddenly " D ,ANTRIM>
 	<MOVE-HERE-NOT-SUB ,ANTRIM>
 	<CRLF>
 	<COND (,ASKED-ANTRIM
-	       %<XTELL D ,ANTRIM " reports back ">
+	       <TELL D ,ANTRIM " reports back ">
 	       <COND (<EQUAL? ,HERE ,SUB ,AIRLOCK> <TELL "to you">)
 		     (T <TELL "from the " D ,AIRLOCK>)>
 	       <COND (<FSET? ,VOLTAGE-REGULATOR ,MUNGBIT>
-		      %<XTELL ".|
+		      <TELL ".|
 \"I think I found your " D ,OVERHEATING " problem. The " D
 ,VOLTAGE-REGULATOR " was making the lasers overcharge.|
 I've adjusted it, but I could replace it. Want me to?\"">
 		      <COND (<YES?> <FCLEAR ,VOLTAGE-REGULATOR ,MUNGBIT>)>)
-		     (T %<XTELL ", looking somewhat puzzled.|
+		     (T <TELL ", looking somewhat puzzled.|
 \"" FN ", I ran the " D ,ENGINE " on full, but it didn't overheat.|
 The " D ,VOLTAGE-REGULATOR " PROBABLY got out of adjustment and
 overcharged the lasers, but it seems okay now. Just to be safe, I
@@ -487,13 +491,13 @@ installed a new " D ,VOLTAGE-REGULATOR ".|
 		      <TELL "Suddenly ">)
 		     (T
 		      <MOVE-HERE-NOT-SUB ,BLY>
-		      %<XTELL
+		      <TELL
 D ,BLY " is approaching.|
 \"" FN ", did you send " D ,ANTRIM " to work on the " D ,SUB "?\" she
 asks. \"I was just ">
 		      <COND (<NOT <EQUAL? ,HERE ,BLY-OFFICE>>
 			     <TELL "in my office, ">)>
-		      %<XTELL
+		      <TELL
 "checking the " D ,STATION-MONITOR " to see what each of
 the crew was doing, and I discovered Mick had gone to the " D ,AIRLOCK ".
 When I saw him on the " D ,STATION-MONITOR ",
@@ -507,7 +511,7 @@ now.\"" CR>)>
 	<TIP-FLASHES>
 	<COND (<FSET? ,VOLTAGE-REGULATOR ,MUNGBIT>
 	       <SETG TEST-BUTTON-READOUT ,TEST-BUTTON-NORMAL>
-	       %<XTELL
+	       <TELL
 "It now looks as though " D ,ANTRIM " can be eliminated as the " D ,TRAITOR ",
 but you'll want to confirm this by pushing the " D ,TEST-BUTTON
 " before you set out again in the " D ,SUB ".|
@@ -517,7 +521,7 @@ but you'll want to confirm this by pushing the " D ,TEST-BUTTON
 	<COND (<READY-FOR-SNARK?>
 	       <RTRUE>)>
 	<COND (<IN? ,ESCAPE-POD-UNIT ,SUB> <RTRUE>)>
-	%<XTELL CR D ,ANTRIM
+	<TELL CR D ,ANTRIM
 " turns away, then stops and says:|
 \"" FN ", there's no " D ,ESCAPE-POD-UNIT "
 under your seats in the " D ,SUB ". I hear you're planning a new type
@@ -536,9 +540,9 @@ Would you like one installed, just in case? " D ,GREENUP " and " D ,LOWELL
 	<COND (<EQUAL? ,HERE <LOC ,LOWELL> <LOC ,GREENUP>>
 	       <TELL ", we'll install it">)>
 	<TELL ".\"" CR>
-	<COND (<AND <EQUAL? <LOC ,SYRINGE>
-			    ,LOWELL ,GREENUP ,ESCAPE-POD-UNIT>
-		    <SET X T>
+	<COND (<EQUAL? <LOC ,SYRINGE> ,LOWELL ,GREENUP ,ESCAPE-POD-UNIT>
+	       <SET X T>)>
+	<COND (<AND .X
 		    <EQUAL? <LOC ,ESCAPE-POD-UNIT>
 			    ,LOWELL ,GREENUP ,DOME-STORAGE>>
 	       <SCORE-OBJ ,ESCAPE-POD-UNIT>
@@ -572,11 +576,12 @@ Would you like one installed, just in case? " D ,GREENUP " and " D ,LOWELL
 	<MOVE ,LOWELL ,HERE>
 	<FCLEAR ,GREENUP ,BUSYBIT>
 	<FCLEAR ,LOWELL ,BUSYBIT>
-	%<XTELL "|
+	<TELL "|
 Suddenly " D ,GREENUP " and " D ,LOWELL " report back from the ">
 	<COND (<EQUAL? ,HERE ,AIRLOCK> <TELL D ,SUB>)
 	      (T <TELL D ,AIRLOCK>)>
-	%<XTELL
+	<SAID-TO ,LOWELL>
+	<TELL
 ".|
 \"That " D ,ESCAPE-POD-UNIT " is in place, " FN ",\" says Amy. \"Bill
 installed the part under your pilot's seat, and I installed the rest.\"" CR>>
@@ -593,13 +598,13 @@ installed the part under your pilot's seat, and I installed the rest.\"" CR>>
 about the " D ,SYRINGE ".\"" CR>)
 		     (T
 		      <SETG GREENUP-GUILT T>
-		      %<XTELL
+		      <TELL
 D ,HORVAK "'s face is grim and pale as he reports the result of his
 analysis.|
 ">
 		      <PERFORM ,V?ASK-ABOUT ,HORVAK ,SYRINGE>
 		      <COND (<IN? ,TIP ,HERE>
-			     %<XTELL "|
+			     <TELL "|
 Tip turns to you with a gasp. \"Holy smoke, " FN "! That's exactly what
 would have happened once you warmed up the pilot's seat enough to
 trigger the sensor relay!\"" CR>)>)>)
@@ -618,10 +623,10 @@ trigger the sensor relay!\"" CR>)>)>)
 	<SAID-TO ,HORVAK>
 	<TELL "Doc Horvak ">
 	<MOVE-HERE-NOT-SUB ,HORVAK "is now" "now comes rushing back,">
-	%<XTELL " holding an aquatic dart gun. ">
+	<TELL " holding an aquatic dart gun. ">
 	<COND (<NOT <IN? ,HORVAK ,HERE>> <TELL "He shouts from outside, ">)>
-	%<XTELL "\"Okay, "
-FN ", I've made a special 'trank' to use against an AH-type organism!
+	<TELL "\"Okay, "
+FN ", I've made a special 'trank' to use against an A.H.-type organism!
 It's loaded in the dart gun. What shall I do with it?\"" CR>
 	<SCORE-OBJ ,DART>
 	<RTRUE>>
@@ -649,12 +654,12 @@ It's loaded in the dart gun. What shall I do with it?\"" CR>
 	<SETG GREENUP-ESCAPE <+ 1 ,GREENUP-ESCAPE>>
 	<COND (<EQUAL? 3 ,GREENUP-ESCAPE>
 	       <MOVE ,GREENUP ,AIRLOCK>
-	       %<XTELL CR
+	       <TELL CR
 "Greenup has reached the top of the wall and is climbing down the ladder
 into the " D ,AIRLOCK ". In a moment he'll reach the floor
 and head for the " D ,SUB "." CR>)
 	      (<EQUAL? 4 ,GREENUP-ESCAPE>
-	       %<XTELL CR
+	       <TELL CR
 "Greenup is scrambling aboard the " D ,SUB ". Tip groans.
 \"There's no way to stop him now, " FN "! All he has to do is
 open the " D ,AIRLOCK-HATCH " and shove off!\"" CR>
@@ -665,7 +670,7 @@ open the " D ,AIRLOCK-HATCH " and shove off!\"" CR>
 	       <FSET ,AIRLOCK-HATCH ,OPENBIT>
 	       <SETG AIRLOCK-FULL T>
 	       <QUEUE I-SNARK-ATTACKS 1>
-	       %<XTELL
+	       <TELL
 "|
 Better not raise any false hopes. As the " D ,SUB " glides out,
 a pall of gloom settles over the " D ,AQUADOME ". All
@@ -684,7 +689,7 @@ general S.O.S. to any craft in the vicinity isn't answered.">
 	<MOVE ,GREENUP ,GALLEY>
 	<FSET ,GREENUP ,MUNGBIT>
 	<SETG GREENUP-CUFFED T>
-	%<XTELL
+	<TELL
 "Knowing he's trapped, " D ,GREENUP " gives up without a fight. " D ,BLY
 " orders him handcuffed to a pipe in the " D ,GALLEY "." CR>
 	<SCORE-OBJ ,GLOBAL-GREENUP>
@@ -695,7 +700,7 @@ general S.O.S. to any craft in the vicinity isn't answered.">
 	     <IN? ,ESCAPE-POD-UNIT ,SUB>
 	     <FSET? ,SYRINGE ,MUNGBIT>
 	     <IN? ,SYRINGE ,ESCAPE-POD-UNIT>>
-	%<XTELL CR
+	<TELL CR
 "A sudden jab in your right buttock makes you realize that the "
 D ,SYRINGE " in the " D ,ESCAPE-POD-UNIT " has been activated, even though
 no alarm sounded.|
@@ -740,9 +745,14 @@ Most regrettable!">
 	       <COND (.D <TELL " the " D ,DART>)>
 	       <COND (<AND .B .D> <TELL " and">)>
 	       <COND (.B <TELL " the " D ,BAZOOKA>)>)>
-	%<XTELL "! Let's shove off and find the " D ,GLOBAL-SNARK "!\"" CR>>
+	<TELL "! Let's shove off and find the " D ,GLOBAL-SNARK "!\"" CR>>
 
 <GLOBAL SNARK-ATTACK-COUNT 0>
+
+<ROUTINE USE-FEWER-TURNS ()
+	<TELL "|
+|
+(You'll probably do better if you restart and use fewer turns next time.)">>
 
 <ROUTINE I-SNARK-ATTACKS ()
  <COND (<0? ,SNARK-ATTACK-COUNT>
@@ -752,22 +762,21 @@ Most regrettable!">
 			       <NOT <L? ,SONAR-RANGE <ABS ,SUB-LAT>>>>>
 		      <QUEUE I-SNARK-ATTACKS 3>
 		      <RFALSE>)>
-	       %<XTELL "A call comes on the ">	;"[more?]"
+	       <TELL "A call comes on the ">	;"[more?]"
 	       <COND (<EQUAL? ,HERE ,SUB ,CRAWL-SPACE>
 		      <TELL D ,SONARPHONE>)
 		     (T <TELL D ,VIDEOPHONE>)>
-	       %<XTELL
+	       <TELL
 " from the " D ,AQUADOME": the " D ,GLOBAL-SNARK
-" is attacking and destroying it! You're too late!|
-|
-You'll probably do better if you restart and use fewer turns next time.">
+" is attacking and destroying it! You're too late!">
+	       <USE-FEWER-TURNS>
 	       <FINISH>)
 	      (T <ENABLE <QUEUE I-SNARK-ATTACKS -1>>)>)>
  <INC SNARK-ATTACK-COUNT>
  <COND (<==? 1 ,SNARK-ATTACK-COUNT>
 	<MOVE ,SIEGEL ,COMM-BLDG>
 	<MOVE ,TIP ,HERE>
-	%<XTELL
+	<TELL
 "|
 Suddenly an alarm rings through the " D ,AQUADOME "! " D ,SIEGEL " yells
 over the squawk box:|
@@ -781,7 +790,7 @@ over the squawk box:|
 	<COND (<EQUAL? ,HERE ,SUB ,CRAWL-SPACE ,AIRLOCK>
 	       <COND (<FSET? ,AIRLOCK-HATCH ,OPENBIT>
 		      <FCLEAR ,AIRLOCK-HATCH ,OPENBIT>
-		      %<XTELL
+		      <TELL
 "The " D ,AIRLOCK-HATCH " closes in defense.">)>)
 	      (T
 	       <COND (<GLOBAL-IN? ,WINDOW ,HERE>
@@ -791,7 +800,7 @@ over the squawk box:|
 	<CRLF>
 	<RFATAL>)
        (<==? 2 ,SNARK-ATTACK-COUNT>
-	%<XTELL
+	<TELL
 "|
 Even as you try this, the undersea nightmare takes shape!|
 \"Holy spaghetti! LOOK at that thing!\" cries Tip.|
@@ -801,7 +810,7 @@ terror, the " D ,GLOBAL-SNARK " seems as big as a house,
 and it's just outside the " D ,AQUADOME "!" CR>
 	<RFATAL>)
        (<==? 3 ,SNARK-ATTACK-COUNT>
-	%<XTELL
+	<TELL
 "|
 No more time for that! The " D ,SNARK " has flopped down on the " D
 ,AQUADOME "!
@@ -812,4 +821,5 @@ The Atlantic Ocean is pouring into the " D ,AQUADOME "! And
 your last thought, before a zillion tons of " D ,GLOBAL-WATER " crushes you
 to jelly, is
 \"Oh gosh! I wonder if I shut off the Bunsen burner in the lab?\"">
+	<USE-FEWER-TURNS>
 	<FINISH>)>>

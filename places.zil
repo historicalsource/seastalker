@@ -4,7 +4,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 "Directions"
 
 <GLOBAL DIR-STRINGS
-	<TABLE  P?NORTH "north" P?SOUTH "south"
+	<PTABLE  P?NORTH "north" P?SOUTH "south"
 		P?EAST "east" P?WEST "west"
 		P?NW "northwest" P?NE "northeast"
 		P?SW "southwest" P?SE "southeast"
@@ -39,34 +39,15 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 <ROUTINE NULL-F ("OPTIONAL" A1 A2)
 	<RFALSE>>
 
-<ROUTINE DDESC (STR1 DOOR STR2)
-	 #DECL ((STR1) <OR STRING ZSTRING> (DOOR) OBJECT
-		(STR2) <OR FALSE STRING ZSTRING>)
-	 <TELL .STR1>
-	 <COND (<FSET? .DOOR ,OPENBIT> <TELL "open">)
-	       (T <TELL "closed">)>
-	 <TELL .STR2 CR>>
-
-<DEFINE XDDESC ("CALL" F "AUX" (L ,XTELLEN))
- <COND (<NOT <GASSIGNED? PREDGEN>>
-	<MAPR <>
-	      <FUNCTION (FF "AUX" (A <1 .FF>))
-	       <COND (<AND <TYPE? .A STRING ZSTRING>
-			   <NOT <LENGTH? .A .L>>>
-		      <1 .FF <STRING <SUBSTRUC .A 0 <- .L 3>>
-				     "...">>)>>
-	      .F>)>
- <1 .F DDESC>>
-
-<ROUTINE DOOR-ROOM (RM DR "AUX" (P 0) T)
+<ROUTINE DOOR-ROOM (RM DR "AUX" (P 0) TBL)
 	 #DECL ((RM DR) OBJECT (P) FIX)
 	 <REPEAT ()
 		 <COND (<OR <0? <SET P <NEXTP .RM .P>>>
 			    <L? .P ,LOW-DIRECTION>>
 			<RFALSE>)
-		       (<AND <==? ,DEXIT <PTSIZE <SET T <GETPT .RM .P>>>>
-			     <==? .DR <GETB .T ,DEXITOBJ>>>
-			<RETURN <GETB .T ,REXIT>>)>>>
+		       (<AND <==? ,DEXIT <PTSIZE <SET TBL <GETPT .RM .P>>>>
+			     <==? .DR <GETB .TBL ,DEXITOBJ>>>
+			<RETURN <GETB .TBL ,REXIT>>)>>>
 
 <ROUTINE FIND-FLAG (RM FLAG "OPTIONAL" (EXCLUDED <>) "AUX" (O <FIRST? .RM>))
 	<REPEAT ()
@@ -148,7 +129,9 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
  <COND (<==? .RARG ,M-LOOK>
 	<TELL
 "You're in the " D ,NORTH-WALL " of " D ,YOUR-LABORATORY ". A " D
-,COMPUTESTOR " stands here to help test your inventions." CR>)>>
+,COMPUTESTOR " stands here to help test your inventions." CR>)
+       (<AND <==? .RARG ,M-ENTER> <VIDEOPHONE-WORKING>>
+	<RTRUE>)>>
 
 <OBJECT COMPUTESTOR
 	(IN NORTH-WALL)
@@ -167,13 +150,13 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	      "." CR>)
        ;(<OR <VERB? FIND>
 	    <AND <VERB? SHOW TELL-ABOUT> <DOBJ? PLAYER>>>
-	%<XTELL
+	<TELL
 "The " D ,COMPUTESTOR " is located in the north part of " D ,YOUR-LABORATORY
 ". For more information, look in your Logbook." CR>)
        (<VERB? LAMP-ON>
 	<COND (<NOT <FSET? ,COMPUTESTOR ,ONBIT>>
 	       <FSET ,COMPUTESTOR ,ONBIT>
-	       %<XTELL "The " D ,COMPUTESTOR " is ready for questions." CR>)>)
+	       <TELL "The " D ,COMPUTESTOR " is ready for questions." CR>)>)
        (<AND <REMOTE-VERB?>
 	     <OR <NOT <VERB? ASK-ABOUT>>
 		 <NOT <DOBJ? COMPUTESTOR>>>>
@@ -181,7 +164,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
        (<NOT <FSET? ,COMPUTESTOR ,ONBIT>>
 	<TELL "The " D ,COMPUTESTOR " is off!" CR>)
        ;(<VERB? TELL>
-	%<XTELL
+	<TELL
 "Ask the " D ,COMPUTESTOR " about something specific." CR>)
        (<VERB? ASK USE>
 	<COND (<FSET? ,VIDEOPHONE ,MUNGBIT>
@@ -198,14 +181,14 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	       <SETG TIP-SAYS-1 32 ;4>
 	       <SETG TIP-SAYS-2 ,VIDEOPHONE>
 	       <ENABLE <QUEUE I-TIP-SAYS 3>>
-	       %<XTELL
+	       <TELL
 "\"Symptoms: no picture, no sound.|
 Possible causes:|
 1) Failure of the " D ,VIDEOPHONE-TRANSMITTER " at source.|
 2) A short in the " D ,VIDEOPHONE-CABLE " linking " D ,VIDEOPHONE-TRANSMITTER
 " to">
 	       <RESEARCH-LAB>
-	       %<XTELL
+	       <TELL
 ", if signal is coming from " D ,AQUADOME ".|
 3) Sunspot interference or " D ,VIDEOPHONE-SATELLITE " malfunction if "
 D ,VIDEOPHONE-TRANSMITTER " is at earth's surface.|
@@ -215,31 +198,31 @@ D ,VIDEOPHONE-TRANSMITTER " is at earth's surface.|
 6) Sabotage (" D ,CIRCUIT-BREAKER " open).\"" CR>)
 	      (<AND <IOBJ? VIDEOPHONE-TRANSMITTER>
 		    <FSET? ,VIDEOPHONE ,MUNGBIT>>
-	       %<XTELL
+	       <TELL
 "Impossible. It's located " D ,UNDERWATER " at the " D ,AQUADOME ",
 beyond your control. Right now you have no communication with the " D
 ,AQUADOME "." CR>)
 	      (<IOBJ? VIDEOPHONE-CABLE>
-	       %<XTELL "This can be done only by submarine." CR>)
+	       <TELL "This can be done only by submarine." CR>)
 	      (<IOBJ? VIDEOPHONE-SATELLITE>
-	       %<XTELL
+	       <TELL
 "You're goofing off, " FN ". Video signals from the " D ,AQUADOME " to">
 	       <RESEARCH-LAB>
-	       %<XTELL
+	       <TELL
 " are NOT relayed by a space " D ,VIDEOPHONE-SATELLITE "." CR>)
 	      (<IOBJ? VIDEOPHONE-RECEIVER>
-	       %<XTELL
+	       <TELL
 "You can do this by pushing the " D ,TEST-BUTTON " on the " D
 ,VIDEOPHONE "." CR>)
 	      (<AND <IOBJ? GLOBAL-SUB REACTOR>
 		    <NOT <IN? ,CATALYST-CAPSULE ,REACTOR>>>
-	       %<XTELL
+	       <TELL
 "\"Symptom: " D ,ENGINE " won't start.|
 Possible causes:|
 1) The " D ,CATALYST-CAPSULE " is not inserted in the " D ,REACTOR ".|
 2) The " D ,REACTOR " is not turned on.|
 3) The " D ,TEST-TANK " is not filled.\"" CR>)
-	      (T %<XTELL
+	      (T <TELL
 "\"This device is designed only to troubleshoot operating problems.\"|
 (Maybe you can find information about" THE-PRSI " in your SEASTALKER
 package.)" CR>)>)>>
@@ -283,13 +266,16 @@ leads out through a " D ,HALLWAY " to the office of your " D
 ,LAB-ASSISTANT ", " D ,GLOBAL-SHARON ". A " D
 ,MICROWAVE-SECURITY-SCANNER " stands against the wall. An " D ,INTERCOM " sits
 on the " D ,DESK "." CR>)
-       (<AND <==? .RARG ,M-ENTER>
-	     ,BREAKER-JUST-FIXED
+       (<AND <==? .RARG ,M-ENTER> <VIDEOPHONE-WORKING>>
+	<RTRUE>)>>
+
+<ROUTINE VIDEOPHONE-WORKING ()
+ <COND (<AND ,BREAKER-JUST-FIXED
 	     <NOT <FSET? ,CIRCUIT-BREAKER ,OPENBIT>>>
 	<SETG BREAKER-JUST-FIXED <>>
 	<TELL "As you re-enter the lab, ">
 	<TIP-SAYS>
-	%<XTELL
+	<TELL
 "Look, " FN "! The " D ,VIDEOPHONE
 "'s working again! There's a normal test pattern on the screen!\"" CR>)>>
 
@@ -305,12 +291,12 @@ on the " D ,DESK "." CR>)
 <ROUTINE MICROWAVE-SECURITY-SCANNER-F ()
  <COND ;(<OR <VERB? FIND>
 	    <AND <VERB? SHOW TELL-ABOUT> <DOBJ? PLAYER>>>
-	%<XTELL
+	<TELL
 "The " D ,MICROWAVE-SECURITY-SCANNER " is located in the east part of "
 D ,YOUR-LABORATORY ".
 For more information, look in your Logbook." CR>)
        (<VERB? LAMP-ON>
-	%<XTELL
+	<TELL
 "No beep occurs. Scanner displays: \"NO INTRUDER PRESENT ON GROUNDS.\"" CR>)>>
 
 <OBJECT DESK
@@ -323,13 +309,15 @@ For more information, look in your Logbook." CR>)
 	(GENERIC GENERIC-DESK-F)
 	(ACTION DESK-F)>
 
-<ROUTINE DESK-F ()
- <COND (<VERB? OPEN> %<XTELL "It has no drawers." CR>)
-       (<AND <VERB? EXAMINE LOOK-INSIDE LOOK-ON> <DOBJ? DESK>>
-	%<XTELL "An intercom is on the desk">
-	<COND (<FIRST? ,DESK>
-	       %<XTELL ", as well as ">
-	       <PRINT-CONTENTS ,DESK>)>
+<ROUTINE DESK-F () <COMMON-DESK-F ,DESK>>
+
+<ROUTINE COMMON-DESK-F (OBJ)
+ <COND (<VERB? OPEN> <TELL "It has no drawers." CR>)
+       (<AND <VERB? EXAMINE LOOK-INSIDE LOOK-ON> <EQUAL? ,PRSO .OBJ>>
+	<TELL "An " D ,INTERCOM " is on the desk">
+	<COND (<FIRST? .OBJ>
+	       <TELL ", as well as ">
+	       <PRINT-CONTENTS .OBJ>)>
 	<TELL "." CR>)>>
 
 <ROUTINE GENERIC-DESK-F (OBJ)
@@ -381,7 +369,7 @@ D ,ELECTRICAL-CONTROL-PANEL " fills most of the north wall." CR>)
 <ROUTINE ELECTRICAL-CONTROL-PANEL-F ()
 	<COND (<AND <VERB? ANALYZE EXAMINE> <FSET? ,CIRCUIT-BREAKER ,OPENBIT>>
 	       <THIS-IS-IT ,CIRCUIT-BREAKER>
-	       %<XTELL
+	       <TELL
 "A " D ,CIRCUIT-BREAKER ;" has popped open" " on the " D
 ,ELECTRICAL-CONTROL-PANEL " is open. This " D ,CIRCUIT-BREAKER" controls the "
 D ,POWER-SUPPLY " to the " D ,VIDEOPHONE " and other equipment in the
@@ -392,17 +380,17 @@ private " D ,VIDEOPHONE " network." CR>
 "How did that happen? You didn't overload the circuit.\"" CR>)>
 	       <RTRUE>)
 	      (<VERB? OPEN>
-	       %<XTELL
+	       <TELL
 "You don't need to open the " D ,ELECTRICAL-CONTROL-PANEL "." CR>)>>
 
 <GLOBAL BREAKER-JUST-FIXED <>>
 <OBJECT CIRCUIT-BREAKER
 	(IN HALLWAY)
-	(ADJECTIVE THIS CIRCUIT)
+	(ADJECTIVE THIS CIRCUIT OPEN)
 	(SYNONYM BREAKER CIRCUIT SWITCH)
 	(DESC "circuit breaker")
-	(FDESC
-"A circuit breaker is open on the Electrical Panel." ;" Power")
+	;(FDESC
+"A circuit breaker is open on the Electrical Panel.")
 	(FLAGS CONTBIT NDESCBIT TOUCHBIT)
 	(CAPACITY 0)
 	(TEXT "(You'll find that information in your SEASTALKER package.)")
@@ -412,7 +400,7 @@ private " D ,VIDEOPHONE " network." CR>
 <ROUTINE CIRCUIT-BREAKER-F ("AUX" V)
  <COND (<AND <VERB? ANALYZE EXAMINE> <FSET? ,PRSO ,OPENBIT>>
 	<TELL-HINT 31 ,ELECTRICAL-CONTROL-PANEL <>>)
-       (<VERB? CLOSE PUSH FIX MOVE TURN>
+       (<VERB? CLOSE PUSH FIX MOVE TURN LAMP-ON>
 	<COND (<FSET? ,PRSO ,OPENBIT>
 	       <FSET ,PRSO ,NDESCBIT>
 	       <OKAY ,CIRCUIT-BREAKER "closed">
@@ -424,7 +412,7 @@ private " D ,VIDEOPHONE " network." CR>
 		      <SCORE-OBJ ,CIRCUIT-BREAKER>)>
 	       <RTRUE>)
 	      (T <ALREADY ,CIRCUIT-BREAKER "closed">)>)
-       (<VERB? OPEN>
+       (<VERB? OPEN LAMP-OFF>
 	<COND (<FSET? ,PRSO ,OPENBIT> <ALREADY ,CIRCUIT-BREAKER "open">)
 	      (T
 	       <TELL "You shouldn't do that." CR>)>)>>
@@ -493,7 +481,7 @@ out to the parking lot. To the west, a " D ,HALLWAY " leads back to " D
 	<COND (<IN? ,SHARON ,OFFICE>
 	       <THIS-IS-IT ,SHARON>
 	       <THIS-IS-IT ,FILE-DRAWER>
-	       %<XTELL
+	       <TELL
 "As you enter, Sharon is hastily going through the contents of an open
 " D ,FILE-DRAWER ". She turns with a startled expression as you
 appear in the doorway. Her face is flushed and her manner seems
@@ -513,7 +501,7 @@ slightly emotional." CR>)>)>>
 
 <OBJECT FILE-DRAWER
 	(IN OFFICE)
-	(ADJECTIVE FILE PERSONNEL SHARON KEMP\'S)
+	(ADJECTIVE FILE SHARON KEMP\'S)
 	(SYNONYM DRAWER FILE FILES CABINET)
 	(DESC "file drawer")
 	(FLAGS CONTBIT SEARCHBIT OPENBIT NDESCBIT)
@@ -532,13 +520,12 @@ slightly emotional." CR>)>)>>
 <ROUTINE PAPERS-F ("AUX" X)
  <COND (<AND <VERB? LOOK-UP> <IOBJ? FILE-DRAWER PAPERS>>
 	<COND (<FSET? ,PRSO ,PERSON>
-	       %<XTELL <GETP ,LOCAL-SUB ,P?TEXT>
-;"(You'll find that information in your SEASTALKER package.)" CR>)
-	      (T %<XTELL
+	       <TELL <GETP ,LOCAL-SUB ,P?TEXT> CR>)
+	      (T <TELL
 "There's no information in the drawer about that.">)>
 	<CRLF>)
        (<AND <VERB? CLOSE> <IN? ,SHARON ,OFFICE>>
-	%<XTELL
+	<TELL
 "Sharon stops you from closing it. \"Hey, " FN "! I can't do my job here
 if you interfere!\"" CR>)
        (<VERB? ;BURN EXAMINE LOOK-INSIDE READ TAKE SEARCH SEARCH-FOR>
@@ -546,11 +533,11 @@ if you interfere!\"" CR>)
 	       <TOO-BAD-BUT ,FILE-DRAWER "closed">
 	       <RTRUE>)>
 	<FSET ,PAPERS ,TOUCHBIT>
-	%<XTELL "You look ">
+	<TELL "You look ">
 	<COND (<==? ,P-ADVERB ,W?CAREFULLY>
-	       %<XTELL "more thoroughly through the drawer and still">)
-	      (T %<XTELL "quickly through the drawer but">)>
-	%<XTELL
+	       <TELL "more thoroughly through the drawer and still">)
+	      (T <TELL "quickly through the drawer but">)>
+	<TELL
 " find nothing suspicious, so you decide to leave the papers alone." CR>)>>
 
 <OBJECT KEMP-DESK
@@ -561,7 +548,10 @@ if you interfere!\"" CR>)
 	(FLAGS CONTBIT SEARCHBIT SURFACEBIT OPENBIT NDESCBIT NARTICLEBIT)
 	(CAPACITY 33)
 	(GENERIC GENERIC-DESK-F)
-	(ACTION DESK-F)>
+	(ACTION KEMP-DESK-F)>
+
+<ROUTINE KEMP-DESK-F () <COMMON-DESK-F ,KEMP-DESK>>
+
 ]
 <ROOM LIMBO
 	(IN ROOMS)
@@ -593,7 +583,9 @@ if you interfere!\"" CR>)
 	<TELL
 "You're in the " D ,SOUTH-WALL " of " D ,YOUR-LABORATORY ", next to
 shelves full of chemical and electronic supplies. A door leads south to
-the " D ,TEST-TANK "." CR>)>>
+the " D ,TEST-TANK "." CR>)
+       (<AND <==? .RARG ,M-ENTER> <VIDEOPHONE-WORKING>>
+	<RTRUE>)>>
 
 <OBJECT CHEMICAL-SUPPLY-SHELVES
 	(IN SOUTH-WALL)
@@ -656,7 +648,9 @@ the " D ,TEST-TANK "." CR>)>>
  <COND (<==? .RARG ,M-LOOK>
 	<TELL
 "You're in the " D ,WEST-WALL " of " D ,YOUR-LABORATORY ", next to a
-shelf full of mechanical supplies." CR>)>>
+shelf full of mechanical supplies." CR>)
+       (<AND <==? .RARG ,M-ENTER> <VIDEOPHONE-WORKING>>
+	<RTRUE>)>>
 
 <OBJECT MECHANICAL-SUPPLY-SHELVES
 	(IN WEST-WALL)
@@ -678,15 +672,6 @@ shelf full of mechanical supplies." CR>)>>
 	(SYNONYM BUNCH MECHANICAL SUPPLY SUPPLIES)
 	(DESC "bunch of mechanical supplies")
 	(FLAGS NDESCBIT)>
-
-"<OBJECT TOOLS
-	(IN WEST-WALL)
-	(ADJECTIVE MACHIN OTHER)
-	(SYNONYM TOOL TOOLS DEVICE BUNCH)
-	(DESC 'bunch of machine tools and other devices')
-	(TEXT
-'The machine tools and other devices are used by you in constructing
-pilot models of your inventions.')>"
 ][
 <ROOM CENTER-OF-LAB
 	(IN ROOMS)
@@ -714,20 +699,20 @@ pilot models of your inventions.')>"
 	     <EXIT-VERB?>>
 	<THIS-IS-IT ,MICROPHONE>
 	<HE-SHE-IT ,WINNER T>
-	%<XTELL " can't walk away while ">
-	<HE-SHE-IT ,WINNER>
-	<COND (<IN? ,MICROPHONE ,PLAYER> <TELL "'re">)
-	      (T <TELL "'s">)>
+	<TELL " can't walk away while ">
+	<HE-SHE-IT ,WINNER <> "is">
 	<TELL " holding the " D ,MICROPHONE "!" CR>	;"[YOU-CANT?]")
        (<==? .RARG ,M-LOOK>
-	%<XTELL
+	<TELL
 "You're at your workbench in the center of " D ,YOUR-LABORATORY ",
 a small part of">
 	<RESEARCH-LAB>
 	<TELL
 " in the town of Frobton. The " D ,VIDEOPHONE " screen looms overhead">
 	<COND (,ALARM-RINGING <TELL ", with its " D ,ALARM " ringing">)>
-	<TELL "." CR>)>>
+	<TELL "." CR>)
+       (<AND <==? .RARG ,M-ENTER> <VIDEOPHONE-WORKING>>
+	<RTRUE>)>>
 
 <OBJECT WORKBENCH
 	(IN CENTER-OF-LAB)
@@ -752,19 +737,19 @@ a small part of">
 	(FLAGS NDESCBIT)
 	(ACTION SUB-PLANS-F)>
 
-<ROUTINE SUB-PLANS-F ("AUX" X STR)
+<ROUTINE SCREENPLAY () <TELL "Screenplay by Jim Lawrence" CR>>
+
+<ROUTINE SUB-PLANS-F ("AUX" X)
  <COND (<VERB? ANALYZE EXAMINE READ>
-	<SET X <G? 50 <RANDOM 100>> ;<PROB 50>>
-	<SET STR "Screenplay by Jim Lawrence|
-">
-	%<XTELL
+	<TELL
 "Written in one corner is the legend:|
 |
 ">
-	<COND (.X <TELL .STR>)>
+	<SET X <RANDOM 2>>
+	<COND (<1? .X> <SCREENPLAY>)>
 	<TELL "  Directed by Stu Galley|
 ">
-	<COND (<NOT .X> <TELL .STR>)>
+	<COND (<NOT <1? .X>> <SCREENPLAY>)>
 	<CRLF>
 	<V-VERSION>)>>
 
@@ -785,7 +770,7 @@ a small part of">
 
 <ROUTINE MICROPHONE-F ("OPTIONAL" (DOME? <>))
  <COND (<VERB? EXAMINE>
-	%<XTELL
+	<TELL
 "The " D ,MICROPHONE " is connected to the " D ,VIDEOPHONE " by a coiled
 cord. At the moment, it is turned o">
 	<COND (<OR <AND .DOME? <FSET? ,MICROPHONE-DOME ,ONBIT>>
@@ -797,18 +782,18 @@ cord. At the moment, it is turned o">
 		 <DIVESTMENT? ,MICROPHONE-DOME>>
 	     <DOBJ? MICROPHONE MICROPHONE-DOME>
 	     <EQUAL? ,VIDEOPHONE ,REMOTE-PERSON-ON>>
-	%<XTELL
-"You'd better say \"Good-bye\"" ;" to  D ,REMOTE-PERSON" " first." CR>)
+	<TELL
+"You'd better say \"Good-bye\" to " D ,REMOTE-PERSON " first." CR>)
        (<AND <VERB? REPLY SAY-INTO> <NOT <FSET? ,VIDEOPHONE ,ONBIT>>>
-	%<XTELL
+	<TELL
 "That won't do any good while the " D ,VIDEOPHONE " is off." CR>)
        (<VERB? SAY-INTO>
 	<COND (<EQUAL? ,REMOTE-PERSON-ON ,VIDEOPHONE>
-	       %<XTELL D ,REMOTE-PERSON " nods at you." CR>)
+	       <TELL D ,REMOTE-PERSON " nods at you." CR>)
 	      (,WOMAN-ON-SCREEN
-	       %<XTELL
+	       <TELL
 "That won't do any good while the sound is fuzzy." CR>)
-	      (T %<XTELL "It's not clear whom you're talking to." CR>)>)
+	      (T <TELL "It's not clear whom you're talking to." CR>)>)
        (<AND <VERB? LAMP-ON>
 	     <OR <IN? ,MICROPHONE ,PLAYER> <IN? ,MICROPHONE-DOME ,PLAYER>>>
 	<COND (<OR <AND .DOME? <FSET? ,MICROPHONE-DOME ,ONBIT>>
@@ -827,13 +812,14 @@ cord. At the moment, it is turned o">
 
 <ROUTINE TECHNICIAN-F ()
  <COND (<VERB? FIND PHONE TAKE $CALL>
-	%<XTELL
-"How can you do that? By telepathy or carrier pigeon?
-Seriously, "
-;"the telephone is on your desk to the east. "
-"your " D ,LAB-ASSISTANT
-", Sharon Kemp, is in her office, which is through a doorway to
-the east. Or, you could summon her by the intercom on your desk." CR>)>>
+	<TELL
+"How can you do that? By telepathy or carrier pigeon? ">
+	<COND (<IN? ,SHARON ,OFFICE>
+	       <TELL
+"Seriously, your " D ,LAB-ASSISTANT ", " D ,SHARON ", is in her office,
+which is through a doorway to the east. Or, you could summon her by the
+" D ,INTERCOM " on your desk.">)>
+	<CRLF>)>>
 ]
 <OBJECT SOUTH-DOORWAY
 	(ADJECTIVE SOUTH SLIDING)
@@ -955,18 +941,18 @@ the east. Or, you could summon her by the intercom on your desk." CR>)>>
 		<FSET ,WEST-TANK-AREA  ,TOUCHBIT>
 		<FSET ,SOUTH-TANK-AREA ,TOUCHBIT>
 		<COND (<EQUAL? ,HERE ,NORTH-TANK-AREA>
-		       %<XTELL
+		       <TELL
 "You're at a temporary runway or gangplank that leads from the walkway
-to the entry hatch of the " D ,GLOBAL-SUB>
-		       <DDESC ". The hatch is " ,SUB-DOOR ".|">)
+to the " D ,SUB-DOOR " of the " D ,GLOBAL-SUB ". ">
+		       <CHECK-DOOR ,SUB-DOOR>)
 		      (<EQUAL? ,HERE ,WEST-TANK-AREA>
-		       %<XTELL
+		       <TELL
 "You're at a " D ,WORK-COUNTER ", next to the " D ,TANK-CONTROL-GEAR-1
 " used to operate the " D ,TEST-TANK ".|">)>
-		%<XTELL "The test tank (which is now ">
+		<TELL "The test tank (which is now ">
 		<COND (,TEST-TANK-FULL <TELL "filled with ">)
 		      (T <TELL "empty of ">)>
-		%<XTELL
+		<TELL
 D ,GLOBAL-WATER ") is located in a large work room, just south of "
 D ,YOUR-LABORATORY ", with
 concrete-block walls on three sides and a high metal roof. Most of
@@ -979,10 +965,10 @@ a steel gate forms the wall of the room." CR>)>>
 
 "Other stuff"
 
-<ROUTINE FRESH-AIR? (RM "AUX" P L T O)
+<ROUTINE FRESH-AIR? (RM "AUX" P L TBL O)
 	#DECL ((RM O) OBJECT (P L) FIX)
 	<COND (<AND ,DOME-AIR-BAD? ,SUB-IN-DOME ;<IN-DOME? .RM>>
-	       %<XTELL
+	       <TELL
 "It's impossible to tell that way whether the air is good." CR>
 	       <RTRUE>)>
 	<SET P 0>
@@ -990,47 +976,47 @@ a steel gate forms the wall of the room." CR>)>>
 		<COND (<0? <SET P <NEXTP ,HERE .P>>>
 		       <RFALSE>)
 		      (<NOT <L? .P ,LOW-DIRECTION>>
-		       <SET T <GETPT ,HERE .P>>
-		       <SET L <PTSIZE .T>>
+		       <SET TBL <GETPT ,HERE .P>>
+		       <SET L <PTSIZE .TBL>>
 		       <COND (<AND <EQUAL? .L ,DEXIT>	;"Door EXIT"
-				   <FSET? <SET O <GETB .T ,DEXITOBJ>>
+				   <FSET? <SET O <GETB .TBL ,DEXITOBJ>>
 					  ,OPENBIT>>
-			      %<XTELL
+			      <TELL
 "There's a pleasant breeze coming through the " D .O "." CR>
 			      <RETURN>)>)>>>
 
 "unused corridor: COR-40000"
 [
 <GLOBAL COR-20000
-	<TABLE P?NORTH P?SOUTH OUTSIDE-COMM-BLDG OUTSIDE-ADMIN-BLDG 0>>
+	<PTABLE P?NORTH P?SOUTH OUTSIDE-COMM-BLDG OUTSIDE-ADMIN-BLDG 0>>
 <GLOBAL COR-10000
-	<TABLE P?WEST P?EAST OUTSIDE-WORKSHOP OUTSIDE-COMM-BLDG 0>>
+	<PTABLE P?WEST P?EAST OUTSIDE-WORKSHOP OUTSIDE-COMM-BLDG 0>>
 <GLOBAL COR-4000
-	<TABLE P?NORTH P?SOUTH OUTSIDE-WORKSHOP OUTSIDE-DORM 0>>
+	<PTABLE P?NORTH P?SOUTH OUTSIDE-WORKSHOP OUTSIDE-DORM 0>>
 <GLOBAL COR-2000
-	<TABLE P?WEST P?EAST OUTSIDE-DORM FOOT-OF-RAMP OUTSIDE-ADMIN-BLDG 0>>
+	<PTABLE P?WEST P?EAST OUTSIDE-DORM FOOT-OF-RAMP OUTSIDE-ADMIN-BLDG 0>>
 <GLOBAL COR-1000
-	<TABLE P?NORTH P?SOUTH CENTER-OF-DOME FOOT-OF-RAMP AIRLOCK-WALL 0>>
+	<PTABLE P?NORTH P?SOUTH CENTER-OF-DOME FOOT-OF-RAMP AIRLOCK-WALL 0>>
 <GLOBAL COR-400
-	<TABLE P?NE P?SW OUTSIDE-COMM-BLDG CENTER-OF-DOME OUTSIDE-DORM 0>>
+	<PTABLE P?NE P?SW OUTSIDE-COMM-BLDG CENTER-OF-DOME OUTSIDE-DORM 0>>
 <GLOBAL COR-200
-	<TABLE P?NW P?SE
+	<PTABLE P?NW P?SE
 	       OUTSIDE-WORKSHOP CENTER-OF-DOME OUTSIDE-ADMIN-BLDG 0>>
 <GLOBAL COR-64
-	<TABLE P?NORTH P?SOUTH
+	<PTABLE P?NORTH P?SOUTH
 	       NORTH-TANK-AREA WEST-TANK-AREA SOUTH-TANK-AREA 0>>
 <GLOBAL COR-32
-	<TABLE P?NORTH P?SOUTH NORTH-WALL WEST-WALL 0>>
+	<PTABLE P?NORTH P?SOUTH NORTH-WALL WEST-WALL 0>>
 <GLOBAL COR-16
-	<TABLE P?NORTH P?SOUTH WEST-WALL SOUTH-WALL 0>>
+	<PTABLE P?NORTH P?SOUTH WEST-WALL SOUTH-WALL 0>>
 <GLOBAL COR-8
-	<TABLE P?WEST P?EAST WEST-WALL CENTER-OF-LAB EAST-WALL 0>>
+	<PTABLE P?WEST P?EAST WEST-WALL CENTER-OF-LAB EAST-WALL 0>>
 <GLOBAL COR-4
-	<TABLE P?NORTH P?SOUTH NORTH-WALL CENTER-OF-LAB SOUTH-WALL 0>>
+	<PTABLE P?NORTH P?SOUTH NORTH-WALL CENTER-OF-LAB SOUTH-WALL 0>>
 <GLOBAL COR-2
-	<TABLE P?NORTH P?SOUTH NORTH-WALL EAST-WALL 0>>
+	<PTABLE P?NORTH P?SOUTH NORTH-WALL EAST-WALL 0>>
 <GLOBAL COR-1
-	<TABLE P?NORTH P?SOUTH EAST-WALL SOUTH-WALL 0>>
+	<PTABLE P?NORTH P?SOUTH EAST-WALL SOUTH-WALL 0>>
 ]
 
 "Routines to do looking down corridors"
@@ -1096,7 +1082,7 @@ a steel gate forms the wall of the room." CR>)>>
 	 <COND (.FOUND <RETURN .FOUND>)>)>
   <SET CNT <+ .CNT 1>>>>
 
-<ROUTINE COR-DIR (HERE THERE "AUX" COR RM (PAST 0) (CNT 2))
+;<ROUTINE COR-DIR (HERE THERE "AUX" COR RM (PAST 0) (CNT 2))
 	 <SET COR <GET-COR <BAND <GETP .THERE ,P?CORRIDOR>
 				 <GETP .HERE ,P?CORRIDOR>>>>
 	 <REPEAT ()
@@ -1108,7 +1094,7 @@ a steel gate forms the wall of the room." CR>)>>
 		 <SET CNT <+ .CNT 1>>>
 	 <GET .COR .PAST>>
 
-<ROUTINE GET-COR (NUM)
+;<ROUTINE GET-COR (NUM)
 	 #DECL ((NUM) FIX)
 	 <COND (<==? .NUM 1> ,COR-1)
 	       (<==? .NUM 2> ,COR-2)

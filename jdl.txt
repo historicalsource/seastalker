@@ -1,0 +1,23 @@
+ 3-Sep-84 10:20:30-EDT,955;000000000001
+Date:  3 Sep 1984 1020-EDT
+From: Stu Galley <SWG at ZORK>
+Subject: Re: JIM LAWRENCE
+To: JON
+cc: SWG, MD, BLANK
+In-Reply-To: Your message of 28-Aug-84 1104-EDT
+
+I think he should be included in Seastalker's About the Author.
+
+Here's a summary of the bio he supplied to us:
+
+Jim Lawrence has written fiction extensively for both children and
+adults in a variety of media: books, magazine articles, film and radio
+scripts, and comic strips, including "decision" strips.  He estimates
+that he has written some sixty books of fiction, many of them under pen
+names for series like Tom Swift Jr and Nancy Drew.  His radio credits
+include weekly scripts for Sergeant Preston of the Yukon, The Green
+Hornet, and Sky King.  He has written for, and in some cases created and
+illustrated, the comic strips Dallas, Joe Palooka, Captain Easy, Friday
+Foster, and Buck Rogers.  Seastalker is his first published work of
+interactive fiction.
+-------

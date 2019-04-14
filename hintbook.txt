@@ -1,0 +1,673 @@
+
+HINTBOOK FOR SEASTALKER
+
+
+
+
+
+Table of Contents
+
+
+
+Introduction............
+
+The Lab.................
+
+The Scimitar............
+
+The Bay and Ocean.......
+
+The Aquadome............
+
+The Battle..............
+
+How Points are Scored...
+
+For Your Amusement......
+
+
+
+
+
+The Lab
+
+
+
+Why is the alarm bell ringing?
+    
+   A. Someone is trying to contact you.
+   B. Someone is calling the lab on the videophone.
+   C. Have you tried turning off the alarm?
+   D. If you have, then you know you should TURN ON THE VIDEOPHONE.
+
+
+The picture and sound on the videophone are fuzzy. What should I do?
+
+   A. You could try tuning the videophone.
+   B. Type TUNE THE VIDEOPHONE.
+
+
+How can I get better reception on the videophone?
+
+   A. Call Frobton Cable Vision and have cable installed. Much better reception, plus lots of movies!
+
+
+How do I finish my conversation on the videophone?
+  
+   A. How do you normally finish a phone conversation?
+   B. Type in SAY "GOOD-BYE"
+
+
+Why can't I walk away with the microphone?
+    
+    A. The cord is too short.
+    
+
+Why did the videophone conk out?
+
+ A. Power failure?
+ B. Someone in the lab shut off the power...
+ C. ... by opening the circuit breaker. Who was it?
+ D. Use the microwave security scanner.
+ E. There are only three people in the lab ...
+ F. ... and you and Tip were in the same room when the videophone conked out.
+ G. That leaves only one person.
+ H. That person is Sharon.
+
+
+How can I fix the videophone?
+
+ A. Is there a technician nearby?
+ B. If not you may have to fix it yourself.
+ C. Go to the computestor and ask about the videophone.
+ D. Go to the electrical panel and close the circuit breaker.
+
+
+What is the storage closet used for?
+
+ A. Storage. But you don't have anything to store.
+ B. Nothing.
+
+
+Why does Tip always follow me around?
+
+   A. He doesn't ALWAYS follow you around.
+   B. He tries to keep you in sight, except when he's working on something.
+   C. He's your pal, and there to help.
+
+
+Why does Sharon Kemp look embarrassed?
+   
+   A. There is something about her you don't know.
+   B. And it has nothing to do with her mother.
+   C. Try reading the article in Tip's magazine.
+   D. Sharon opened the circuit breaker, which made the Videophone conk out. Hmmm...
+   
+
+Is there anything I should look at in the file cabinet?
+
+ A. There seems to be nothing interesting about the papers.
+ B. But there are a lot of them.
+ C. The papers are of no help to you.
+    
+
+How do I get out of the lab building?
+            
+ A. Have you tried all the doors in all the rooms?
+ B. There's a door to the parking lot, but you can't open it. 
+ C. The only way out is by submarine.
+
+
+Where is the submarine?
+
+ A. Right where you left it.
+ B. Did you try to FIND it.
+ C. The Scimitar is in the test tank.
+ D. Go south from the lab center, three times.
+
+
+Why won't the submarine start?
+   
+   A. Try asking the COMPUTESTOR.
+   
+
+What should I do with the catalyst capsule?
+
+ A. Don't try to swallow it.
+ B. The capsule powers the Scimitar's plasma-fusion reactor.
+ C. Take the capsule and try inserting it in the reactor.
+ D. PUT THE CAPSULE IN THE REACTOR THEN CLOSE THE REACTOR.
+
+
+
+
+
+The Scimitar
+
+
+
+How do I get the Scimitar moving?
+
+   A. Look at the control panel.
+   B. You'll need the catalyst capsule.
+   C. Put the capsule in the reactor.
+   D. Close the reactor.
+   E. Turn on the reactor.
+   F. Close the entry hatch.
+   G. Fill the test tank.
+   H. Open the gate.
+   I. Start the engine.
+   J. Open the throttle.
+   K. Go east.
+
+
+Should I set my throttle to slow, medium, or fast?
+   
+   A. It depends on how quickly you want to reach your destination.
+   B. Remember, the Aquadome is in trouble and your help is needed.
+   C. On the other hand, you haven't fully tested this sub yet.
+   D. Set it to slow the first time you play, then experiment later.
+            
+
+The Scimitar is overheating! What should I do?
+    
+    A. If your throttle is set to slow, relax.
+    B. It's not?! Better do something quick!
+    C. Did the program prompt you to press the test button?  If so, you know that you should ... 
+    D. Adjust the voltage regulator located in the engine crawl space.
+    E. Be careful; it's dangerous.
+
+
+How do I open the engine access panel?
+
+    A. Read the sign.
+    B. Ask Tip for the Universal Tool.
+    C. Type OPEN THE ACCESS PANEL.
+
+
+How can I fix the regulator?
+    
+    A. Open the engine access panel.
+    B. Enter the engine crawl space.
+    C. Type FIX THE REGULATOR.
+
+
+How do I keep from disturbing the machinery in the crawl space?
+
+    A. Don't spend any more time than you need in the crawl space.
+    B. When you are in the crawl space, use the word "carefully" in each command. Example: FIX REGULATOR CAREFULLY.
+    C. Enter the crawl space, fix the regulator, then leave.
+    D. The more time you spend in the engine crawl space, the greater your chances of disturbing the machinery.
+
+
+How do I use the sonarscope?
+
+   A. You can use it only in the bay and near the Aquadome.
+   B. When you look at it, you see a small area around the Scimitar.
+   C. The sonarscope shows obstacles at the same depth as the Scimitar. 
+   D. To check for obstacles below you, use the Depth Finder.
+
+
+How do I use the Depth Finder?
+ 
+   A. Type EXAMINE THE DEPTH FINDER.
+   B. The Depth Finder tells you how deep you are and how far below you the bottom is.
+
+
+How do I use the hydrophone?
+
+   A. Type LISTEN TO HYDROPHONE.
+
+How do I use the temperature gauge?
+
+   A. Type LOOK AT GAUGE.
+
+
+
+
+
+The Bay and Ocean
+
+
+
+How do I keep from getting hit by the speedboats?
+
+   A. Duck!
+   B. You can avoid them if you are underwater.
+   C. If you DIVE TO 5 METERS, you will not be hit by the speedboats.
+
+
+How do I find my way through the bay?
+
+   A. Once you are in the sub and in the bay, you should look at the Sonarscope.
+   B. Use the Sonarscope and the map of Frobton Bay to avoid shoals and safely navigate through the bay.
+   C. Head for the opening in the sea wall.
+
+
+Ships keep running into Tip and me. What should I do?
+
+   A. Stay out of their way.
+   B. Go around them.
+   C. You're in a submarine -- dive under them.
+   D. You will have to dive to at least 15 meters to avoid the ships' keels, which are 10 meters deep.
+
+
+Where is the Aquadome?
+
+   A. Ask Commander Bly when you talk to her on the Videophone.
+   B. Ask Tip. He's a sharp guy.
+   C. Look at your map of Frobton Bay.
+   D. The Aquadome can be reached only from the open sea.
+   E. When you reach the open sea, turn on the Autopilot.
+
+
+What is the Friendly Mermaid trying to tell me?
+
+   A. You left the gas cap off the sub.
+   B. She's telling you the directions to the Aquadome.
+   C. But it's very hard to hear her ...
+   D. ... because there is no Friendly Mermaid in this game. Remember, some of these questions and answers are fakes. Don't assume the absense or presents of a question means it's important. Also don't assume long answers are always associated with important questions.
+   E. Because that was hardly the case here!
+
+
+
+
+
+The Aquadome
+
+   
+
+How do I enter the Aquadome?
+
+  A. When the autopilot shuts off, type DOCK.
+
+
+Why is everyone having trouble breathing?
+
+   A. Did you remember to use your mouth-wash this morning?
+   B. There must be something wrong with the air.
+   C. I hope you have your emergency oxygen gear.
+   D. Even if you do have it, you should find out what is wrong with the air supply system.
+
+
+How can I fix the air supply system?
+
+   A. First you must OPEN THE DOOR WITH THE UNIVERSAL TOOL.
+   B. If you don't have the Universal Tool, ask Tip for it.
+   C. Something inside has been unscrewed.
+   D. Could it be the electrolyte relay?
+   E. Type TAKE RELAY AND SCREW IT INTO THE EMPTY SPACE.
+
+
+Where is the Fram Bolt wrench?
+   
+   A. Did you read the sign?
+   B. It should be on the hook.
+   C. Someone misplaced the Fram Bolt wrench. 
+   D. It might have been the same person who unscrewed the electrolyte relay.
+
+
+Now that I am at the Aquadome, what should I do?
+    
+   A. When Commander Bly asks if she can speak to you in private, you should say yes.
+   B. Once Commander Bly starts telling you about the problems at the Aquadome, you will have an idea what you should do.
+            
+
+Is the "black box" useful for anything?
+   
+   A. Yes.
+   B. Try opening the black box.
+   C. Any time after Commander Bly tells you about the "black box" ask Tip about his idea.
+                     
+
+Should I let Mick examine my sub?
+          
+   A. Yes.
+   B. You really don't have any choice.
+          
+
+Why does Commander Bly want to talk to me?
+    
+    A. She has something important to tell you.
+    B. When Commander Bly asks for a word in private, go with her.
+    C. When she tells you she has evidence, ASK HER ABOUT THE EVIDENCE.
+    D. The "black box" is her evidence.
+                     
+
+Do I need the emergency survival unit?
+
+    A. It would come in handy if there were an emergency.  
+    B. You also need it installed to get all the points in the game.
+
+What is that "oddly shaped metallic object"?
+
+   A. It's the Fram Bolt wrench.
+   B. It's supposed to be hanging on the hook next to the air supply system.
+   C. In case of an emergency, you would need the Fram Bolt wrench to repair the air supply system.
+   D. Someone took the Fram Bolt wrench from the hook and dropped it under Commander Bly's desk.
+   E. It was the same person who sabotaged the air supply system by unscrewing the electrolyte relay.
+
+
+What happened to the Air Supply System?
+
+   A. Someone unscrewed the Electrolyte Relay, causing the system to malfunction ...
+   B. ... and that someone also took the Fram Bolt Wrench so no one could repair the Air Supply System.
+
+
+Is Commander Bly in love with anyone?
+
+   A. No.
+   B. But might someone else be in love with her?
+   C. Have you checked personal storage areas?
+   D. Including the lockers?
+   E. Did you read the diary?
+   F. Then you know Doc Horvak is in love with Commander Bly.
+   
+
+I found this 'mushy' diary. What should I do with it?
+
+   A. Reading a diary is an invasion of privacy.
+   B. But this is a life-or-death situation.
+   C. Under the circumstances, you should read it.
+   D. Doc Horvak sabotaged the air supply system because he wanted to embarrass Commander Bly. 
+   E. Take the diary and the photo and show them to Commander Bly.
+
+
+Amy Lowell asked to borrow the Scimitar. Should I let her?
+
+   A. Ask her if she has a submariner's license.
+   B. Tell her you promised the Scimitar to Tip for the day.
+   C. Amy never asks to borrow the Scimitar. You must be cheating. 
+   D. Ask your parents to firmly punish you by ...
+   E. ... buying "Suspended" and making you complete the game before they will feed you again.
+
+ 
+What do I do with the dart gun?
+
+   A. Doc Horvak can fix it.
+   B. Doc Horvak will prepare a special tranquilizer for the dart gun, which you can use on the Snark if you need to.
+   C. Show Doc Horvak the magazine that Tip brought along.
+   D. When Doc Horvak asks you what he should do with the dart gun, type DOC, MOUNT DART GUN ON SUB.
+
+
+What about the "49er" Prospecting Bazooka?
+
+   A. A bazooka seems as if it might come in handy.
+   B. There are several ways to mount the bazooka on the Scimitar.
+   C. One way is to find the bazooka. Take it and mount it on the claw of the Scimitar yourself.
+   D. Or, when Commander Bly asks you if you can think of any high-power weapon, tell her about the bazooka. Get the bazooka, then tell Commander Bly to mount it on the Scimitar. 
+
+
+How do I know when I'm ready to leave the Aquadome?
+
+   A. Commander Bly will ask you if you are ready to take off.
+
+
+What does the fine grid do?
+
+   A. The fine grid will show objects within 25 meters of the Scimitar. The regular sonar shows objects within  2,500 meters.
+   B. Having the fine grid installed will give you a better picture of objects very near the Scimitar, like the Snark.
+   C. So when Tip asks if he should install it, tell him yes.
+
+
+Who put the stew in the galley?
+
+   A. Stu Galley?
+   B. The cook?
+   C. What stew? There is no stew in this game.
+
+
+Is someone trying to kill me?
+
+   A. Have you been killed yet?
+   B. Someone replaced the stimulant in the syringe with poison.
+   C. Someone is trying to kill you.
+   D. Someone who worked on the Scimitar.
+   E. Someone who installed the Emergency Survival Unit.
+   F. Someone who installed the part under your seat.
+   G. Give up?
+   H. That someone is Bill Greenup.
+
+
+What should I do with the syringe?
+
+   A. Talk to the person who installed the emergency survival unit under your seat.
+   B. Ask that person about the syringe.
+   
+
+Hey, where is Bill Greenup going and how can I stop him?
+
+   A. If you don't know why Bill is running away, don't develop any more of the answers for this question until you do.
+   B. Bill is running away because you know he tried to kill you.
+   C. One way to stop him is to close the Docking Tank roof when he first appears on the station monitor. 
+   D. Another way is to turn off the Docking Tank electricity
+. Then he won't be able to open the gate and escape in the Scimitar. 
+   D. Another way to stop Bill is to flood the Docking Tank before he enters the Scimitar.
+
+
+I'm ready to leave the Aquadome. What should I do?
+
+   A. Remember what you had to do to leave the Lab's Test Tank?
+   B. Flood the tank, open the gate, start the engine, open the throttle and go south.
+
+
+
+
+
+The Battle
+
+
+
+Where's the Snark?
+          
+   A. Try asking Commander Bly.
+   B. Or any of the crew members.
+   C. Go southeast from the Aquadome.
+        
+
+We have spotted a cloud of silt ahead. Should we continue?
+              
+   A. It might be the Snark. Are you prepared to deal with it?
+   B. Yes, you should continue.
+   C. Besides, you don't have any choice.
+
+
+How did Sharon get in the Seacat?
+
+   A. Hitch-hiked?
+   B. Dr. Thorpe picked her up at the Research Lab.
+
+
+Is Sharon a traitor?
+
+   A. She opened the circuit breaker, didn't she?
+   B. She left the catalyst capsule out of the Scimitar, didn't she?
+   C. And now she is in the Seacat with the man who is trying to kill you. What do you think?
+   D. Try saying something to her over the sonarphone.
+   E. Of course she isn't a traitor. She was just playing along with Dr. Thorpe in the hope of stopping him.
+
+
+Is Tip a traitor?
+
+   A. Tip, your good-buddy, pal and friend, a traitor?
+   B. Tip, who has stood by you in this game while you killed both yourself and him many times, a traitor?
+   C. No way. You should be ashamed of yourself for even developing the answers to this question.
+   D. You owe Tip an apology.
+
+
+Are you a traitor?
+
+   A. Why are you wasting your developing fluid on this answer.
+   B. Go ahead and develop, there's plenty of fluid.
+   C. And plenty more dumb answers.
+   D. See, I told you.
+   E. You can stop now.
+   F. Some people never learn!
+   G. Absolutely never!!!
+
+
+Why can't I get around the Snark?
+
+   A. The Snark and the Seacat are moving too fast?
+   B. Maybe you should move faster.
+   C. Try setting the throttle to medium.
+   D. Better yet, try setting the throttle to fast.
+
+
+What should I do with the dart?
+
+   A. You could tranquilize the Snark.
+   B. Or maybe that isn't such a good idea.
+   C. If you tranquilize the Snark there won't be much to stop Dr. Thorpe from blasting you with his rocket.
+
+
+What should I do with the bazooka?
+
+   A. You could try shooting the Snark.
+   B. But the Snark has tremedous scientific value, so it would be a waste to shoot it.
+   C. Another good reason not to shoot the Snark with the bazooka is that then Dr. Thorpe will have a clear shot at you! 
+   D. So why not shoot the Seacat's Power Pod and disable it?
+
+
+
+
+
+How Points are Scored
+
+(use as a last resort)
+
+
+
+Points / Actions
+
+1   Turning on the videophone.
+
+1   Tuning the videophone.
+
+1   Picking up the microphone.
+
+-3  The circuit breaker is opened.
+
+3   Closing the circuit breaker.
+
+5   Taking the catalyst capsule.
+
+1   Entering the Scimitar.
+
+5   Starting the reactor.
+
+5   Starting the engine.
+
+5   Entering Frobton Bay.
+
+5   Entering the ocean.
+
+5   Turning on the autopilot.
+
+5   Docking at the Aquadome.
+
+5   Opening the air supply system.
+
+5   Screwing in the electrolyte relay.
+
+5   Having the emergency survival unit installed.
+
+5   Arresting Bill Greenup.
+
+5   Capturing Bill Greenup.
+
+5   Having Doc Horvak fix the dart gun.
+
+5   Installing the dart gun.
+
+5   Taking the bazooka.
+
+5   Installing the bazooka.
+
+1   Leaving the Aquadome.
+
+5   Finding the Snark.
+
+5   Aiming the bazooka at the Seacat.
+
+5   Firing the bazooka at the Seacat.
+
+-----
+
+100 Total
+
+
+
+
+
+For Your Amusement
+
+Have you...
+
+
+read the diagram on the workbench?
+
+told Tip to leave the sub and then closed the hatch?
+
+picked up something in an extensor claw before leaving the lab?
+
+crashed the Scimitar into the Aquadome?
+
+taken the electrolyte relay but not screwed it in?
+
+said "Hello" to anyone on the sonarphone?
+
+asked anyone besides Doc Horvak to fix the gash in your arm?
+
+tried to shoot the Seacat with a tranquilizer dart?
+
+tried to arrest an object instead of a person?
+
+tried to clean or wipe anything?
+
+tried to find someone who's in the same place as you?
+
+tried to climb the sea wall?
+
+tried to break down a door?
+
+tried to enter something that you're holding?
+
+asked anyone about yourself?
+
+asked anyone to find you?
+
+kicked anyone?
+
+rubbed anyone?
+
+tried to look inside or under anyone?
+
+looked up?
+
+kissed anyone or anything?
+
+slapped anyone or anything, including yourself or a handcuffed person?
+
+thrown something at a person and then at an object?
+
+tried to break a window in the Aquadome?
+
+tried to turn off a person?
+
+tried to wake up anyone?
+
+tried to eat a meal or take the food?
+
+tried to shoot yourself?
+
+followed an inanimate object?
+
+played something?
+
+typed HELLO SAILOR?
+
+typed RESTART or RESTORE at the very beginning instead of your name?
+
+cursed at the program?
+

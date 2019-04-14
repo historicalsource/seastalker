@@ -14,7 +14,7 @@
 	SET	'TBL,P-PRSO
 	JUMP	?CND1
 ?ELS11:	SET	'TBL,P-PRSI
-	SET	'PRSO?,0
+	SET	'PRSO?,FALSE-VALUE
 ?CND1:	EQUAL?	PRSA,V?SEARCH-FOR,V?ASK-FOR,V?ASK-ABOUT \?CND14
 	FSET?	PRSO,PERSON \?CND14
 	IN?	PRSO,GLOBAL-OBJECTS \?CND14
@@ -93,14 +93,14 @@
 	EQUAL?	PRSA,V?GIVE,V?WHAT,V?FIND \?ELS43
 ?THN52:	EQUAL?	PRSA,V?ASK-FOR,V?ASK-ABOUT \?ELS56
 	FSET?	PRSO,PERSON /?CND57
-	SET	'PERSON?,0
+	SET	'PERSON?,FALSE-VALUE
 	PRINTI	"The "
 ?CND57:	PRINTD	PRSO
 	JUMP	?CND54
 ?ELS56:	CALL	QCONTEXT-GOOD?
 	ZERO?	STACK /?ELS65
 	FSET?	QCONTEXT,PERSON /?CND66
-	SET	'PERSON?,0
+	SET	'PERSON?,FALSE-VALUE
 	PRINTI	"The "
 ?CND66:	PRINTD	QCONTEXT
 	JUMP	?CND54
@@ -146,16 +146,12 @@
 ?ELS5:	EQUAL?	PRSO,NOT-HERE-OBJECT \?ELS23
 	GET	P-ITBL,P-NC1 >?TMP1
 	GET	P-ITBL,P-NC1L
-	CALL	BUFFER-PRINT,?TMP1,STACK,0
+	CALL	BUFFER-PRINT,?TMP1,STACK,FALSE-VALUE
 	RSTACK	
 ?ELS23:	GET	P-ITBL,P-NC2 >?TMP1
 	GET	P-ITBL,P-NC2L
-	CALL	BUFFER-PRINT,?TMP1,STACK,0
+	CALL	BUFFER-PRINT,?TMP1,STACK,FALSE-VALUE
 	RSTACK	
-
-
-	.FUNCT	NO-TOUCH
-	PRINTR	"Only clods fool around with these things for no good reason."
 
 
 	.FUNCT	THE?,NOUN
@@ -177,16 +173,14 @@
 
 
 	.FUNCT	MAGAZINE-F
-	CALL	REMOTE-VERB?
-	ZERO?	STACK \FALSE
-	EQUAL?	PRSA,V?OPEN \?ELS7
+	EQUAL?	PRSA,V?OPEN,V?LOOK-INSIDE \?ELS5
 	CALL	NOT-HOLDING?,MAGAZINE
 	ZERO?	STACK \TRUE
-?ELS7:	EQUAL?	PRSA,V?LOOK-UP \?ELS11
-	EQUAL?	PRSO,GLOBAL-THORPE \?ELS11
+?ELS5:	EQUAL?	PRSA,V?LOOK-UP \?ELS12
+	EQUAL?	PRSO,GLOBAL-THORPE \?ELS12
 	CALL	PERFORM,V?READ,ARTICLE
 	RTRUE	
-?ELS11:	EQUAL?	PRSA,V?ANALYZE,V?EXAMINE,V?READ \FALSE
+?ELS12:	EQUAL?	PRSA,V?ANALYZE,V?EXAMINE,V?READ \FALSE
 	CALL	NOT-HOLDING?,MAGAZINE
 	ZERO?	STACK \TRUE
 	PRINTI	"""Science World"" is a popular "
@@ -207,13 +201,15 @@ The cover shows "
 	RTRUE	
 ?ELS5:	EQUAL?	PRSA,V?ANALYZE /?THN8
 	EQUAL?	PRSA,V?EXAMINE,V?LOOK-INSIDE,V?READ \FALSE
-?THN8:	PRINTI	"It says that "
+?THN8:	CALL	NOT-HOLDING?,MAGAZINE
+	ZERO?	STACK \TRUE
+	PRINTI	"It says that "
 	PRINTD	GLOBAL-THORPE
 	PRINTI	" may have created synthetic forms of marine life by genetic engineering. You learn that Thorpe went into hiding to duck publicity, but before that he told friends he would soon marry "
 	PRINTD	SHARON
 	PRINTR	".
 The form of the creatures is unknown. They may be stimulated by ultrasonic pulses and might be trained to respond to such pulses.
-Some scientists are skeptical, but Thorpe has claimed that one-celled organisms had evolved in his lab from AMINO-HYDROPHASE or AH. If rumors are true, these synthetic sea creatures should be based on the AH molecule."
+Some scientists are skeptical, but Thorpe has claimed that one-celled organisms had evolved in his lab from AMINO-HYDROPHASE or A.H. If rumors are true, these synthetic sea creatures should be based on the A.H. molecule."
 
 
 	.FUNCT	CATALYST-CAPSULE-F
@@ -274,14 +270,14 @@ Some scientists are skeptical, but Thorpe has claimed that one-celled organisms 
 	EQUAL?	PRSA,V?TAKE \?ELS8
 	EQUAL?	PRSO,OXYGEN-GEAR \?ELS8
 	CALL	ITAKE
-	EQUAL?	STACK,1 \TRUE
+	EQUAL?	STACK,TRUE-VALUE \TRUE
 	PRINTI	"You're now wearing"
 	CALL	THE-PRSO-PRINT
 	PRINTR	" around your neck."
 ?ELS8:	EQUAL?	PRSA,V?OPEN /?THN18
 	EQUAL?	PRSA,V?USE,V?TURN,V?LAMP-ON \?ELS17
 ?THN18:	FSET?	OXYGEN-GEAR,ONBIT \?ELS22
-	CALL	ALREADY,OXYGEN-GEAR,STR?47
+	CALL	ALREADY,OXYGEN-GEAR,STR?42
 	RTRUE	
 ?ELS22:	CALL	NOT-HOLDING?,OXYGEN-GEAR
 	ZERO?	STACK \TRUE
@@ -319,7 +315,9 @@ Some scientists are skeptical, but Thorpe has claimed that one-celled organisms 
 
 
 	.FUNCT	V-$BAY
-	SET	'HERE,SUB
+	ZERO?	SUB-IN-TANK \?CND1
+	PRINTR	"too late"
+?CND1:	SET	'HERE,SUB
 	MOVE	PLAYER,SUB
 	MOVE	TIP,SUB
 	MOVE	CATALYST-CAPSULE,REACTOR
@@ -327,12 +325,12 @@ Some scientists are skeptical, but Thorpe has claimed that one-celled organisms 
 	FSET	REACTOR,ONBIT
 	FSET	ENGINE,ONBIT
 	FCLEAR	SUB-DOOR,OPENBIT
-	SET	'MONSTER-GONE,1
+	SET	'MONSTER-GONE,TRUE-VALUE
 	SET	'JOYSTICK-DIR,P?EAST
 	SET	'SUB-DLON,1
 	SET	'SUB-DLAT,0
 	SET	'NOW-TERRAIN,BAY-TERRAIN
-	SET	'SUB-IN-TANK,0
+	SET	'SUB-IN-TANK,FALSE-VALUE
 	CALL	QUEUE,I-UPDATE-SUB-POSITION,-1
 	PUT	STACK,0,1
 	RTRUE	

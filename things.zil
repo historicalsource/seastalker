@@ -7,7 +7,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	(ACTION NULL-F ;"Place holder")>
 
 <ROUTINE RANDOM-PSEUDO ()
-	 %<XTELL "You can't do anything useful with that." CR>>
+	 <TELL "You can't do anything useful with that." CR>>
 
 <OBJECT NOT-HERE-OBJECT
 	(DESC "that thing")
@@ -117,7 +117,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 		     (T <TELL "Someone">)>
 	       <COND (<NOT .PERSON? ;<FSET? ,PRSO ,PERSON>>
 		      <TELL " isn't connected to any">)
-		     (T %<XTELL
+		     (T <TELL
 " looks confused. \"I don't know anything about any">)>
 	       <NOT-HERE-PRINT>
 	       <TELL "!">
@@ -125,7 +125,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	       <CRLF>
 	       <RTRUE>)
 	      (<NOT .PRSO?>
-	       %<XTELL "You wouldn't find any">
+	       <TELL "You wouldn't find any">
 	       <NOT-HERE-PRINT>
 	       <TELL " there." CR>
 	       <RTRUE>)
@@ -140,9 +140,9 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
        (T
 	<BUFFER-PRINT <GET ,P-ITBL ,P-NC2> <GET ,P-ITBL ,P-NC2L> <>>)>>
 
-<ROUTINE NO-TOUCH ()
-	 %<XTELL
-"Only clods fool around with these things for no good reason." CR>>
+;"<ROUTINE NO-TOUCH ()
+	 <TELL
+'Only clods fool around with these things for no good reason.' CR>>"
 
 <ROUTINE THE? (NOUN)
 	<COND (<OR <AND <FSET? .NOUN ,PERSON>
@@ -174,16 +174,14 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	(ACTION MAGAZINE-F)>
 
 <ROUTINE MAGAZINE-F ()
- <COND (<REMOTE-VERB?>
+ <COND ;(<REMOTE-VERB?>
 	<RFALSE>)
-       (<AND <VERB? OPEN> <NOT-HOLDING? ,MAGAZINE>>
-	;"<VERB? OPEN> added 4/11/84 by MARC"
-	<RTRUE>)
+       (<VERB? LOOK-INSIDE OPEN>
+	<COND (<NOT-HOLDING? ,MAGAZINE> <RTRUE>)>)
        (<AND <VERB? LOOK-UP> <DOBJ? GLOBAL-THORPE>>
 	<PERFORM ,V?READ ,ARTICLE>
 	<RTRUE>)
-       (<VERB? READ ;"LOOK-INSIDE OPEN" EXAMINE ANALYZE>
-	;"COND added 4/11/84 by MARC"
+       (<VERB? READ EXAMINE ANALYZE>
 	<COND (<NOT-HOLDING? ,MAGAZINE> <RTRUE>)>
 	<TELL
 "\"Science World\" is a popular " D ,MAGAZINE " about new
@@ -209,6 +207,7 @@ forms. The cover says:|
 	<PERFORM ,PRSA ,MAGAZINE ,PRSI>
 	<RTRUE>)
        (<VERB? READ LOOK-INSIDE EXAMINE ANALYZE>
+	<COND (<NOT-HOLDING? ,MAGAZINE> <RTRUE>)>
 	<TELL
 "It says that " D ,GLOBAL-THORPE " may have created synthetic forms of
 marine life by genetic engineering. You learn that Thorpe went into
@@ -217,21 +216,9 @@ marry " D ,SHARON ".|
 The form of the creatures is unknown. They may be stimulated by
 ultrasonic pulses and might be trained to respond to such pulses.|
 Some scientists are skeptical, but Thorpe has claimed that one-celled
-organisms had evolved in his lab from AMINO-HYDROPHASE or AH. If rumors
-are true, these synthetic sea creatures should be based on the AH
+organisms had evolved in his lab from AMINO-HYDROPHASE or A.H. If rumors
+are true, these synthetic sea creatures should be based on the A.H.
 molecule." CR>)>>
-
-;<OBJECT LAMP
-	(IN LOCAL-GLOBALS)
-	(DESC "lamp")
-	(SYNONYM LAMP)
-	(FLAGS NDESCBIT FURNITURE ONBIT)>
-
-;<OBJECT CABINET
-	(IN LOCAL-GLOBALS)
-	(DESC "cabinet")
-	(SYNONYM CABINET)
-	;(ACTION CUPBOARD-F)>
 
 <OBJECT CATALYST-CAPSULE
 	(IN WORK-COUNTER)
@@ -241,7 +228,6 @@ molecule." CR>)>>
 	(ACTION CATALYST-CAPSULE-F)
 	(FLAGS TAKEBIT)
 	(TEXT "(You'll find that information in your SEASTALKER package.)")
-	;(TEXT "This capsule goes in the reactor in the SCIMITAR.")
 	(SIZE 11)
 	(VALUE 5)>
 
@@ -253,14 +239,13 @@ molecule." CR>)>>
 "It looks as if the " D ,CATALYST-CAPSULE " fits perfectly into the "
 D ,REACTOR "." CR>)
        (<AND <VERB? FIND> <NOT <FSET? ,CATALYST-CAPSULE ,TOUCHBIT>>>
-	%<XTELL
+	<TELL
 "The capsule is usually stored on a " D ,WORK-COUNTER" on the west wall of the
 tank area." CR>)
        (<AND <VERB? PUT> <IOBJ? GLOBAL-SUB LOCAL-SUB>>
-	%<XTELL "You'll have to take it there yourself." CR>)
-       (<AND <VERB? TAKE> <FSET? ,CATALYST-CAPSULE ,TRYTAKEBIT>
-	     ;"<NOT ,SUB-IN-TANK> <NOT <EQUAL? ,NOW-TERRAIN ,BAY-TERRAIN>>">
-	%<XTELL "It's too hot to pick up." CR>)>>
+	<TELL "You'll have to take it there yourself." CR>)
+       (<AND <VERB? TAKE> <FSET? ,CATALYST-CAPSULE ,TRYTAKEBIT>>
+	<TELL "It's too hot to pick up." CR>)>>
 
 <OBJECT OXYGEN-GEAR-OTHER
 	(IN GLOBAL-OBJECTS)
@@ -321,7 +306,7 @@ tank area." CR>)
  <FCLEAR ,OXYGEN-GEAR ,NDESCBIT>
  <COND (<AND <VERB? TAKE> <DOBJ? OXYGEN-GEAR>>
 	<COND (<==? <ITAKE> T>
-		%<XTELL
+		<TELL
 "You're now wearing" THE-PRSO " around your neck." CR>)>
 	<RTRUE>)
        (<VERB? LAMP-ON TURN USE OPEN>
@@ -331,14 +316,14 @@ tank area." CR>)
 	      (<NOT-HOLDING? ,OXYGEN-GEAR>
 	       <RTRUE>)
 	      (<NOT ,DOME-AIR-BAD?>
-	       %<XTELL "You don't need it now!" CR>
+	       <TELL "You don't need it now!" CR>
 	       <RTRUE>)>
 	<FSET ,OXYGEN-GEAR ,ONBIT>
-	%<XTELL
+	<TELL
 "As you open the valve and suck on the rubber straw, you feel your lungs
 filling with pure oxygen.">
 	<COND (<AND ,DOME-AIR-BAD? <CORRIDOR-LOOK ,BLY>>
-	       %<XTELL CR
+	       <TELL CR
 "But you notice Zoe Bly collapsing, and you realize she has
 no " D ,OXYGEN-GEAR ;" around her neck" "!">)>
 	<CRLF>)
@@ -407,6 +392,7 @@ no " D ,OXYGEN-GEAR ;" around her neck" "!">)>
 	<PRINTC <+ *101* <MOD .CH 26>>>>>"
 
 <ROUTINE V-$BAY ()
+	<COND (<NOT ,SUB-IN-TANK> <TELL "too late" CR> <RTRUE>)>
 	<SETG HERE ,SUB>
 	<MOVE ,PLAYER ,SUB>
 	<MOVE ,TIP ,SUB>

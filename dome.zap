@@ -27,7 +27,7 @@
 	PRINTR	"."""
 ?ELS5:	EQUAL?	PRSA,V?EXAMINE \?ELS29
 	LESS?	DISTANCE-FROM-BAY,AQUADOME-VISIBLE /?ELS29
-	SET	'P-WON,0
+	SET	'P-WON,FALSE-VALUE
 	GETP	LOCAL-SUB,P?TEXT
 	PRINT	STACK
 	CRLF	
@@ -55,11 +55,11 @@
 
 
 	.FUNCT	IN-DOME?,RM
-	ZERO?	SUB-IN-DOME /?ELS5
-	EQUAL?	RM,SUB,CRAWL-SPACE /?THN1
+	EQUAL?	RM,SUB,CRAWL-SPACE \?ELS5
+	RETURN	SUB-IN-DOME
 ?ELS5:	CALL	ZMEMQ,RM,IN-DOME-AROUND
-	RSTACK	
-?THN1:	RSTACK	
+	ZERO?	STACK /FALSE
+	RTRUE
 
 
 	.FUNCT	AIR-ROOM?,RM
@@ -125,64 +125,67 @@
 	PRINTD	AIRLOCK
 	PRINTR	", at the foot of the ramp."
 ?ELS16:	ZERO?	RARG \FALSE
-	ZERO?	SUB-IN-DOME \?ELS23
+	CALL	REMOTE-VERB?
+	ZERO?	STACK /?ELS23
+	EQUAL?	PRSA,V?WALK-TO,V?THROUGH \FALSE
+?ELS23:	ZERO?	SUB-IN-DOME \?ELS27
 	CALL	SUB-OUTSIDE-AIRLOCK?
-	ZERO?	STACK \?ELS23
+	ZERO?	STACK \?ELS27
 	CALL	NOT-HERE,AIRLOCK
 	RSTACK	
-?ELS23:	EQUAL?	PRSA,V?EMPTY \?ELS27
-	ZERO?	AIRLOCK-FULL \?ELS32
-	CALL	ALREADY,AIRLOCK,STR?70
+?ELS27:	EQUAL?	PRSA,V?EMPTY \?ELS31
+	ZERO?	AIRLOCK-FULL \?ELS36
+	CALL	ALREADY,AIRLOCK,STR?65
 	RSTACK	
-?ELS32:	FSET?	AIRLOCK-HATCH,OPENBIT \?ELS34
-	CALL	YOU-CANT,0,AIRLOCK-HATCH,STR?23
+?ELS36:	FSET?	AIRLOCK-HATCH,OPENBIT \?ELS38
+	CALL	YOU-CANT,FALSE-VALUE,AIRLOCK-HATCH,STR?21
 	RSTACK	
-?ELS34:	EQUAL?	HERE,SUB,CRAWL-SPACE /?THN37
+?ELS38:	EQUAL?	HERE,SUB,CRAWL-SPACE /?THN41
 	EQUAL?	HERE,BLY-OFFICE,FOOT-OF-RAMP \FALSE
-?THN37:	CALL	QUEUE,I-AIRLOCK-EMPTY,2
+?THN41:	CALL	QUEUE,I-AIRLOCK-EMPTY,2
 	PUT	STACK,0,1
 	PRINTR	"This will take 1 turn."
-?ELS27:	EQUAL?	PRSA,V?FILL \?ELS42
-	ZERO?	AIRLOCK-FULL /?ELS45
-	CALL	ALREADY,AIRLOCK,STR?71
+?ELS31:	EQUAL?	PRSA,V?FILL \?ELS46
+	ZERO?	AIRLOCK-FULL /?ELS49
+	CALL	ALREADY,AIRLOCK,STR?66
 	RTRUE	
-?ELS45:	FSET?	AIRLOCK-ELECTRICITY,ONBIT /?ELS48
-	CALL	YOU-CANT,0,AIRLOCK-ELECTRICITY,STR?44
+?ELS49:	FSET?	AIRLOCK-ELECTRICITY,ONBIT /?ELS52
+	CALL	YOU-CANT,FALSE-VALUE,AIRLOCK-ELECTRICITY,STR?39
 	RTRUE	
-?ELS48:	CALL	AIRLOCK-POP?
-	ZERO?	STACK /?CND43
-	CALL	YOU-CANT,0,AIRLOCK,STR?72
+?ELS52:	CALL	AIRLOCK-POP?
+	ZERO?	STACK /?CND47
+	CALL	YOU-CANT,FALSE-VALUE,AIRLOCK,STR?67
 	RTRUE	
-?CND43:	ZERO?	GREENUP-ESCAPE \?CND51
-	FSET?	SUB-DOOR,OPENBIT \?CND54
-	CALL	YOU-CANT,0,SUB-DOOR,STR?23
+?CND47:	ZERO?	GREENUP-ESCAPE \?CND55
+	FSET?	SUB-DOOR,OPENBIT \?CND58
+	CALL	YOU-CANT,FALSE-VALUE,SUB-DOOR,STR?21
 	RTRUE	
-?CND54:	FSET?	AIRLOCK-ROOF,OPENBIT \?CND51
+?CND58:	FSET?	AIRLOCK-ROOF,OPENBIT \?CND55
 	CALL	THIS-IS-IT,AIRLOCK-ROOF
 	PRINTI	"A safety mechanism prevents it. The "
 	PRINTD	AIRLOCK-ROOF
 	PRINTR	" is open!"
-?CND51:	ZERO?	GREENUP-ESCAPE /?ELS66
-	GRTR?	4,GREENUP-ESCAPE \?ELS66
+?CND55:	ZERO?	GREENUP-ESCAPE /?ELS70
+	GRTR?	4,GREENUP-ESCAPE \?ELS70
 	PRINTI	"Greenup is frantically scrambling back up the ladder to avoid being swept off and drowned! "
 	CALL	GREENUP-CUFF
 	PRINTI	"Tip immediately empties the "
 	PRINTD	AIRLOCK
 	PRINTR	" again."
-?ELS66:	EQUAL?	HERE,SUB,CRAWL-SPACE /?THN75
+?ELS70:	EQUAL?	HERE,SUB,CRAWL-SPACE /?THN79
 	EQUAL?	HERE,BLY-OFFICE,FOOT-OF-RAMP \FALSE
-?THN75:	CALL	QUEUE,I-AIRLOCK-EMPTY,2
+?THN79:	CALL	QUEUE,I-AIRLOCK-EMPTY,2
 	PUT	STACK,0,1
 	PRINTR	"This will take 1 turn."
-?ELS42:	EQUAL?	PRSA,V?CLOSE,V?OPEN \?ELS80
+?ELS46:	EQUAL?	PRSA,V?CLOSE,V?OPEN \?ELS84
 	CALL	PERFORM,PRSA,AIRLOCK-HATCH
 	RTRUE	
-?ELS80:	EQUAL?	PRSA,V?WALK-TO,V?THROUGH \FALSE
-	ZERO?	SUB-IN-DOME \?CND83
-	EQUAL?	HERE,SUB,CRAWL-SPACE \?CND83
+?ELS84:	EQUAL?	PRSA,V?WALK-TO,V?THROUGH \FALSE
+	ZERO?	SUB-IN-DOME \?CND87
+	EQUAL?	HERE,SUB,CRAWL-SPACE \?CND87
 	CALL	TOO-BAD-BUT,PRSO,STR?16
 	RTRUE	
-?CND83:	SET	'PRSO,AIRLOCK
+?CND87:	SET	'PRSO,AIRLOCK
 	CALL	CHEERS?
 	RFALSE	
 
@@ -202,7 +205,7 @@
 	.FUNCT	I-AIRLOCK-EMPTY
 	ZERO?	AIRLOCK-FULL /?ELS5
 	FSET?	AIRLOCK-HATCH,OPENBIT /FALSE
-	SET	'AIRLOCK-FULL,0
+	SET	'AIRLOCK-FULL,FALSE-VALUE
 	CRLF	
 	PRINTI	"The "
 	PRINTD	AIRLOCK
@@ -227,7 +230,7 @@ A ramp swings down from the top of the "
 	PRINTI	"."
 	CRLF	
 	RETURN	2
-?ELS5:	SET	'AIRLOCK-FULL,1
+?ELS5:	SET	'AIRLOCK-FULL,TRUE-VALUE
 	CRLF	
 	PRINTI	"The "
 	PRINTD	AIRLOCK
@@ -362,7 +365,7 @@ Doctor Walt Horvak, marine biologist and first-aid medic;
 	PRINTI	"The "
 	PRINTD	CREW-GLOBAL
 	CALL	NOT-HERE-PERSON,CREW
-	SET	'P-CONT,0
+	SET	'P-CONT,FALSE-VALUE
 	RTRUE	
 ?ELS5:	EQUAL?	PRSA,V?WALK-TO \?ELS11
 	CALL	PERFORM,PRSA,CREW
@@ -412,10 +415,10 @@ Doctor Walt Horvak, marine biologist and first-aid medic;
 	EQUAL?	PRSA,V?WAIT-UNTIL,V?WAIT-FOR /FALSE
 	IN?	OXYGEN-GEAR,PLAYER \?THN8
 	FSET?	OXYGEN-GEAR,ONBIT /FALSE
-?THN8:	PRINTI	"You are having"
+?THN8:	PRINTI	"You are having "
 	GRTR?	13,DOME-AIR-BAD? /?CND12
-	PRINTI	" real"
-?CND12:	PRINTR	" trouble breathing."
+	PRINTI	"real "
+?CND12:	PRINTR	"trouble breathing."
 
 
 	.FUNCT	TIP-REPORTS?
@@ -432,7 +435,7 @@ Doctor Walt Horvak, marine biologist and first-aid medic;
 	FSET?	AIR-SUPPLY-SYSTEM,MUNGBIT \?ELS5
 	ZERO?	DOME-AIR-BAD? \?CND6
 	SET	'DOME-AIR-BAD?,INITIAL-DOME-AIR-BAD
-	SET	'DOME-AIR-CRIME,1
+	SET	'DOME-AIR-CRIME,TRUE-VALUE
 	CALL	QUEUE,I-DOME-AIR,-1
 	PUT	STACK,0,1
 	CALL	VISIBLE?,BLY >X
@@ -516,7 +519,7 @@ At this desperate moment, "
 	FSET	SPECIAL-TOOL,TOUCHBIT
 	REMOVE	SPECIAL-TOOL-GLOBAL
 	CALL	FIX-AIR-SUPPLY
-	SET	'HORVAK-FIXED-AIR,1
+	SET	'HORVAK-FIXED-AIR,TRUE-VALUE
 	PRINTI	". He's clutching an oddly-shaped gadget.
 "
 	CALL	TIP-SAYS
@@ -545,9 +548,9 @@ At this desperate moment, "
 ?ELS89:	PRINTI	". He "
 	LOC	HORVAK
 	EQUAL?	HERE,STACK \?ELS118
-	PUSH	STR?74
+	PUSH	STR?69
 	JUMP	?CND114
-?ELS118:	PUSH	STR?65
+?ELS118:	PUSH	STR?62
 ?CND114:	PRINT	STACK
 	PRINTI	"s, ""I never wanted it to go this far! I sabotaged the "
 	PRINTD	AIR-SUPPLY-SYSTEM
@@ -568,7 +571,7 @@ As Doc breaks down in tears and Bly suffocates, you realize there's no point in 
 	PUT	STACK,0,0
 	CALL	QUEUE,I-ANTRIM-TO-SUB,10
 	PUT	STACK,0,1
-	SET	'DOME-AIR-BAD?,0
+	SET	'DOME-AIR-BAD?,FALSE-VALUE
 	FSET?	BLY,MUNGBIT \FALSE
 	FCLEAR	BLY,MUNGBIT
 	FCLEAR	GREENUP,MUNGBIT
@@ -620,7 +623,7 @@ As Doc breaks down in tears and Bly suffocates, you realize there's no point in 
 ?ELS29:	PRINTD	BLY
 	PRINTR	" and the others gather to shake your hand and wish you luck on your perilous mission."
 ?ELS22:	ZERO?	BLY-WELCOMED \FALSE
-	SET	'BLY-WELCOMED,1
+	SET	'BLY-WELCOMED,TRUE-VALUE
 	PRINTD	BLY
 	PRINTI	" says, """
 	CALL	BLY-WELCOME
@@ -652,13 +655,13 @@ As Doc breaks down in tears and Bly suffocates, you realize there's no point in 
 	EQUAL?	EXCLAM-DOME-AIR-BAD,DOME-AIR-BAD? \FALSE
 	FSET?	AIR-SUPPLY-SYSTEM,MUNGBIT \FALSE
 	CRLF	
-	CALL	BADGES-RED,1
+	CALL	BADGES-RED,TRUE-VALUE
 	RTRUE	
 
 
 	.FUNCT	BADGES-RED,SHOUT?=0
 	ZERO?	BADGES-RED-SAID? \FALSE
-	SET	'BADGES-RED-SAID?,1
+	SET	'BADGES-RED-SAID?,TRUE-VALUE
 	ZERO?	SHOUT? /?CND6
 	PRINTI	"Someone shouts, "
 ?CND6:	PRINTI	"""Our badges are turning red! The air's bad! Everyone use your "
@@ -674,15 +677,15 @@ As Doc breaks down in tears and Bly suffocates, you realize there's no point in 
 
 	.FUNCT	FROM-HERE,DIR1,DIR2
 	PRINTI	"From here, you can go "
-	CALL	DIR-PRINT,DIR1,0
+	CALL	DIR-PRINT,DIR1,FALSE-VALUE
 	PRINTI	" or "
-	CALL	DIR-PRINT,DIR2,0
+	CALL	DIR-PRINT,DIR2,FALSE-VALUE
 	PRINTR	" into the building."
 
 
 	.FUNCT	WOMENS-QUARTERS-F,RARG=0
 	EQUAL?	RARG,M-LOOK \FALSE
-	CALL	QUARTERS-F,WOMENS-QUARTERS,STR?75
+	CALL	QUARTERS-F,WOMENS-QUARTERS,STR?70
 	RSTACK	
 
 
@@ -694,7 +697,7 @@ As Doc breaks down in tears and Bly suffocates, you realize there's no point in 
 
 	.FUNCT	MENS-QUARTERS-F,RARG=0
 	EQUAL?	RARG,M-LOOK \FALSE
-	CALL	QUARTERS-F,MENS-QUARTERS,STR?76
+	CALL	QUARTERS-F,MENS-QUARTERS,STR?71
 	RSTACK	
 
 
@@ -744,7 +747,7 @@ As Doc breaks down in tears and Bly suffocates, you realize there's no point in 
 	PRINTI	", that he will never willingly surrender it. You have no right to demand it without a search warrant. The "
 	PRINTD	AQUADOME
 	PRINTR	" is neither a military establishment nor a ship at sea, so you could get in legal trouble."
-?ELS16:	CALL	HE-SHE-IT,WINNER,1,STR?77
+?ELS16:	CALL	HE-SHE-IT,WINNER,TRUE-VALUE,STR?72
 	PRINTI	", "
 	CALL	PRINT-NAME,FIRST-NAME
 	PRINTI	". Do not pursue this any further, or you will lose the respect and cooperation of the "
@@ -771,7 +774,7 @@ There must be some way! She doesn't do everything by the rule book. She even bre
 "
 	FSET?	SPECIAL-TOOL,TOUCHBIT \TRUE
 	PRINTI	"
-Well! Sounds as if "
+Well! It sounds as if "
 	PRINTD	HORVAK
 	PRINTI	" found the answer to his problem by sabotaging the "
 	PRINTD	AIR-SUPPLY-SYSTEM
@@ -832,13 +835,13 @@ Well! Sounds as if "
 ?CND17:	ZERO?	HORVAK-TOLD-AH \TRUE
 	FSET?	DART,MUNGBIT \TRUE
 	FSET?	HORVAK,BUSYBIT /TRUE
-	SET	'HORVAK-TOLD-AH,1
+	SET	'HORVAK-TOLD-AH,TRUE-VALUE
 	CRLF	
 	PRINTD	HORVAK
 	PRINTI	" says:
 """
 	CALL	PRINT-NAME,FIRST-NAME
-	PRINTI	", right after the Snark ceased its attack, I detected a high concentration of AH molecules in the "
+	PRINTI	", right after the Snark ceased its attack, I detected a high concentration of A.H. molecules in the "
 	PRINTD	GLOBAL-WATER
 	PRINTI	" around the "
 	PRINTD	AQUADOME
@@ -855,12 +858,12 @@ Well! Sounds as if "
 	PRINTD	CLAW
 	PRINTI	"s.
 But without knowing the creature's biochemistry, there's no guarantee the 'trank' will work. Shall I go ahead and make some up, anyhow?"""
-	CALL	YES?
+	CALL	YES? >MAGLOC
 ?CND31:	CALL	META-LOC,MAGAZINE >MAGLOC
 	CALL	IN-DOME?,MAGLOC
 	ZERO?	STACK /TRUE
 	CALL	TIP-SAYS
-	PRINTI	"Wait a minute! Wasn't there something about AH molecules in that "
+	PRINTI	"Wait a minute! Wasn't there something about A.H. molecules in that "
 	PRINTD	MAGAZINE
 	PRINTI	"? Shall "
 	EQUAL?	MAGLOC,HERE \?ELS43
@@ -876,7 +879,9 @@ But without knowing the creature's biochemistry, there's no guarantee the 'trank
 	PRINTI	"Tip "
 	EQUAL?	MAGLOC,HERE /?CND60
 	PRINTI	"returns quickly and "
-?CND60:	PRINTI	"hands you the magazine. "
+?CND60:	PRINTI	"hands you the "
+	PRINTD	MAGAZINE
+	PRINTI	". "
 ?CND55:	CALL	THIS-IS-IT,HORVAK
 	PRINTD	HORVAK
 	PRINTR	" looks interested. ""I'd like to see that."""
@@ -920,7 +925,7 @@ But without knowing the creature's biochemistry, there's no guarantee the 'trank
 
 
 	.FUNCT	MICROPHONE-DOME-F
-	CALL	MICROPHONE-F,1
+	CALL	MICROPHONE-F,TRUE-VALUE
 	RSTACK	
 
 
@@ -961,16 +966,16 @@ But without knowing the creature's biochemistry, there's no guarantee the 'trank
 	CALL	EXIT-VERB?
 	ZERO?	STACK /?ELS28
 	ZERO?	GREENUP-ESCAPE /?ELS35
-	CALL	HE-SHE-IT,WINNER,1
+	CALL	HE-SHE-IT,WINNER,TRUE-VALUE
 	PRINTR	"'d better stay here and trap Greenup."
 ?ELS35:	FSET?	SPECIAL-TOOL,INVISIBLE \FALSE
 	EQUAL?	WINNER,PLAYER \FALSE
-	PRINTI	"As you start to leave, you notice"
+	PRINTI	"As you start to leave, you notice "
 	CALL	SPECIAL-TOOL-VISIBLE
 	RSTACK	
 ?ELS28:	EQUAL?	PRSA,V?SEARCH-FOR,V?SEARCH \FALSE
 	FSET?	SPECIAL-TOOL,INVISIBLE \FALSE
-	PRINTI	"You find"
+	PRINTI	"You find "
 	CALL	SPECIAL-TOOL-VISIBLE
 	RSTACK	
 
@@ -980,13 +985,13 @@ But without knowing the creature's biochemistry, there's no guarantee the 'trank
 	FSET	SPECIAL-TOOL,TOUCHBIT
 	REMOVE	SPECIAL-TOOL-GLOBAL
 	CALL	THIS-IS-IT,SPECIAL-TOOL
-	PRINTI	" an oddly shaped metallic object lying under Zoe's desk. It must be the "
+	PRINTI	"an oddly shaped metallic object lying under Zoe's desk. It must be the "
 	PRINTD	SPECIAL-TOOL
 	PRINTR	"!"
 
 
 	.FUNCT	ZOE-MENTIONS-EVIDENCE
-	SET	'ZOE-MENTIONED-EVIDENCE,1
+	SET	'ZOE-MENTIONED-EVIDENCE,TRUE-VALUE
 	MOVE	TRAITOR,GLOBAL-OBJECTS
 	CALL	THIS-IS-IT,EVIDENCE
 	CALL	QUEUE,I-BLY-SAYS,6
@@ -1003,16 +1008,16 @@ But without knowing the creature's biochemistry, there's no guarantee the 'trank
 	PRINTD	AQUADOME
 	PRINTI	", "
 	CALL	PRINT-NAME,FIRST-NAME
-	PRINTI	"!"
+	PRINTI	"! "
 	ZERO?	DOME-AIR-CRIME /?CND10
-	PRINTI	" I'm not saying that just because the "
+	PRINTI	"I'm not saying that just because the "
 	PRINTD	AIR-SUPPLY-SYSTEM
-	PRINTI	" had been sabotaged."
-?CND10:	PRINTI	" I discovered "
+	PRINTI	" was sabotaged. "
+?CND10:	PRINTI	"I discovered "
 	ZERO?	DOME-AIR-CRIME /?ELS22
-	PUSH	STR?78
+	PUSH	STR?73
 	JUMP	?CND18
-?ELS22:	PUSH	STR?79
+?ELS22:	PUSH	STR?74
 ?CND18:	PRINT	STACK
 	PRINTD	EVIDENCE
 	PRINTI	" after we talked on the "
@@ -1023,7 +1028,7 @@ But without knowing the creature's biochemistry, there's no guarantee the 'trank
 	.FUNCT	BLY-DESK-F
 	EQUAL?	PRSA,V?LOOK-UNDER \FALSE
 	FSET?	SPECIAL-TOOL,TOUCHBIT /FALSE
-	PRINTI	"There's"
+	PRINTI	"There's "
 	CALL	SPECIAL-TOOL-VISIBLE
 	RSTACK	
 
@@ -1031,17 +1036,17 @@ But without knowing the creature's biochemistry, there's no guarantee the 'trank
 	.FUNCT	BLACK-BOX-F
 	EQUAL?	PRSA,V?LOOK-INSIDE,V?EXAMINE \?ELS5
 	FSET?	BLACK-BOX,OPENBIT \?ELS10
-	SET	'BLACK-BOX-EXAMINED,1
+	SET	'BLACK-BOX-EXAMINED,TRUE-VALUE
 	PRINTI	"After a brief study of the "
 	PRINTD	BLACK-CIRCUITRY
-	PRINTR	", you deduce its purpose: it was designed to change the sonar output so the ultrasonic pulses make a more complex pattern (for example BURPETY-BURP-B'DURP) instead of just a simple, clear-cut BURP. This would also make fuzzier blips."
+	PRINTR	", you deduce its purpose: it was designed to change the sonar output so the ultrasonic pulses make a more complex pattern (for example BURPETY BURP B'DURP) instead of just a simple, clear-cut BURP. This would also make fuzzier blips."
 ?ELS10:	PRINTR	"You'll need a suitable tool to open its cover."
 ?ELS5:	EQUAL?	PRSA,V?OPEN-WITH,V?OPEN \FALSE
 	FSET?	BLACK-BOX,OPENBIT \?ELS23
-	CALL	ALREADY,BLACK-BOX,STR?23
+	CALL	ALREADY,BLACK-BOX,STR?21
 	RSTACK	
 ?ELS23:	EQUAL?	PRSI,UNIVERSAL-TOOL \?ELS25
-	CALL	OKAY,BLACK-BOX,STR?23
+	CALL	OKAY,BLACK-BOX,STR?21
 	RSTACK	
 ?ELS25:	PRINTI	"You can't open it with"
 	ZERO?	PRSI /?ELS32
@@ -1117,7 +1122,7 @@ But without knowing the creature's biochemistry, there's no guarantee the 'trank
 	PRINTD	AIRLOCK-ROOF
 	PRINTI	": "
 	FSET?	AIRLOCK-ROOF,OPENBIT \?ELS16
-	PUSH	STR?23
+	PUSH	STR?21
 	JUMP	?CND12
 ?ELS16:	PUSH	STR?17
 ?CND12:	PRINT	STACK
@@ -1237,13 +1242,9 @@ Tip reports that the part under his seat appears to be okay."
 	CALL	THIS-IS-IT,ELECTROLYTE-RELAY
 	PRINTR	"Something is lying at the base of the cylinder, just inside the housing."
 ?ELS24:	PRINTR	"There's a lot of complicated machinery inside."
-?ELS19:	PRINTI	"The first thing you notice is a stenciled sign saying: ""To repair "
-	PRINTD	AIR-SUPPLY-SYSTEM
-	PRINTI	", first open "
-	PRINTD	ACCESS-PLATE
-	PRINTI	" with "
-	PRINTD	SPECIAL-TOOL
-	PRINTR	" hanging on hook at right."" An arrow points to this hook."
+?ELS19:	PRINTI	"The first thing you notice is a stenciled sign saying: "
+	CALL	READ-AIR-SUPPLY
+	RSTACK	
 ?ELS14:	CALL	TOO-FAR-AWAY,AIR-SUPPLY-SYSTEM
 	RSTACK	
 ?ELS9:	EQUAL?	PRSA,V?WALK-TO,V?FIND \?ELS45
@@ -1255,6 +1256,16 @@ Tip reports that the part under his seat appears to be okay."
 ?ELS52:	EQUAL?	PRSA,V?CLOSE,V?OPEN-WITH,V?OPEN \FALSE
 	CALL	PERFORM,PRSA,ACCESS-PLATE,PRSI
 	RTRUE	
+
+
+	.FUNCT	READ-AIR-SUPPLY
+	PRINTI	"""To repair "
+	PRINTD	AIR-SUPPLY-SYSTEM
+	PRINTI	", first open "
+	PRINTD	ACCESS-PLATE
+	PRINTI	" with "
+	PRINTD	SPECIAL-TOOL
+	PRINTR	" hanging on hook at right."" An arrow points to this hook."
 
 
 	.FUNCT	AIR-SUPPLY-VERB?
@@ -1270,30 +1281,33 @@ Tip reports that the part under his seat appears to be okay."
 
 
 	.FUNCT	ACCESS-PLATE-F
-	EQUAL?	PRSA,V?EXAMINE \?ELS5
-	FSET?	ACCESS-PLATE,OPENBIT \?ELS10
+	EQUAL?	PRSA,V?READ \?ELS5
+	CALL	READ-AIR-SUPPLY
+	RSTACK	
+?ELS5:	EQUAL?	PRSA,V?ANALYZE,V?EXAMINE \?ELS7
+	FSET?	ACCESS-PLATE,OPENBIT \?ELS12
 	PRINTR	"It's open."
-?ELS10:	PRINTI	"It's held in place on the cylinder by curiously-shaped fram bolts, which no ordinary wrench will fit."
-	FSET	AIR-SUPPLY-SYSTEM,TOUCHBIT
+?ELS12:	PRINTI	"It's held in place on the cylinder by curiously-shaped fram bolts, which no ordinary wrench will fit."
+	FSET?	AIR-SUPPLY-SYSTEM,TOUCHBIT /TRUE
 	PRINTI	" To open it, you need a "
 	PRINTD	SPECIAL-TOOL
 	PRINTR	", or something like it."
-?ELS5:	EQUAL?	PRSA,V?LOOK-INSIDE \?ELS23
+?ELS7:	EQUAL?	PRSA,V?LOOK-INSIDE \?ELS25
 	CALL	PERFORM,PRSA,AIR-SUPPLY-SYSTEM,PRSI
 	RTRUE	
-?ELS23:	EQUAL?	PRSA,V?CLOSE \?ELS25
+?ELS25:	EQUAL?	PRSA,V?CLOSE \?ELS27
 	FSET?	ACCESS-PLATE,OPENBIT \?ELS32
 	FCLEAR	ACCESS-PLATE,OPENBIT
 	CALL	OKAY,AIR-SUPPLY-SYSTEM,STR?17
 	RSTACK	
 ?ELS32:	CALL	ALREADY,AIR-SUPPLY-SYSTEM,STR?17
 	RSTACK	
-?ELS25:	EQUAL?	PRSA,V?TAKE-WITH,V?OPEN-WITH,V?OPEN \?ELS36
+?ELS27:	EQUAL?	PRSA,V?TAKE-WITH,V?OPEN-WITH,V?OPEN \?ELS36
 	EQUAL?	PRSI,SPECIAL-TOOL,UNIVERSAL-TOOL \?ELS36
 	FSET?	ACCESS-PLATE,OPENBIT \?ELS43
-	CALL	ALREADY,ACCESS-PLATE,STR?23
+	CALL	ALREADY,ACCESS-PLATE,STR?21
 	RSTACK	
-?ELS43:	CALL	OKAY,ACCESS-PLATE,STR?23
+?ELS43:	CALL	OKAY,ACCESS-PLATE,STR?21
 	FSET	AIR-SUPPLY-SYSTEM,OPENBIT
 	FSET	AIR-SUPPLY-SYSTEM,TOUCHBIT
 	CALL	PERFORM,V?LOOK-INSIDE,AIR-SUPPLY-SYSTEM
@@ -1301,7 +1315,7 @@ Tip reports that the part under his seat appears to be okay."
 	RTRUE	
 ?ELS36:	EQUAL?	PRSA,V?TAKE-WITH,V?TAKE,V?OPEN \FALSE
 	FSET?	ACCESS-PLATE,OPENBIT \?ELS52
-	CALL	ALREADY,ACCESS-PLATE,STR?23
+	CALL	ALREADY,ACCESS-PLATE,STR?21
 	RSTACK	
 ?ELS52:	EQUAL?	PRSI,SPECIAL-TOOL-GLOBAL \?ELS54
 	CALL	NOT-HERE,PRSI
@@ -1333,7 +1347,7 @@ Tip reports that the part under his seat appears to be okay."
 
 
 	.FUNCT	ARROW-F
-	EQUAL?	PRSA,V?FOLLOW \FALSE
+	EQUAL?	PRSA,V?ANALYZE,V?EXAMINE,V?FOLLOW \FALSE
 	PRINTR	"It points to the hook."
 
 
@@ -1384,7 +1398,7 @@ Tip reports that the part under his seat appears to be okay."
 	FCLEAR	ELECTROLYTE-RELAY,TAKEBIT
 	FSET	ELECTROLYTE-RELAY,NDESCBIT
 	FCLEAR	ELECTROLYTE-RELAY,MUNGBIT
-	PUTP	ELECTROLYTE-RELAY,P?TEXT,STR?82
+	PUTP	ELECTROLYTE-RELAY,P?TEXT,STR?77
 	RTRUE	
 
 

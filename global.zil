@@ -5,7 +5,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	(PSEUDO "NOTHIN" RANDOM-PSEUDO)
 	(VALUE 0)
 	(GENERIC NULL-F)
-	(FLAGS	BUSYBIT CONTBIT DOORBIT ;DRINKBIT FEMALE ;FOODBIT FURNITURE
+	(FLAGS	BUSYBIT CONTBIT DOORBIT ;DRINKBIT FEMALE ;FOODBIT ;FURNITURE
 		INVISIBLE LIGHTBIT LOCKED MUNGBIT
 		NARTICLEBIT NDESCBIT ONBIT ON?BIT OPENBIT
 		PERSON READBIT RLANDBIT RMUNGBIT SEARCHBIT SURFACEBIT TAKEBIT
@@ -47,7 +47,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 		 <VERB? ASK-ABOUT ASK-FOR SEARCH-FOR TELL-ABOUT>>
 	    <AND <DOBJ? IT>
 		 <VERB? ASK-CONTEXT-ABOUT ASK-CONTEXT-FOR FIND WHAT>>>
-	%<XTELL "\"I'm not sure what you're talking about.\"" CR>)>>
+	<TELL "\"I'm not sure what you're talking about.\"" CR>)>>
 
 <OBJECT FLOOR
 	(IN GLOBAL-OBJECTS)
@@ -65,7 +65,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 		       <PERFORM ,PRSA ,TEST-TANK>
 		       <RTRUE>)>)
 	       (<VERB? EXAMINE SEARCH LOOK-ON>
-		%<XTELL "You don't find anything new there." CR>)>>
+		<TELL "You don't find anything new there." CR>)>>
 
 <OBJECT IU-GLOBAL
 	(IN GLOBAL-OBJECTS)
@@ -108,7 +108,7 @@ to the family name with your own unique inventions.")>
 	;"I-SNARK-ATTACKS provides output."
 	<RTRUE>)
        (<AND <VERB? FIND> <NOT ,MONSTER-GONE>>
-	%<XTELL "It's attacking the " D ,AQUADOME "!" CR>
+	<TELL "It's attacking the " D ,AQUADOME "!" CR>
 	<RTRUE>)>>
 
 <OBJECT GLOBAL-WEAPON
@@ -137,16 +137,16 @@ to the family name with your own unique inventions.")>
 	 <TELL "The " D .OBJ " is mounted on " A ,CLAW "." CR>>
 
 <ROUTINE CANT-SEND ()
-	%<XTELL "You can't send it. Only you can pilot it there." CR>>
+	<TELL "You can't send it. Only you can pilot it there." CR>>
 
 <ROUTINE LOCAL-SUB-F ()
- <COND (<VERB? PUT> <MORE-SPECIFIC>)
+ <COND (<VERB? PUT TURN> <MORE-SPECIFIC>)
        (<VERB? SEARCH SEARCH-FOR>
 	<DO-INSTEAD-OF ,SUB ,LOCAL-SUB>
 	<RTRUE>)
        (<VERB? EXAMINE>
 	<COND (<AND <NOT <GET ,ON-SUB 0>> <NOT <GET ,ON-SUB 1>>>
-	       %<XTELL <GETP ,LOCAL-SUB ,P?TEXT>
+	       <TELL <GETP ,LOCAL-SUB ,P?TEXT>
 ;"(You'll find that information in your SEASTALKER package.)" CR>
 	       <RTRUE>)>
 	<COND (<GET ,ON-SUB 0>
@@ -156,7 +156,7 @@ to the family name with your own unique inventions.")>
 	<RTRUE>)
        (<VERB? FIND>
 	<DISABLE <INT I-SEND-SUB>>
-	%<XTELL "It's right here!" CR>)
+	<TELL "It's right here!" CR>)
        (<OR <VERB? LOOK-BEHIND>
 	    <AND <VERB? LOOK-OUTSIDE> <EQUAL? ,HERE ,SUB>>>
 	<PERFORM ,V?LOOK-OUTSIDE ,SUB-WINDOW>
@@ -199,14 +199,14 @@ to the family name with your own unique inventions.")>
 	<PERFORM ,PRSA ,SUB-DOOR>
 	<RTRUE>)
        (<AND <VERB? ANALYZE> <EQUAL? ,PRSI ,DAMAGE ,GLOBAL-SABOTAGE <>>>
-	%<XTELL "You can do this by pushing the " D ,TEST-BUTTON>
+	<TELL "You can do this by pushing the " D ,TEST-BUTTON>
 	<COND (<NOT <EQUAL? ,HERE ,SUB ,CRAWL-SPACE>>
 	       <TELL " on the " D ,CONTROLS " inside">)>
 	<TELL "." CR>)
        (<VERB? LAMP-ON>
 	<COND (<NOT <EQUAL? ,HERE ,SUB ;,CRAWL-SPACE>>
 	       <THIS-IS-IT ,SUB>
-	       %<XTELL "You have to be in the " D ,SUB " to start it." CR>)
+	       <TELL "You have to be in the " D ,SUB " to start it." CR>)
 	      ;(<EQUAL? ,HERE ,CRAWL-SPACE>
 	       <THIS-IS-IT ,SUB>
 	       <TELL "You have to be in the pilot's seat to start it." CR>)
@@ -231,7 +231,7 @@ to the family name with your own unique inventions.")>
 	       <THIS-IS-IT ,ENGINE>
 	       <TELL "The engine is off!" CR>)
 	      (T
-	       %<XTELL
+	       <TELL
 "You can do this by setting the throttle to the speed you want (slow,
 medium, or fast) and by moving the " D ,JOYSTICK
 " in the " D ,INTDIR " you wish to go." CR
@@ -240,11 +240,11 @@ medium, or fast) and by moving the " D ,JOYSTICK
        (<VERB? STOP>
 	<COND (<NOT <EQUAL? ,HERE ,SUB ;,CRAWL-SPACE>>
 	       <THIS-IS-IT ,SUB>
-	       %<XTELL "You have to be in the " D ,SUB " to stop it." CR>)
+	       <TELL "You have to be in the " D ,SUB " to stop it." CR>)
 	      ;(<EQUAL? ,HERE ,CRAWL-SPACE>
 	       <TELL "You have to be in the pilot's seat to stop it." CR>)
 	      (<NOT <FSET? ,ENGINE ,ONBIT>>
-	       %<XTELL "The engine is off!" CR>)
+	       <TELL "The engine is off!" CR>)
 	      (T	;<EQUAL? ,SUB-DEPTH ,TARGET-DEPTH>
 	       <SETG TARGET-DEPTH ,SUB-DEPTH>
 	       <TELL ,I-ASSUME " close the " D ,THROTTLE ".)" CR>
@@ -282,7 +282,7 @@ your present depth." CR>)>)>>
 	     <OR <VERB? FIND>
 		 <AND <VERB? ASK-ABOUT> <FSET? ,PRSO ,PERSON>>>>
 	<DISABLE <INT I-SEND-SUB>>
-	%<XTELL "The only sub at">
+	<TELL "The only sub at">
 	<RESEARCH-LAB>
 	<TELL " is your new " D ,GLOBAL-SUB ".
 It's located in the test tank just south of " D ,YOUR-LABORATORY "." CR>)
@@ -311,16 +311,16 @@ It's located in the test tank just south of " D ,YOUR-LABORATORY "." CR>)
 	<RTRUE>)
        (<EQUAL? ,HERE ,WEST-TANK-AREA>
 	<COND (<VERB? EXAMINE>
-	       %<XTELL
+	       <TELL
 "These are valves, gauges and control gear needed to make full use of
 the tank. Two important controls are the " D ,OPEN-GATE-BUTTON " and the
 " D ,FILL-TANK-BUTTON ". This gear can be operated by remote control
 from all " LN " subs." CR>)>)>>
 
-<ROUTINE PHONE-ON (PERSON PWHERE ON ;WHERE)
-	<SETG REMOTE-PERSON .PERSON>
-	<SETG QCONTEXT .PERSON>
-	<THIS-IS-IT .PERSON>
+<ROUTINE PHONE-ON (PER PWHERE ON ;WHERE)
+	<SETG REMOTE-PERSON .PER>
+	<SETG QCONTEXT .PER>
+	<THIS-IS-IT .PER>
 	<SETG REMOTE-PERSON-REMLOC .PWHERE>
 	<SETG REMOTE-PERSON-ON .ON>
 	<SETG REMOTE-PERSON-LOC ,HERE ;.WHERE>
@@ -343,7 +343,7 @@ from all " LN " subs." CR>)>)>>
 
 <ROUTINE INTERCOM-F ("AUX" P L)
  <COND (<VERB? LAMP-ON SAY-INTO>
-	%<XTELL "Try the command: CALL (someone) ON THE INTERCOM." CR>)
+	<TELL "Try the command: CALL (someone) ON THE INTERCOM." CR>)
        (<VERB? PHONE>
 	<COND (<FSET? ,PRSO ,PERSON>
 	       <SET P <GET ,CHARACTER-TABLE <GETP ,PRSO ,P?CHARACTER>>>
@@ -447,11 +447,6 @@ D ,ESCAPE-POD-UNIT " is not properly connected.">)
 	(SYNONYM SUPPLY)
 	(TEXT "(You'll find that information in your SEASTALKER package.)")>
 
-;<OBJECT LIGHTS
-	(IN LOCAL-GLOBALS)
-	(DESC "lights")
-	(SYNONYM LIGHT LIGHTS)>
-
 <OBJECT DISTRESS-CALL
 	(IN GLOBAL-OBJECTS)
 	(DESC "distress call")
@@ -501,7 +496,7 @@ D ,ESCAPE-POD-UNIT " is not properly connected.">)
 		     (T <TELL "It's not ringing!" CR>)>)>>
 
 <ROUTINE WHY-NOT-VP ()
-	%<XTELL "Why not turn on the " D ,VIDEOPHONE "?" CR>>
+	<TELL "Why not turn on the " D ,VIDEOPHONE "?" CR>>
 
 <OBJECT VIDEOPHONE
 	(IN LOCAL-GLOBALS)
@@ -552,7 +547,7 @@ turn the knob." CR>)
 	       <TELL
 "An " D ,ALARM " on the " D ,VIDEOPHONE " is ringing." CR>)>)
        (<AND <VERB? ANALYZE> <IOBJ? GLOBAL-SABOTAGE> ,SUB-IN-TANK>
-	%<XTELL
+	<TELL
 "If you wish
 to determine at once whether any saboteur or other intruder may have
 penetrated">
@@ -568,13 +563,13 @@ penetrated">
 	<RTRUE>)
        (<REMOTE-VERB?> <RFALSE>)
        (<NOT <EQUAL? ,HERE ,CENTER-OF-LAB ,COMM-BLDG>>
-	%<XTELL "You must be in the ">
+	<TELL "You must be in the ">
 	<COND (,SUB-IN-TANK <TELL D ,CENTER-OF-LAB>)
 	      (T <TELL D ,COMM-BLDG>)>
 	<TELL " to do that." CR>)
        (<VERB? ADJUST FIX TURN>
 	<COND (<FSET? ,VIDEOPHONE ,MUNGBIT>
-	       %<XTELL
+	       <TELL
 "You can't fix the " D ,VIDEOPHONE " until you know what is wrong.
 The simplest way to find out is to consult your "LN" " D ,COMPUTESTOR ",
 which is programmed to troubleshoot many of your inventions.
@@ -591,7 +586,7 @@ D ,GLOBAL-TECHNICIAN "." CR>
 	<PHONE-ON ,GLOBAL-BLY ,AQUADOME ,VIDEOPHONE>
 	;<ENABLE <QUEUE I-SHARON-TO-HALLWAY 12>>
 	<THIS-IS-IT ,PROBLEM>
-	%<XTELL
+	<TELL
 "Ah, that's better! You recognize the woman as " D ,BLY ", who's in
 charge of the " ,URS " of " D ,IU-GLOBAL ", called
 the " D ,AQUADOME ", just off the Atlantic coast. \"" FN "! " FN "!\" she's
@@ -612,10 +607,11 @@ saying. \"This is the " D ,AQUADOME " calling">
 	       <RTRUE>)
 	      (T
 	       <PHONE-OFF>
-	       %<XTELL "The screen goes dark." CR>)>)
+	       <TELL "The screen goes dark." CR>)>)
        (<AND <VERB? LAMP-ON REPLY> ,SUB-IN-TANK>
 	<COND (<FSET? ,VIDEOPHONE ,ONBIT>
-	       <ALREADY ,VIDEOPHONE "on">)
+	       <ALREADY ,VIDEOPHONE "on">
+	       <RTRUE>)
 	      (<OR <FSET? ,CIRCUIT-BREAKER ,OPENBIT>
 		   <FSET? ,VIDEOPHONE ,MUNGBIT>>
 	       <TELL "You can't. It's conked out." CR>
@@ -627,17 +623,17 @@ saying. \"This is the " D ,AQUADOME " calling">
 	       <QUEUE I-ALARM-RINGING 0>
 	       <SETG WOMAN-ON-SCREEN T>
 	       <THIS-IS-IT ,GLOBAL-BLY>
-	       %<XTELL
+	       <TELL
 "As the " D ,ALARM " stops ringing, a picture of a woman holding a " D
 ,MICROPHONE " appears, and you can hear her voice from the speaker. But
 both sound and picture are fuzzy." CR>
 	       <SCORE-OBJ ,VIDEOPHONE>
 	       <RTRUE>)
-	      (T %<XTELL "A test pattern appears." CR>)>)
+	      (T <TELL "A test pattern appears." CR>)>)
        (<VERB? PHONE>
 	<COND (<OR ,WOMAN-ON-SCREEN
 		   <EQUAL? ,REMOTE-PERSON-ON ,VIDEOPHONE>>
-	       %<XTELL "You should finish talking with ">
+	       <TELL "You should finish talking with ">
 	       <COND (,WOMAN-ON-SCREEN <TELL "the woman">)
 		     (T <TELL D ,REMOTE-PERSON>)>
 	       <TELL " first." CR>
@@ -646,7 +642,7 @@ both sound and picture are fuzzy." CR>
 	       <TELL "There's no answer." CR>)
 	      (<AND <DOBJ? AQUADOME GLOBAL-BLY> ,SUB-IN-TANK>
 	       <COND (,BLY-TOLD-PROBLEM
-		      %<XTELL
+		      <TELL
 "There's no answer. The crew must be busy with the " D ,SNARK "." CR>
 		      <RTRUE>)
 		     (,ALARM-RINGING
@@ -731,7 +727,7 @@ both sound and picture are fuzzy." CR>
 	       <PERFORM ,V?LOOK-OUTSIDE ,SUB-WINDOW>
 	       <RTRUE>)>)
        (<VERB? SWIM THROUGH>
-	%<XTELL "This is no time for a swim, " FN "!" CR>)>>
+	<TELL "This is no time for a swim, " FN "!" CR>)>>
 
 <OBJECT SEA
 	(IN GLOBAL-OBJECTS)
@@ -751,11 +747,11 @@ both sound and picture are fuzzy." CR>
 	<COND (<OR ,SUB-IN-DOME
 		   ,SUB-IN-OPEN-SEA
 		   <==? ,NOW-TERRAIN ,SEA-TERRAIN>>
-	       %<XTELL "You're in it!" CR>)
+	       <TELL "You're in it!" CR>)
 	      (<EQUAL? ,HERE ,SUB ,CRAWL-SPACE>
-	       %<XTELL
+	       <TELL
 "The nautical chart in your SEASTALKER package should help." CR>)
-	      (T %<XTELL "First you must get in the " D ,SUB "." CR>)>)>>
+	      (T <TELL "First you must get in the " D ,SUB "." CR>)>)>>
 
 <OBJECT HER
 	(IN GLOBAL-OBJECTS)
@@ -821,7 +817,7 @@ both sound and picture are fuzzy." CR>
 
 <ROUTINE GLOBAL-HERE-F ("AUX" (FLG <>) F HR TIM VAL)
 	 <COND (<VERB? KNOCK>
-		%<XTELL "Knocking on the walls reveals nothing unusual." CR>)
+		<TELL "Knocking on the walls reveals nothing unusual." CR>)
 	       (<VERB? PUT TIE-TO>
 		<MORE-SPECIFIC>)
 	       (<VERB? SEARCH EXAMINE>
@@ -831,25 +827,25 @@ both sound and picture are fuzzy." CR>
 		       <SET TIM 3>)
 		      (T <SET TIM <+ 2 <GETP ,HERE ,P?SIZE>>>)>
 		<COND (<==? ,P-ADVERB ,W?CAREFULLY> <SET TIM <* 2 .TIM>>)>
-		%<XTELL
+		<TELL
 "(It's better to examine or search one thing at a time. It would take a
 long time to search a whole room or area thoroughly. A ">
 		<COND (<==? ,P-ADVERB ,W?CAREFULLY> <TELL "careful">)
 		      (T <TELL "brief">)>
-		%<XTELL " search would take
+		<TELL " search would take
 " N .TIM " turns, and it might not reveal much. Would you like
 to do it anyway?)">
 		<COND (<YES?>
 		       <COND (<==? ,M-FATAL <SET VAL <INT-WAIT .TIM>>>
 			      <RTRUE>)
 			     (.VAL
-			      %<XTELL "Your "
+			      <TELL "Your "
 				      <COND (<==? ,P-ADVERB ,W?CAREFULLY>
 					     "careful")
 					    (T "brief")>
 				      " search reveals nothing exciting." CR>)
 			     (T
-			      %<XTELL
+			      <TELL
 "You didn't finish looking over the place." CR>)>)
 		      (T <TELL "Okay." CR>)>)
 	       (<VERB? WHAT ANALYZE ;ASK-ABOUT>
@@ -878,14 +874,14 @@ to do it anyway?)">
 
 <ROUTINE AIR-F ()
 	 <COND (<VERB? EXAMINE>
-		%<XTELL "You can see through the air around you." CR>)
+		<TELL "You can see through the air around you." CR>)
 	       (<VERB? WALK-TO>
 		<TELL "It's all around you!" CR>)
 	       (<VERB? SMELL>
 		<COND ;(<OUTSIDE? ,HERE>
-		       %<XTELL "The air is clear and fresh." CR>)
+		       <TELL "The air is clear and fresh." CR>)
 		      (<FRESH-AIR? ,HERE> <RTRUE>)
-		      (T %<XTELL "The air is rather musty." CR>)>)>>
+		      (T <TELL "The air is rather musty." CR>)>)>>
 
 <ROUTINE GENERIC-TANK-F (OBJ)
  <COND ;(<VERB? LEAVE>
@@ -927,7 +923,7 @@ to do it anyway?)">
        (<EQUAL? ,NOW-TERRAIN ,BAY-TERRAIN>
 	<TOO-FAR-AWAY ,TEST-TANK>)
        (<NOT ,SUB-IN-TANK>
-	%<XTELL "You're nowhere near">
+	<TELL "You're nowhere near">
 	<RESEARCH-LAB>
 	<TELL "!" CR>)
        (<AND <OR <NOT <EQUAL? ,HERE ,SUB>> <NOT ,SUB-IN-TANK>>
@@ -936,15 +932,15 @@ to do it anyway?)">
 	;<SETG P-WON <>>
 	<NOT-HERE ,TEST-TANK>)
        (<VERB? BOARD>
-	%<XTELL "That won't do any good." CR>)
+	<TELL "That won't do any good." CR>)
        (<VERB? ;DROP LEAVE>
-	%<XTELL
+	<TELL
 "You can either walk north, or get in the " D ,SUB " and go east." CR>)
        (<VERB? ANALYZE EXAMINE LOOK-INSIDE>
 	<FILL-TANK-BUTTON-F>)
        (<AND <VERB? EMPTY FILL>
 	     <NOT <EQUAL? ,HERE ,WEST-TANK-AREA ,SUB>>>
-	%<XTELL "You'll have to go west to do that." CR>
+	<TELL "You'll have to go west to do that." CR>
 	<RTRUE>)
        (<VERB? EMPTY>
 	<COND (<FSET? ,TANK-GATE ,OPENBIT>
@@ -961,12 +957,12 @@ to do it anyway?)">
 	       <ALREADY ,TEST-TANK "full">)
 	      (T
 	       <SETG TEST-TANK-FULL T>
-	       %<XTELL
+	       <TELL
 "The " D ,GLOBAL-WATER " quickly fills the tank, up to the level of the
 walkway." CR>)>)
        (<VERB? OPEN CLOSE> <PERFORM ,PRSA ,TANK-GATE> <RTRUE>)
        (<VERB? SWIM THROUGH>
-	%<XTELL "This is no time for a swim, " FN "!" CR>)>>
+	<TELL "This is no time for a swim, " FN "!" CR>)>>
 
 <OBJECT FILL-TANK-BUTTON
 	(IN LOCAL-GLOBALS ;SUB)
@@ -1011,14 +1007,14 @@ walkway." CR>)>)
 <GLOBAL OPENED-GATE-FROM-SUB <>>
 <ROUTINE TANK-GATE-F ()
  <COND (<VERB? FIND>
-	%<XTELL "It's on the east wall of the test tank." CR>)
+	<TELL "It's on the east wall of the test tank." CR>)
        (<REMOTE-VERB?> <RFALSE>)
        (<AND <NOT <EQUAL? ,HERE ,SUB>>
 	     <NOT <IN-TANK-AREA? ,HERE>>>
 	;<SETG P-WON <>>
 	<NOT-HERE ,TANK-GATE>)
        (<VERB? ANALYZE EXAMINE>
-	%<XTELL
+	<TELL
 "This gate "
 <COND (<FSET? ,TANK-GATE ,OPENBIT> "is") (T "can be")>
 " raised to
@@ -1027,7 +1023,7 @@ be raised or lowered by wall controls or by remote control from
 all " LN " subs." CR>)
        (<VERB? OPEN CLOSE RAISE DROP>
 	<COND (<NOT <EQUAL? ,HERE ,WEST-TANK-AREA ,SUB>>
-	       %<XTELL "You'll have to go west to do that." CR>
+	       <TELL "You'll have to go west to do that." CR>
 	       <RTRUE>)>
 	<OPEN-CLOSE-GATE ,TANK-GATE ,TEST-TANK-FULL ,TEST-TANK>)>>
 
@@ -1085,7 +1081,7 @@ all " LN " subs." CR>)
 
 <ROUTINE AIRLOCK-HATCH-F ()
  <COND (<VERB? FIND>
-	%<XTELL
+	<TELL
 "It's on the south wall of the " D ,AQUADOME " " D ,AIRLOCK "." CR>)
        (<REMOTE-VERB?> <RFALSE>)
        (<AND <OR <NOT ,SUB-IN-DOME>
@@ -1093,7 +1089,7 @@ all " LN " subs." CR>)
 	     <NOT <SUB-OUTSIDE-AIRLOCK?>>>
 	<TOO-FAR-AWAY ,AIRLOCK-HATCH>)
        (<NOT <0? ,SNARK-ATTACK-COUNT>>
-	%<XTELL "It's too late now! The machinery is jammed!" CR>)
+	<TELL "It's too late now! The machinery is jammed!" CR>)
        (<VERB? OPEN CLOSE RAISE DROP>
 	<OPEN-CLOSE-GATE ,AIRLOCK-HATCH ,AIRLOCK-FULL ,AIRLOCK>)>>
 
@@ -1103,7 +1099,7 @@ all " LN " subs." CR>)
 		      <ALREADY .GATE "open">
 		      <RTRUE>)
 		     (<NOT .FULL>
-		      %<XTELL
+		      <TELL
 "You'd better fill the " D .TANK " first, unless you want to go surfing!" CR>
 		      <RTRUE>)
 		     (T
@@ -1154,7 +1150,7 @@ all " LN " subs." CR>)
 
 <ROUTINE AIRLOCK-ROOF-F ()
  <COND (<VERB? FIND>
-	%<XTELL "It covers the " D ,AQUADOME " " D ,AIRLOCK "." CR>)
+	<TELL "It covers the " D ,AQUADOME " " D ,AIRLOCK "." CR>)
        (<REMOTE-VERB?> <RFALSE>)
        (<OR <NOT ,SUB-IN-DOME>
 	    <AND <NOT <EQUAL? ,HERE ,SUB ,AIRLOCK ,BLY-OFFICE>>
@@ -1167,7 +1163,7 @@ all " LN " subs." CR>)
 	      (<FSET? ,AIRLOCK-HATCH ,OPENBIT>
 	       ;<ENABLE <QUEUE I-DOME-FLOODED 2>>
 	       <THIS-IS-IT ,AIRLOCK-HATCH>
-	       %<XTELL
+	       <TELL
 "A safety mechanism prevents it. The " D ,AIRLOCK-HATCH " is open!" CR>
 	       <RTRUE>)>
 	<FSET ,AIRLOCK-ROOF ,OPENBIT>
@@ -1186,7 +1182,7 @@ all " LN " subs." CR>)
 	<TELL "." CR>
 	;<DISABLE <INT I-DOME-FLOODED>>
 	<COND (<AND ,GREENUP-ESCAPE <G? 3 ,GREENUP-ESCAPE>>
-	       %<XTELL
+	       <TELL
 "Greenup can't get into the " D ,SUB " and escape any more. ">
 	       <GREENUP-CUFF>)>
 	<RTRUE>)>>
@@ -1194,7 +1190,7 @@ all " LN " subs." CR>)
 <OBJECT PRIVATE-MATTER
 	(DESC "private matter")
 	;(IN GLOBAL-OBJECTS)
-	(ADJECTIVE PERSONNEL ;PRIVATELY)
+	(ADJECTIVE PERSONAL ;PRIVATELY)
 	(SYNONYM MATTER)>
 
 <OBJECT EVIDENCE
@@ -1254,7 +1250,7 @@ all " LN " subs." CR>)
 
 <ROUTINE LAB-ASSISTANT-F ()
  <COND (<VERB? FIND WALK-TO>
-	<DO-INSTEAD-OF ,LAB-ASSISTANT ,LOWELL>)>>
+	<DO-INSTEAD-OF ,LOWELL ,LAB-ASSISTANT>)>>
 
 "? Delete this object and put following in local-globals?"
 <OBJECT DOC-LABORATORY
@@ -1267,11 +1263,11 @@ all " LN " subs." CR>)
 	(ACTION DOC-LABORATORY-F)>
 
 <ROUTINE DOC-LABORATORY-F ()
- <COND (<OR ,SUB-IN-DOME ;<IN-DOME? ,HERE> <VERB? FIND>>
+ <COND ;"(<OR ,SUB-IN-DOME ;<IN-DOME? ,HERE> <VERB? FIND>>
 	<DO-INSTEAD-OF ,HERE ,DOC-LABORATORY>
-	<RTRUE>)
-       (<VERB? WALK-TO>
-	<PERFORM ,PRSA ,DOME-LAB>
+	<RTRUE>)"
+       (<VERB? WALK-TO THROUGH>
+	<PERFORM ,V?WALK-TO ,DOME-LAB>
 	<RTRUE>)>>
 
 <OBJECT YOUR-LABORATORY
@@ -1284,11 +1280,11 @@ all " LN " subs." CR>)
 	(ACTION YOUR-LABORATORY-F)>
 
 <ROUTINE YOUR-LABORATORY-F ()
- <COND (<OR <IN-LAB? ,HERE> ;,SUB-IN-TANK <VERB? FIND>>
+ <COND (<OR <IN-LAB? ,HERE> ;",SUB-IN-TANK <VERB? FIND>">
 	<DO-INSTEAD-OF ,HERE ,YOUR-LABORATORY>
 	<RTRUE>)
-       (<VERB? WALK-TO>
-	<PERFORM ,PRSA ,CENTER-OF-LAB>
+       (<VERB? WALK-TO THROUGH>
+	<PERFORM ,V?WALK-TO ,CENTER-OF-LAB>
 	<RTRUE>)>>
 
 <ROUTINE GENERIC-LABORATORY-F (OBJ)
@@ -1315,7 +1311,7 @@ all " LN " subs." CR>)
 		   <VERB? ASK-ABOUT>
 		   ;<NOT <EQUAL? ,WINNER ,PLAYER>>>>
 	<COND (.X <TELL "\"">)>
-	%<XTELL "I guess you'll have to figure that out, " FN ".">
+	<TELL "I guess you'll have to figure that out, " FN ".">
 	<COND (.X <TELL "\"">)>
 	<CRLF>)>>
 
@@ -1323,12 +1319,12 @@ all " LN " subs." CR>)
 	(IN LOCAL-GLOBALS)
 	(DESC "chair")
 	(SYNONYM CHAIR CHAIRS SEAT)
-	(FLAGS NDESCBIT FURNITURE)
+	(FLAGS NDESCBIT ;FURNITURE)
 	(ACTION CHAIR-F)>
 
 <ROUTINE CHAIR-F ()
- <COND (<VERB? SIT LOOK-UNDER>
-	%<XTELL "That's just a waste of time." CR>)>>
+ <COND (<VERB? SIT LOOK-UNDER CLIMB-ON CLIMB-DOWN>
+	<TELL "That's just a waste of time." CR>)>>
 
 <OBJECT UNDERWATER
 	(IN GLOBAL-OBJECTS)
@@ -1339,7 +1335,7 @@ all " LN " subs." CR>)
 
 <ROUTINE UNDERWATER-F ()
  <COND (<VERB? WALK>
-	%<XTELL "You must be in the " D ,SUB " to do that." CR>)>>
+	<TELL "You must be in the " D ,SUB " to do that." CR>)>>
 
 <OBJECT GAME
 	(IN GLOBAL-OBJECTS)
@@ -1351,7 +1347,7 @@ all " LN " subs." CR>)
 <ROUTINE GAME-F ()
  <COND (<VERB? EXAMINE PLAY READ>
 	<SETG P-WON <>>
-	%<XTELL "(You're doing it!)" CR>)>>
+	<TELL "(You're doing it!)" CR>)>>
 
 <OBJECT SOMETHING
 	(IN GLOBAL-OBJECTS)
@@ -1361,7 +1357,7 @@ all " LN " subs." CR>)
 
 <ROUTINE SOMETHING-F ()
 	<SETG P-WON <>>
-	%<XTELL "(Type a real word instead of " D ,SOMETHING ".)" CR>>
+	<TELL "(Type a real word instead of " D ,SOMETHING ".)" CR>>
 
 "WARNING: object numbers for LEFT & RIGHT must not equal direction numbers!"
 

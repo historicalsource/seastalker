@@ -3,21 +3,22 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 
 "Necessary Flags"
 
-;<GLOBAL LOAD-MAX 100>
-;<GLOBAL LOAD-ALLOWED 100>
+"<GLOBAL LOAD-MAX 100>
+<GLOBAL LOAD-ALLOWED 100>"
 
 "Customization"
 
 <CONSTANT NAME-LENGTH 19>
-;"<GLOBAL  GAME-NAME <ITABLE BYTE 19>>"
+"<GLOBAL  GAME-NAME <ITABLE BYTE 19>>"
 <GLOBAL FIRST-NAME <ITABLE BYTE 19>>
 <GLOBAL  LAST-NAME <ITABLE BYTE 19>>
 <GLOBAL FN-SPACE 0>
 <GLOBAL LN-SPACE 0>
 
-%<COND (<GASSIGNED? PREDGEN>
+"%<COND (<GASSIGNED? PREDGEN>"
 
-<GLOBAL RESTORED-DURING-NAME-INPUT <>>
+"<GLOBAL RESTORED-DURING-NAME-INPUT <>>"
+
 <ROUTINE READ-NAME (TBL STR "AUX" PTR LEN N NUMTOKENS TOK)
 	<TELL .STR CR>
 	<TELL ">">
@@ -38,7 +39,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 		      <AGAIN>)
 		     (<EQUAL? .N ,ACT?RESTORE>
 		      <COND (<V-RESTORE>
-			     <SETG RESTORED-DURING-NAME-INPUT T>
+			     ;<SETG RESTORED-DURING-NAME-INPUT T>
 			     <RFATAL>)
 			    (T
 			     <AGAIN>)>)>)>
@@ -77,12 +78,11 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 		<COND (<IGRTR? NAME-OUTLEN ,NAME-LENGTH> <RETURN>)>
 		<SET PTR <+ 1 .PTR>>>>
 
-)(T
+")(T
 
-;<ROUTINE IN-MOTION? (PERSON) <RFALSE>>
 <ROUTINE IS-CREW? (PERSON) <RFALSE>>
 
-)>
+)>"
 
 <ROUTINE PRINT-NAME (TBL "OPTIONAL" (CAP <>) "AUX" (PTR 0) LEN CH (SP? T))
 	 <SET LEN <GETB .TBL 0>>
@@ -143,7 +143,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 
 "Constants used as table offsets for each character, including the player:"
 
-<CONSTANT PLAYER-C 0>
+"<CONSTANT PLAYER-C 0>
 <CONSTANT TIP-C 1>
 <CONSTANT SHARON-C 2>
 ;<CONSTANT PERELLI-C 3>
@@ -154,32 +154,19 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 <CONSTANT SIEGEL-C 8>
 <CONSTANT GREENUP-C 9>
 <CONSTANT LOWELL-C 10>
-<CONSTANT CHARACTER-MAX 10>
+<CONSTANT CHARACTER-MAX 10>"
 
 <GLOBAL CHARACTER-TABLE
-	<TABLE PLAYER TIP SHARON GLOBAL-PERELLI THORPE
+	<PTABLE PLAYER TIP SHARON GLOBAL-PERELLI THORPE
 	       BLY ANTRIM HORVAK SIEGEL GREENUP LOWELL>>
 
 <GLOBAL GLOBAL-CHARACTER-TABLE
-	<TABLE PLAYER GLOBAL-TIP GLOBAL-SHARON GLOBAL-PERELLI GLOBAL-THORPE
+	<PTABLE PLAYER GLOBAL-TIP GLOBAL-SHARON GLOBAL-PERELLI GLOBAL-THORPE
 	       GLOBAL-BLY GLOBAL-ANTRIM GLOBAL-HORVAK GLOBAL-SIEGEL
 	       GLOBAL-GREENUP GLOBAL-LOWELL>>
 
-<ROUTINE CAPITAL-NOUN? (WRD)
-	<OR <EQUAL? .WRD ,W?DOC ,W?TIP ,W?RANDALL>
-	    <EQUAL? .WRD ,W?DOC\'S ,W?TIP\'S ,W?BILL\'S>
-	    <EQUAL? .WRD ,W?KEMP\'S ,W?ZOE\'S ,W?MARV\'S>
-	    <EQUAL? .WRD ,W?SHARON ,W?KEMP ,W?ZOE>
-	    <EQUAL? .WRD ,W?BLY\'S ,W?AMY\'S ,W?FROBTON>
-	    <EQUAL? .WRD ,W?BLY ,W?AMY ,W?LOWELL>
-	    <EQUAL? .WRD ,W?MICK\'S ,W?WALT\'S>
-	    <EQUAL? .WRD ,W?MICK ,W?ANTRIM ,W?WALT>
-	    <EQUAL? .WRD ,W?DOCTOR ,W?DR ,W?MARV>
-	    <EQUAL? .WRD ,W?SIEGEL ,W?BILL ,W?GREENUP>
-	    <EQUAL? .WRD ,W?HORVAK ,W?JEROME ,W?THORPE>>>
-
 <OBJECT PLAYER
-	(IN CENTER-LAB)
+	(IN CENTER-OF-LAB)
 	(DESC "yourself" ;"famous young inventor")
 	(ADJECTIVE FAMOUS YOUNG)
 	(SYNONYM I ME MYSELF ;INVENT)
@@ -199,7 +186,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	<DO-INSTEAD-OF ,PLAYER ,PLAYER-NAME>
 	<RTRUE>>
 
-;<GLOBAL PLAYER-HIDING <>>
+;"<GLOBAL PLAYER-HIDING <>>"
 
 <ROUTINE PLAYER-F ("AUX" LON LAT)
  <COND (<DOBJ? PLAYER>
@@ -286,7 +273,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
        (<VERB? ANALYZE EXAMINE>
 	<COND (<FSET? ,ARM ,MUNGBIT>
 	       <TELL "Your arm is seriously gashed." CR>)
-	      (T <TELL "There's nothing special about" THE-PRSO "." CR>)>)>>
+	      (T <NOTHING-SPECIAL>)>)>>
 
 <OBJECT GLOBAL-TIP
 	(DESC "Tip Randall")
@@ -311,7 +298,8 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	(CHARACTER 1)>
 
 <GLOBAL TIP-PLAYS <>>
-<GLOBAL TIP-PICKS <LTABLE STATION-MONITOR WINDOW>>
+<GLOBAL TIP-PICKS <PLTABLE STATION-MONITOR WINDOW>>
+
 <ROUTINE TIP-IS-PLAYING ()
 	<TELL <COND (<==? ,TIP-PLAYS ,WINDOW> "looking out")
 		    (T "playing with")>
@@ -331,7 +319,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	      (<==? .L ,SUB>
 	       <TELL D ,TIP " is sitting behind you, ">
 	       <COND (<IN? ,MAGAZINE ,TIP>
-		      <TELL "reading a magazine." CR>)
+		      <TELL "reading a " D ,MAGAZINE "." CR>)
 		     (<NOT ,TIP-FOLLOWS-YOU?>
 		      <TELL "installing a " D ,FINE-GRID "." CR>)
 		     (T
@@ -360,10 +348,7 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	      (<SET X <COM-CHECK ,TIP>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
 	      (T <TELL <PICK-ONE ,WHY-ME> CR> <RFATAL>)>)
-       (<OR <AND ,PRSI <SET OBJ ,PRSI>
-		 <VERB? ASK-ABOUT CONFRONT> <DOBJ? TIP>>
-	    <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		 <VERB? FIND WHAT>>>
+       (<SET OBJ <ASK-ABOUT? ,TIP>>
 	<COND (<NOT <GRAB-ATTENTION ,TIP>> <RTRUE>)>
 	<SAID-TO ,TIP>
 	<COND (<AND <EQUAL? .OBJ ,AUTO-PILOT>
@@ -378,8 +363,10 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 		      <TELL-HINT 61 ,TIP <>>)>)
 	      (<AND <EQUAL? .OBJ ,TRAITOR ,BLACK-BOX> <TIP-COMES>>
 	       <RTRUE>)
-	      (<AND <EQUAL? .OBJ ,TIP-IDEA ,GLOBAL-SONAR>
-		    <IN? ,TIP-IDEA ,GLOBAL-OBJECTS>>
+	      (<AND <EQUAL? .OBJ ,TIP-IDEA ,GLOBAL-SONAR ,GLOBAL-SIEGEL>
+		    <IN? ,TIP-IDEA ,GLOBAL-OBJECTS>
+		    <NOT ,SIEGEL-TESTED>
+		    <NOT <FSET? ,SIEGEL ,BUSYBIT>>>
 	       <TELL-HINT 13 ,SIEGEL <>>)
 	      (<EQUAL? .OBJ ,STATION-MONITOR>
 	       <TELL "\"I just like to play with it.\"" CR>)
@@ -389,13 +376,13 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 			       <NOT <==? ,NOW-TERRAIN ,SEA-TERRAIN>>>>
 		      <TELL "\"I think it's swell!\"" CR>
 		      <RTRUE>)>
-	       %<XTELL
+	       <TELL
 "\"If the " D ,SNARK " stays near the
 sea floor, "FN", it may churn up silt. Even with our " D ,SEARCH-BEAM"
 on, we might have trouble aiming a weapon. Wouldn't it be easier if we
 could spot its exact position by sonar?\"">
 	       <COND (<YES?>
-		      %<XTELL
+		      <TELL
 "\""FN", our " D ,SONARSCOPE " shows each " D ,GRID-UNIT " as 500 meters
 across. A blip indicates the APPROXIMATE position of an object. That's not
 good enough to hit the broad side of a barn! ">
@@ -429,19 +416,29 @@ D ,GRID-UNIT "s -- 0, 5, 10, or 15 meters per turn.\"" CR>)>)>)>
 	      (<SET X <COMMON-ASK-ABOUT ,TIP .OBJ>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
 	      (T
-	       ;<OR <EQUAL? .OBJ ,GLOBAL-SUB ,LOCAL-SUB ,VOLTAGE-REGULATOR>
+	       ;"<OR <EQUAL? .OBJ ,GLOBAL-SUB ,LOCAL-SUB ,VOLTAGE-REGULATOR>
 		   <EQUAL? .OBJ ,OVERHEATING ,CONTROL-CIRCUITS ,MICROPHONE>
 		   <EQUAL? .OBJ ,ELECTROLYTE-RELAY ,MICROPHONE-DOME
 				,SPECIAL-TOOL-GLOBAL ,SPECIAL-TOOL>
-		   <EQUAL? .OBJ ,GLOBAL-SNARK ,CONTROL-CIRCUITS-GAUGE>>
-	       %<XTELL "\"You know as much as I do, "FN".\"" CR>)
+		   <EQUAL? .OBJ ,GLOBAL-SNARK ,CONTROL-CIRCUITS-GAUGE>>"
+	       <TELL "\"You know as much as I do, "FN".\"" CR>)
 	      ;(T <DONT-KNOW ,TIP .OBJ>)>)
        (<VERB? TELL-ABOUT>
 	<COND (<DOBJ? GLOBAL-SNARK>
-	       %<XTELL
+	       <TELL
 "\"I know, " FN "! We'd better go there fast in the " D ,GLOBAL-SUB "!\""
 CR>)>)
        (<COMMON-OTHER ,TIP> <RTRUE>)>>
+
+<ROUTINE ASK-ABOUT? (PER)
+ <COND (<AND <VERB? ASK-ABOUT CONFRONT>
+	     <EQUAL? ,PRSO .PER>
+	     ,PRSI>
+	,PRSI)
+       (<AND <VERB? FIND WHAT>
+	     ,PRSO
+	     <IN? ,PRSO ,GLOBAL-OBJECTS>>
+	,PRSO)>>
 
 <OBJECT GLOBAL-SHARON
 	(IN GLOBAL-OBJECTS)
@@ -465,27 +462,26 @@ CR>)>)
        (<==? ,WINNER ,GLOBAL-SHARON>
 	<COND (<AND <VERB? FIND>
 		    <DOBJ? GLOBAL-SHARON>>
-	       %<XTELL "\"I'm in the Sea Cat.\"" CR>)
+	       <TELL "\"I'm in the " D ,THORPE-SUB ".\"" CR>)
 	      (<AND <VERB? FIND>
 		    <DOBJ? GLOBAL-SNARK>
 		    ;<==? ,REMOTE-PERSON-ON ,SONARPHONE>>
-	       %<XTELL "\"It's right here, next to me.\"" CR>)
-	      (<AND <VERB? STOP MOVE MOVE-DIR PUSH>
-		    <DOBJ? SNARK THORPE-SUB>>
+	       <TELL "\"It's right here, next to me.\"" CR>)
+	      (<AND <VERB? STOP MOVE MOVE-DIR PUSH SET>
+		    <DOBJ? ROOMS SNARK THORPE-SUB>>
 	       <TELL "\"I'm afraid I can't control it that well.\"" CR>)
 	      (<SET X <COM-CHECK ,GLOBAL-SHARON>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
-	      (T <TELL <PICK-ONE ,WHY-ME> CR> <RFATAL>)>)
+	      (T <TELL
+"\"Sorry, "FN", but I'm too busy driving this " D ,THORPE-SUB ".\"" CR>
+	       <RFATAL>)>)
        ;(<VERB? ASK> <RFALSE>)
        (<AND <EQUAL? ,REMOTE-PERSON ,GLOBAL-SHARON>
-	     <OR <AND ,PRSI <SET OBJ ,PRSI>
-		      <DOBJ? GLOBAL-SHARON> <VERB? CONFRONT ASK-ABOUT>>
-		 <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		      <VERB? FIND WHAT>>>>
+	     <SET OBJ <ASK-ABOUT? ,GLOBAL-SHARON>>>
 	;<COND (<NOT <GRAB-ATTENTION ,GLOBAL-SHARON>> <RTRUE>)>
 	<SAID-TO ,GLOBAL-SHARON>
-	<COND (<EQUAL? .OBJ ,SNARK> <TELL ,SHARON-ABOUT-MONSTER CR>)
-	      (<EQUAL? .OBJ ,THORPE-SUB> <TELL ,SHARON-ABOUT-CAT CR>)
+	<COND (<EQUAL? .OBJ ,SNARK> <SHARON-ABOUT-MONSTER> <RTRUE>)
+	      (<EQUAL? .OBJ ,THORPE-SUB> <SHARON-ABOUT-CAT> <RTRUE>)
 	      (<EQUAL? .OBJ ,GLOBAL-THORPE> <SHARON-ABOUT-THORPE> <RTRUE>)
 	      (<SET X <COMMON-ASK-ABOUT ,GLOBAL-SHARON .OBJ>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
@@ -494,7 +490,7 @@ CR>)>)
        (<AND <DOBJ? GLOBAL-SHARON>
 	     <VERB? HELLO>
 	     <EQUAL? ,REMOTE-PERSON-ON ,SONARPHONE ,INTERCOM>>
-	%<XTELL "You hear " D ,PRSO " nodding at you." CR>)
+	<TELL "You hear " D ,PRSO " nodding at you." CR>)
        (<AND <DOBJ? GLOBAL-SHARON> <VERB? LISTEN REPLY>>
 	<WAITING-FOR-YOU-TO-SPEAK>
 	<RTRUE>)
@@ -502,11 +498,15 @@ CR>)>)
 	     <VERB? PHONE>
 	     <NOT <EQUAL? ,HERE ,SUB ,CRAWL-SPACE>>
 	     <NOT ,SUB-IN-DOME ;<IN-DOME? ,HERE>>>
-	%<XTELL "There's no phone line to where she is." CR>)
+	<TELL "There's no phone line to where she is." CR>)
        (<AND <DOBJ? GLOBAL-SHARON> <VERB? READ>>
-	%<XTELL
-"That's just a figure of speech! Try the command: SHARON, HELLO." CR>)
+	<FIGURE-OF-SPEECH>
+	<RTRUE>)
        (T <GLOBAL-PERSON>)>>
+
+<ROUTINE FIGURE-OF-SPEECH ()
+	<TELL
+"That's just a figure of speech! Try the command: SAY \"HELLO.\"" CR>>
 
 <OBJECT SHARON
 	(IN OFFICE)
@@ -523,16 +523,16 @@ CR>)>)
 ;<GLOBAL SHARON-CALLED <>>
 
 <ROUTINE DONT-KNOW-ANYTHING ()
-	%<XTELL "\"Uh . . . I don't know anything about it.\"" CR>>
+	<TELL "\"Uh . . . I don't know anything about it.\"" CR>>
 
 <ROUTINE SHARON-F ("OPTIONAL" (ARG <>) "AUX" OBJ (L <LOC ,SHARON>) X)
  <COND (<==? .ARG ,M-OBJDESC>
 	<COND ;(<IN-MOTION? ,SHARON> <RTRUE>)
 	      (<IN? ,SHARON ,OFFICE>
-	       %<XTELL "Sharon is looking through the file drawer." CR>)
+	       <TELL "Sharon is looking through the file drawer." CR>)
 	      (<AND <IN? ,SHARON ,HERE> <IN? ,HERE ,ROOMS>>
-	       %<XTELL "Sharon is pacing back and forth." CR>)
-	      (T %<XTELL "Sharon is sitting on the " D <LOC ,SHARON> "." CR>)>
+	       <TELL "Sharon is pacing back and forth." CR>)
+	      (T <TELL "Sharon is sitting on the " D <LOC ,SHARON> "." CR>)>
 	;<CARRY-CHECK ,SHARON>)
        (<==? ,WINNER ,SHARON>
 	<COND (<VERB? FIND>
@@ -540,7 +540,7 @@ CR>)>)
 		      <PERFORM ,V?ASK-ABOUT ,SHARON ,MAGAZINE>
 		      <RTRUE>)
 		     (<DOBJ? GLOBAL-THORPE>
-		      %<XTELL
+		      <TELL
 "Sharon looks surprised. \"I don't know, " FN ".\"" CR>)>)
 	      (<AND <VERB? LOOK-INSIDE> <DOBJ? FILE-DRAWER>>
 	       <SETG WINNER ,PLAYER>
@@ -548,31 +548,28 @@ CR>)>)
 	       <RTRUE>)
 	      (<SET X <COM-CHECK ,SHARON>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
-	      (T %<XTELL "\"I'm too busy right now.\"" CR>)>)
+	      (T <TELL "\"I'm too busy right now.\"" CR>)>)
        (<AND <VERB? ASK> <IN? ,SHARON ,OFFICE>>
 	<PERFORM ,V?ASK-ABOUT ,SHARON ,FILE-DRAWER>
 	<RTRUE>)
-       (<OR <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		 <VERB? FIND WHAT>>
-	    <AND ,PRSI <SET OBJ ,PRSI>
-		 <DOBJ? SHARON> <VERB? CONFRONT ASK-ABOUT>>>
+       (<SET OBJ <ASK-ABOUT? ,SHARON>>
 	<COND (<NOT <GRAB-ATTENTION ,SHARON>> <RTRUE>)>
 	<SAID-TO ,SHARON>
 	<COND (<AND <EQUAL? .OBJ ,MAGAZINE ,ARTICLE>
 		    <EQUAL? <LOC ,MAGAZINE> ,SHARON ,PLAYER>>
-	       %<XTELL "\"Uh . . . That's not the magazine I'm looking for.\""
-		       ;"\"I've never seen it before.\"" CR>)
+	       <TELL
+"\"Uh . . . That's not the " D ,MAGAZINE " I'm looking for.\"" CR>)
 	      (<AND <EQUAL? .OBJ ,CIRCUIT-BREAKER ,ELECTRICAL-CONTROL-PANEL>
 		    ,SHARON-BROKE-CIRCUIT>
 	       <DONT-KNOW-ANYTHING>)
 	      (<EQUAL? .OBJ ,CATALYST-CAPSULE>
-	       %<XTELL "\"Uh . . . I guess I forgot about it. Sorry.\"" CR>)
+	       <TELL "\"Uh . . . I guess I forgot about it. Sorry.\"" CR>)
 	      (<EQUAL? .OBJ ,GLOBAL-SHARON ,SHARON>
-	       %<XTELL "\"You know me well and trust me completely.\"" CR>)
+	       <TELL "\"You know me well and trust me completely.\"" CR>)
 	      (<OR <EQUAL? .OBJ ,PROBLEM>
 		   ;<AND ,SHARON-CALLED
 			<EQUAL? .OBJ ,TELEPHONE ,GLOBAL-CALL>>>
-	       %<XTELL
+	       <TELL
 "\"Sorry, " FN ", but I just got word that my mother is ill. They want
 me to come to the hospital at once.">
 	       ;<COND (,SHARON-CALLED
@@ -581,7 +578,7 @@ me to come to the hospital at once.">
 	       <TELL "\"" CR>)
 	      (<OR <EQUAL? .OBJ ,ARTICLE>
 		   <EQUAL? .OBJ ,FILE-DRAWER ,PAPERS ,MAGAZINE>>
-	       %<XTELL
+	       <TELL
 "\"I can't find the " D ,MAGAZINE " I bought for my mother this morning. I
 thought it might be in the " D ,FILE-DRAWER ". I wanted to take it to the
 hospital for her to read. I really must rush off, "FN"!\"" CR>)
@@ -599,7 +596,7 @@ hospital for her to read. I really must rush off, "FN"!\"" CR>)
        (<COMMON-OTHER ,SHARON> <RTRUE>)>>
 
 <GLOBAL SHARON-ASKED
-	<LTABLE "\"I can't help you there.\""
+	<PLTABLE "\"I can't help you there.\""
 		"\"That has nothing to do with me.\"">>
 
 <OBJECT GLOBAL-BLY
@@ -624,12 +621,12 @@ hospital for her to read. I really must rush off, "FN"!\"" CR>)
 	<ENABLE <QUEUE I-SHARON-TO-HALLWAY 6 ;12>>
 	<SAID-TO ,GLOBAL-BLY>
 	<THIS-IS-IT ,GLOBAL-SNARK>
-	%<XTELL
+	<TELL
 FN "! Our transparent dome enclosing the " ,URS
 " is being battered by a huge monster!\"" CR>>
 
 <ROUTINE MIKE-2-F ()
-	 %<XTELL
+	 <TELL
 "\"The " D ,SNARK "'s gone for now, " FN ". It's no longer in sight.">>
 
 <ROUTINE GLOBAL-BLY-F ("OPTIONAL" (ARG <>) "AUX" OBJ L X)
@@ -637,8 +634,8 @@ FN "! Our transparent dome enclosing the " ,URS
  <COND (<==? .ARG ,M-OBJDESC>
 	<COND (<EQUAL? .L ,CENTER-OF-LAB>
 	       <COND (,WOMAN-ON-SCREEN
-		      %<XTELL "You can't tell who the woman is." CR>)
-		     (T %<XTELL
+		      <TELL "You can't tell who the woman is." CR>)
+		     (T <TELL
 "You can see a picture of " D ,BLY " on the " D ,REMOTE-PERSON-ON "." CR>)>)>)
        (<AND <EQUAL? .L ,CENTER-OF-LAB>
 	     <SPEAKING-VERB?>
@@ -647,13 +644,13 @@ FN "! Our transparent dome enclosing the " ,URS
 		 <NOT <FSET? ,MICROPHONE ,ONBIT>>>>
 	<SETG P-CONT <>>
 	<THIS-IS-IT ,MICROPHONE>
-	%<XTELL "She can't hear you unless you ">
+	<TELL "She can't hear you unless you ">
 	<COND (<NOT <IN? ,MICROPHONE ,PLAYER>>
-	       %<XTELL "pick up your " D ,MICROPHONE>
+	       <TELL "pick up your " D ,MICROPHONE>
 	       <COND (<NOT <FSET? ,MICROPHONE ,ONBIT>>
-		      %<XTELL " and switch it on">)>
-	       %<XTELL "." CR>)
-	      (T %<XTELL "switch on your " D ,MICROPHONE "." CR>)>)
+		      <TELL " and switch it on">)>
+	       <TELL "." CR>)
+	      (T <TELL "switch on your " D ,MICROPHONE "." CR>)>)
        (<AND <NOT ,BLY-TOLD-PROBLEM>	;<FSET? ,GLOBAL-SNARK ,INVISIBLE>
 	     <NOT <VERB? GOODBYE LISTEN>>
 	     <NOT ,MONSTER-GONE>
@@ -668,7 +665,7 @@ FN "! Our transparent dome enclosing the " ,URS
        (<==? ,WINNER ,GLOBAL-BLY>
 	<COND (<AND <VERB? FIND>
 		    <DOBJ? GLOBAL-BLY>>
-	       %<XTELL "\"I'm at the " D ,AQUADOME ".\"" CR>)
+	       <TELL "\"I'm at the " D ,AQUADOME ".\"" CR>)
 	      (<AND <DOBJ? PLAYER>
 		    <==? ,P-ADVERB ,W?PRIVATELY>
 		    <OR <AND <VERB? TELL>>
@@ -685,7 +682,7 @@ may return any time.\"" CR>)
 		     (,MONSTER-GONE
 		      <MIKE-2-F>
 		      <TELL "\"" CR>)
-		     (T %<XTELL
+		     (T <TELL
 "The " D ,AQUADOME "'s camera pans, and the monster comes into
 view on your " D ,VIDEOPHONE " screen. It resembles a huge sea slug, about
 5 meters tall. Its clawed tentacles pound and scratch at the dome." CR>)>)
@@ -699,29 +696,29 @@ view on your " D ,VIDEOPHONE " screen. It resembles a huge sea slug, about
 		      <MIKE-2-F>
 		      <TELL "\"" CR>)
 		     (<OR <DOBJ? GLOBAL-EXPLOSIVE> <IOBJ? GLOBAL-EXPLOSIVE>>
-		      %<XTELL
+		      <TELL
 "\"Setting off explosions so close might damage the
 " D ,AQUADOME " even worse than the Snark is doing.\"" CR>)
-		     (T %<XTELL
+		     (T <TELL
 "\"" FN ", this is a peaceful research facility. We
 have no weapons.\"" CR>)>)
 	      (<AND <VERB? SEND SEND-OUT> <DOBJ? GLOBAL-SUB>>
-	       %<XTELL
+	       <TELL
 "\"No subs are stationed here at the " D ,AQUADOME ", " FN ".\"" CR>)
 	      (<AND <DOBJ? DISTRESS-CALL>
 		    <OR <VERB? SEND>
 			<AND <VERB? SEND-TO> <IOBJ? GLOBAL-SUB>>>>
-	       %<XTELL
+	       <TELL
 "\"No response to our " D ,SONARPHONE " " D ,DISTRESS-CALL "s.\"" CR>)
 	      (<AND <DOBJ? GLOBAL-SUB>
 		    <OR <VERB? FIND>
 			<AND <VERB? FIND-WITH> <IOBJ? GLOBAL-SONAR>>>>
-	       %<XTELL
-"\"Sonar pulses show no echo blips on the " D ,SONARSCOPE ".\"" CR>)
+	       <TELL
+"\"No blips appear on the " D ,SONAR-EQUIPMENT ".\"" CR>)
 	      (<OR <VERB? LEAVE DISEMBARK>
-		   <AND <VERB? COME>
+		   <AND <VERB? WALK-TO ;COME>
 			<DOBJ? GLOBAL-SURFACE YOUR-LABORATORY GLOBAL-HERE>>>
-	       %<XTELL
+	       <TELL
 "\"Our emergency escape bell would be vulnerable to a monster
 as big as the Snark. Ditto for SCUBA gear, deep-sea diving suits, or
 jet-propelled observation bubbles.\"" CR>)
@@ -735,24 +732,17 @@ jet-propelled observation bubbles.\"" CR>)
 	       <RTRUE>)
 	      (<OR <AND <VERB? WAIT-FOR> ;<EQUAL? ,PRSO <> ,PLAYER>>
 		   <AND <VERB? FIND ;"LOOK FOR"> <DOBJ? PLAYER>>>
-	       %<XTELL "\"Okay, "FN", but hurry!\"" CR>)
+	       <TELL "\"Okay, "FN", but hurry!\"" CR>)
 	      (<SET X <COM-CHECK ,GLOBAL-BLY>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
 	      (T <TELL <PICK-ONE ,WHY-ME> CR> <RFATAL>)>)
        (<AND <EQUAL? ,REMOTE-PERSON ,GLOBAL-BLY>
-	     <OR <AND ,PRSI <SET OBJ ,PRSI>
-		      <DOBJ? GLOBAL-BLY> <VERB? CONFRONT ASK-ABOUT>>
-		 <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		      <VERB? FIND WHAT>>>>
+	     <SET OBJ <ASK-ABOUT? ,GLOBAL-BLY>>>
 	;<COND (<NOT <GRAB-ATTENTION ,GLOBAL-BLY>> <RTRUE>)>
 	<SAID-TO ,GLOBAL-BLY>
-	<COND ;(<EQUAL? .OBJ ,GLOBAL-BLY>
-	       <TELL 
-"\"I'm the commander of the " ,URS ". If you want to
-know more, look in the personnel file.\"" CR>)
-	      (<EQUAL? .OBJ ,PROBLEM>
+	<COND (<EQUAL? .OBJ ,PROBLEM>
 	       <COND (<EQUAL? .L ,SUB>
-		      %<XTELL
+		      <TELL
 "\"I'll tell you when we can talk privately.\"" CR>)
 		     ;(,MONSTER-GONE
 		      <MIKE-2-F>
@@ -763,25 +753,23 @@ attack at any time!
 		      <PERFORM ,V?TELL-ABOUT ,GLOBAL-BLY ,GLOBAL-SUB>
 		      <RTRUE>)
 		     (T
-		      ;<SETG BLY-TOLD-PROBLEM T>
-		      ;<FCLEAR ,GLOBAL-SNARK ,INVISIBLE>
 		      <TELL "\"">
 		      <BLY-TELLS-PROBLEM>)>)
 	      (<EQUAL? .OBJ ,GLOBAL-SNARK>
 	       <COND (<EQUAL? ,REMOTE-PERSON-ON ,SONARPHONE>
 		      <MOVE ,PRIVATE-MATTER ,GLOBAL-OBJECTS>
 		      <INC BLY-PRIVATELY-COUNT>
-		      %<XTELL
+		      <TELL
 "\"There have been no new attacks, "FN". But the creature may come back. And">
 		      <DISCUSS-PRIVATE>)
 		     (T
-		      %<XTELL
+		      <TELL
 "\"Some of our divers saw it while exploring the undersea environment. They
 nicknamed it the Snark. This is the first time it has approached the " D ,AQUADOME ",
 and it may be the last time, " FN "! I'm not sure how long our plastic dome
 enclosure c">
 		      <COND (,MONSTER-GONE <TELL "ould">) (T <TELL "an">)>
-		      %<XTELL " withstand such a battering!\"" CR>)>
+		      <TELL " withstand such a battering!\"" CR>)>
 	       <RTRUE>)
 	      (<SET X <COMMON-ASK-ABOUT ,GLOBAL-BLY .OBJ>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
@@ -790,11 +778,11 @@ enclosure c">
        (<VERB? ASK $CALL>
 	<TELL "\"Ask me about something in particular, "FN".\"" CR>)
        (<AND ,WOMAN-ON-SCREEN <VERB? EXAMINE>>
-	%<XTELL "You can't tell who the woman is." CR>)
+	<TELL "You can't tell who the woman is." CR>)
        (<AND <DOBJ? GLOBAL-BLY>
 	     <VERB? HELLO>
 	     <EQUAL? ,REMOTE-PERSON-ON ,SONARPHONE ,INTERCOM>>
-	%<XTELL "You hear " D ,PRSO " nodding at you." CR>)
+	<TELL "You hear " D ,PRSO " nodding at you." CR>)
        (<AND <VERB? GOODBYE>
 	     ;<EQUAL? ,REMOTE-PERSON-ON ,VIDEOPHONE>>
 	<TELL "\"I hope to see you soon, " FN ".\"" CR>
@@ -810,11 +798,11 @@ enclosure c">
 	     <NOT ,SUB-IN-DOME ;<IN-DOME? ,HERE>>>
 	<RFALSE>)
        (<AND <DOBJ? GLOBAL-BLY> <VERB? READ>>
-	%<XTELL
-"That's just a figure of speech! Try the command: BLY, HELLO." CR>)
+	<FIGURE-OF-SPEECH>
+	<RTRUE>)
        (<VERB? TELL-ABOUT>
 	<COND (<IOBJ? GLOBAL-SUB>
-	       %<XTELL
+	       <TELL
 "\"The only submarine capable of hunting it at such depths is
 your " D ,GLOBAL-SUB ". Please send us that!\"" CR>)>)
        (<COMMON-OTHER ,GLOBAL-BLY> <RTRUE>)
@@ -841,7 +829,7 @@ your " D ,GLOBAL-SUB ". Please send us that!\"" CR>)>)
  <COND (<==? .ARG ,M-OBJDESC>
 	<DESCRIBE-COLLAPSE ,BLY>)
        (<AND ,DOME-AIR-BAD? <FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>>
-	%<XTELL
+	<TELL
 "\"Never mind me, " FN "!\" she cries. \"S-S-Something's wrong with the "
 D ,AIR-SUPPLY-SYSTEM "! ... F-Fix it -- or we'll all s-s-soon be ...\"" CR>
 	<RFATAL>)
@@ -849,7 +837,7 @@ D ,AIR-SUPPLY-SYSTEM "! ... F-Fix it -- or we'll all s-s-soon be ...\"" CR>
 	;<FSET ,BLY ,TOUCHBIT>
 	<COND (<NOT <GRAB-ATTENTION ,BLY>> <RTRUE>)
 	      (<AND <VERB? FIND> <DOBJ? PHOTO> <NOT ,BLY-SAW-PHOTO>>
-	       %<XTELL
+	       <TELL
 "\"It's either on his person or in his locker, in the
 dormitory.\"" CR>)
 	      (<AND <VERB? GIVE> <DOBJ? JOB> <IOBJ? SIEGEL GLOBAL-SIEGEL>>
@@ -883,10 +871,10 @@ where the " D ,SONAR-EQUIPMENT "is.\"">
 	       <SETG WINNER ,PLAYER>
 	       <PERFORM ,V?ASK-ABOUT ,BLY ,PRSI>
 	       <RTRUE>)
-	      (<OR <AND <DOBJ? PLAYER>
-			<==? ,P-ADVERB ,W?PRIVATELY>
-			<OR <VERB? TELL>
-			    <AND <VERB? TELL-ABOUT> <IOBJ? PRIVATE-MATTER>>>>>
+	      (<AND <DOBJ? PLAYER>
+		    <==? ,P-ADVERB ,W?PRIVATELY>
+		    <OR <VERB? TELL>
+			<AND <VERB? TELL-ABOUT> <IOBJ? PRIVATE-MATTER>>>>
 	       <SETG WINNER ,PLAYER>
 	       <ASK-BLY-ABOUT-PRIVATE-MATTER>
 	       <RTRUE>)
@@ -904,7 +892,7 @@ where the " D ,SONAR-EQUIPMENT "is.\"">
        (<AND <VERB? ASK-ABOUT TELL-ABOUT>
 	     <IOBJ? GLOBAL-SUB LOCAL-SUB VOLTAGE-REGULATOR OVERHEATING
 		    CONTROL-CIRCUITS CONTROL-CIRCUITS-GAUGE>>
-	%<XTELL
+	<TELL
 "\"You mean the problem you had on the way here? Shall I ask Mick to
 check on it?\"">
 	<COND (<NOT <YES?>> <RTRUE>)>
@@ -912,10 +900,7 @@ check on it?\"">
 	<SETG WINNER ,ANTRIM>
 	<PERFORM ,V?FIX ,GLOBAL-SUB>
 	<RTRUE>)
-       (<OR <AND ,PRSI <SET OBJ ,PRSI>
-		 <DOBJ? BLY> <VERB? CONFRONT ASK-ABOUT>>
-	    <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		 <VERB? FIND WHAT>>>
+       (<SET OBJ <ASK-ABOUT? ,BLY>>
 	<COND (<NOT <GRAB-ATTENTION ,BLY>> <RTRUE>)>
 	<SAID-TO ,BLY>
 	<FSET ,BLY ,TOUCHBIT>
@@ -937,31 +922,30 @@ check on it?\"">
 "\"I'm worried that the " D ,SNARK " may attack again, "FN".\"" CR>
 		      ;<DONT-KNOW ,BLY .OBJ>)>)
 	      (<EQUAL? .OBJ ,DIARY>
-	       %<XTELL "\"I think that I can guess what's in it.\"" CR>)
+	       <TELL "\"I think that I can guess what's in it.\"" CR>)
 	      (<EQUAL? .OBJ ,REASON ,PHOTO>
 	       <COND (<EQUAL? .OBJ ,PHOTO> <SETG BLY-SAW-PHOTO T>)>
 	       <DISCRETION ,BLY ,HORVAK>
-	       %<XTELL
+	       <TELL
 "\"A friend took a picture of me just before I was assigned here.
 I usually keep it on my desk, but a few days after Doc came on to me,
 I realized it was gone.">
 	       <COND (<NOT ,BLY-SAW-PHOTO>
 		      <TELL " It still hasn't turned up.">)>
-	       %<XTELL
+	       <TELL
 " I think Doc took it. He wanted a picture of me.\"" CR>)
 	      (<EQUAL? .OBJ ,EVIDENCE ,BLACK-BOX>
 	       <COND (<NOT ,ZOE-MENTIONED-EVIDENCE>
 		      <ASK-BLY-ABOUT-PRIVATE-MATTER>
 		      <RTRUE>)>
-	       %<XTELL
+	       <TELL
 "\"I wanted to make sure the " D ,SONAR-EQUIPMENT " would warn us if the "
 D ,SNARK "
 approached again. I was worried because the blips on the scope looked fuzzy,
 as if the system was out of alignment. When I inspected it, I found someone
 had secretly attached ">
 	       <COND (<NOT <IN? ,BLACK-BOX ,BLY-DESK>>
-		      <TELL "th"
-			    <COND (<IN? ,BLACK-BOX ,BLY> "is ") (T "at ")>
+		      <TELL <COND (<IN? ,BLACK-BOX ,BLY> "this ") (T "that ")>
 			    D ,BLACK-BOX>)
 		     (T <TELL "this device">)>
 	       <TELL " to it!\"" CR>
@@ -981,12 +965,12 @@ had secretly attached ">
 		      <TELL "\"">)
 		     (T
 		      <DISCRETION ,BLY ,SIEGEL ,ANTRIM>
-		      %<XTELL
+		      <TELL
 "\"I bet you're wondering if he could have attached that " D ,BLACK-BOX
 " to the " D ,SONAR-EQUIPMENT ".|
 I agree that he had the opportunity, but all I can say, " FN ", is that he's
 no troublemaker like " D ,ANTRIM "." CR>)>
-	       %<XTELL
+	       <TELL
 "He's a great diver and a skilled electronics engineer.|
 I think he really enjoys exploring the undersea
 environment. He discovered that " D ,ORE-NODULES "
@@ -998,35 +982,36 @@ the " ,URS " of " D ,IU-GLOBAL ".">
 			  <IN? ,BLACK-BOX ,BLY-DESK>>
 		      <TELL "\"" CR>)
 		     (T
-		      %<XTELL
+		      <TELL
 " But I do have a plan
 that will help us find out. Do you want to hear it, " FN "?\"">
 		      <MOVE ,BLY-PLAN ,GLOBAL-OBJECTS>
 		      <COND (<NOT <YES?>> <RTRUE>)>
+		      <QUEUE I-TIP-SONAR-PLAN 0>
 		      <TELL-HINT 13 ;18 ,SIEGEL <>>
 		      ;<PERFORM ,V?ASK-ABOUT ,BLY ,BLY-PLAN>
 		      <RTRUE>)>)
 	      (<EQUAL? .OBJ ,BLY-PLAN>
 	       <TELL-HINT 13 ;18 ,SIEGEL <>>)
 	      (<EQUAL? .OBJ ,ANTRIM ,GLOBAL-ANTRIM>
-	       %<XTELL
+	       <TELL
 "Just hearing Antrim's name makes her eyes flash fire, and she
 clenches her fists. You can tell she's had a hard time keeping her
 temper when dealing with Antrim.|">
 	       <DISCRETION ,BLY ,ANTRIM>
-	       %<XTELL
+	       <TELL
 "\"" FN ", that redheaded troublemaker's been nothing but bad news since
 the day I arrived! He's always got a chip on his shoulder and looks
 for ways to embarrass me or start a fight.">
 	       <COND (,ANTRIM-EXPLODED
 		      <TELL
 " You heard his remarks about the " D ,OXYGEN-GEAR ".">)>
-	       %<XTELL
+	       <TELL
 " Most of
 the time he complains about discipline, but whenever I ease up he's always the
 first to accuse me of laxity!\"" CR>)
 	      (<EQUAL? .OBJ ,ORE-NODULES>
-	       %<XTELL
+	       <TELL
 "\"Oops, I forgot you hadn't heard about it, " FN ". I was
 about to report it when we were attacked.
 " D ,SIEGEL " discovered it by accident. The ore is mostly
@@ -1034,13 +1019,13 @@ manganese and iron, but there's gold and platinum, and there may
 be traces of rare earths, too.
 This could be the richest payoff yet from the " D ,AQUADOME "!\"" CR>)
 	      (<EQUAL? .OBJ ,SPECIAL-TOOL ;,SPECIAL-TOOL-GLOBAL>
-	       %<XTELL "\"That belongs on the " D ,HOOK "!">
+	       <TELL "\"That belongs on the " D ,HOOK "!">
 	       <COND (<IN? ,SPECIAL-TOOL ,BLY-OFFICE>
 		      <TELL
 " Why is it in my office? It hasn't been there long! When I ">
 		      <COND (<EQUAL? ,HERE ,BLY-OFFICE> <TELL "came back ">)
 			    (T <TELL "went back t">)>
-		      %<XTELL ;"that black box"
+		      <TELL ;"that black box"
 "here to put something
 in a drawer, I knocked a pen off my desk.
 I had to stoop down to find it. Had that wrench
@@ -1052,10 +1037,11 @@ been lying under my desk, I would have seen it!">)>
 		     (T
 		      <SETG ZOE-BLUSHING T>
 		      <DISCRETION ,BLY ,HORVAK>
-		      <TELL "\"I bet you're wondering if he">
+		      <TELL
+"\"I wonder if he sabotaged the " D ,AIR-SUPPLY-SYSTEM>
 		      <COND (<NOT ,HORVAK-FIXED-AIR>
-			     <TELL " ditched the wrench there after he">)>
-		      <TELL " sabotaged the " D ,AIR-SUPPLY-SYSTEM "?">
+			     <TELL " and then ditched the wrench there">)>
+		      <TELL "?">
 		      <COND (<NOT ,HORVAK-FIXED-AIR>
 			     <TELL
 " He had the opportunity: he could have tossed it there when he came to
@@ -1070,14 +1056,14 @@ Zoe blushes and her voice trembles with emotion as she speaks." CR>)>)
 	       <HE-SHE-IT .OBJ T>
 	       <TELL "'s an excellent diver.\"" CR>)
 	      (<EQUAL? .OBJ ,GREENUP ,GLOBAL-GREENUP>
-	       %<XTELL "\"I never would have suspected him!\"" CR>)
+	       <TELL "\"I never would have suspected him!\"" CR>)
 	      (<AND <NOT <FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>>
 		    <EQUAL? .OBJ ,AIR-SUPPLY-SYSTEM ,AIR-SUPPLY-SYSTEM-GLOBAL
 				 ,GLOBAL-SABOTAGE>>
 	       <COND (<IN? ,CREW ,HERE>
-		      %<XTELL
+		      <TELL
 "Zoe shoots a troubled glance at her five crew members.|">)>
-	       %<XTELL
+	       <TELL
 "\"Once we saw your " D ,SEARCH-BEAM " beam, " FN ", we were all
 watching for your arrival outside the dome. Any one of us could have
 tampered with the " D ,AIR-SUPPLY-SYSTEM " without being noticed.\"|
@@ -1088,7 +1074,7 @@ tampered with the " D ,AIR-SUPPLY-SYSTEM " without being noticed.\"|
 also took that " D ,SPECIAL-TOOL "!\"|">
 	       <COND (<IN? ,ANTRIM ,HERE>
 		      <SETG ANTRIM-EXPLODED T>
-		      %<XTELL
+		      <TELL
 D ,ANTRIM " explodes: \"That shows you what kind of a commander Bly is!
 Regulations state that EVERYONE has to wear " D ,OXYGEN-GEAR " all the time.
 But neither of those two divers were wearing theirs! Bly wasn't even wearing
@@ -1109,7 +1095,7 @@ HER OWN!\"" CR>)>
 	<COND (<AND <NOT ,DOME-AIR-BAD?>
 		    <FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>>
 	       <MOVE ,ANTRIM ,HERE>
-	       %<XTELL
+	       <TELL
 "As you turn to leave with " D ,BLY ", " D ,ANTRIM " explodes
 angrily:|
 \"What's so private, 'Captain Bly'? If you have a complaint, why not spill
@@ -1129,7 +1115,7 @@ action, you'll be the first to -- to --\"|
 
 <ROUTINE DOC-IN-LOVE ()
 	<DISCRETION ,BLY ,HORVAK>
-	%<XTELL
+	<TELL
 "\"This is embarrassing. Doc's in love with me, or so he says.|
 When he said he loved me, I didn't handle it well. I lost my poise
 and told him this was a scientific research station,
@@ -1163,9 +1149,9 @@ D ,LAB-ASSISTANT ".\"" CR>>
 	       <ENABLE <QUEUE I-SIEGEL-REPORTS 4>>)>
 	<TELL "\"" CR "Zoe sends " D ,SIEGEL " into the " D .PLACE "." CR>>
 
-<ROUTINE IS-CREW? (PERSON)
-	<OR <EQUAL? .PERSON ,LOWELL ,ANTRIM ,HORVAK>
-	    <EQUAL? .PERSON ,SIEGEL ,GREENUP>>>
+<ROUTINE IS-CREW? (PER)
+	<OR <EQUAL? .PER ,LOWELL ,ANTRIM ,HORVAK>
+	    <EQUAL? .PER ,SIEGEL ,GREENUP>>>
 
 <ROUTINE CREW-5-TOGETHER? ("AUX" (L <LOC ,LOWELL>))
  <COND (<AND <==? .L <LOC ,ANTRIM>>
@@ -1202,7 +1188,7 @@ D ,LAB-ASSISTANT ".\"" CR>>
 <GLOBAL ASKED-ANTRIM <>>
 <GLOBAL ANTRIM-CHECKED-SUB <>>
 
-<ROUTINE ANTRIM-F ("OPTIONAL" (ARG <>) "AUX" OBJ X (L <LOC ,ANTRIM>))
+<ROUTINE ANTRIM-F ("OPTIONAL" (ARG <>) "AUX" OBJ X SUB0 SUB1)
  <COND (<==? .ARG ,M-OBJDESC>
 	<COND (<IN? ,ANTRIM ,AIRLOCK>
 	       <DESCRIBE-PERSON ,ANTRIM "working on the SCIMITAR">)
@@ -1214,37 +1200,39 @@ D ,LAB-ASSISTANT ".\"" CR>>
 		    <DOBJ? GLOBAL-SUB LOCAL-SUB VOLTAGE-REGULATOR OVERHEATING
 			   CONTROL-CIRCUITS CONTROL-CIRCUITS-GAUGE>>
 	       <COND (,ANTRIM-CHECKED-SUB
-		      %<XTELL "\"I already did that!\"" CR>
+		      <TELL "\"I already did that!\"" CR>
 		      <RTRUE>)>
 	       <MOVE ,BLY ,HERE>
 	       <SETG ASKED-ANTRIM T>
 	       <I-ANTRIM-TO-SUB "\"Wilco, ">
-	       %<XTELL
+	       <TELL
 "But " D ,BLY " has heard your order. \"Please remember, " FN ",\"
 she says, \"while Mick is working on your " D ,SUB ", it'll
 be out of action. The " D ,SNARK " may return at any time, and we'll
 be defenseless! Are you sure you want to repair the
 " D ,SUB " now?\"">
 	       <COND (<YES?>
-		      <COND (<OR <NOT <==? ,BAZOOKA <GET ,ON-SUB 0>>>
-				 <NOT <==? ,DART <GET ,ON-SUB 1>>>>
-			     %<XTELL
+		      <SET SUB0 <GET ,ON-SUB 0>>
+		      <SET SUB1 <GET ,ON-SUB 1>>
+		      <COND (<OR <NOT <==? ,BAZOOKA .SUB0>>
+				 <NOT <==? ,DART .SUB1>>>
+			     <TELL
 "\"Then why not use the time to arm the " D ,SUB>
-			     <COND (<OR <==? ,BAZOOKA <GET ,ON-SUB 0>>
-					<==? ,DART <GET ,ON-SUB 1>>>
+			     <COND (<OR <==? ,BAZOOKA .SUB0>
+					<==? ,DART .SUB1>>
 				    <TELL " better">)>
-			     %<XTELL "?\" Zoe goes on." CR>
-			     <COND (<NOT <==? ,BAZOOKA <GET ,ON-SUB 0>>>
+			     <TELL "?\" Zoe goes on." CR>
+			     <COND (<NOT <==? ,BAZOOKA .SUB0>>
 				    <TELL-HINT 73 ;22 ,CLAW <>>)>
-			     <COND (<NOT <==? ,DART <GET ,ON-SUB 1>>>
+			     <COND (<NOT <==? ,DART .SUB1>>
 				    <TELL-HINT 72 ;23 ,DART ;<>>)>
 			     <SETG BLY-PRIVATELY-DELAY T>
-			     %<XTELL "|
+			     <TELL "|
 \"If you want to consider your options">
-			     %<XTELL ", let's go to">
-			     <COND (<NOT <==? ,DART <GET ,ON-SUB 1>>>
+			     <TELL ", let's go to">
+			     <COND (<NOT <==? ,DART .SUB1>>
 				    <TELL " the " D ,DOME-LAB>)
-				   (<NOT <==? ,BAZOOKA <GET ,ON-SUB 0>>>
+				   (<NOT <==? ,BAZOOKA .SUB0>>
 				    <TELL THE <LOC ,BAZOOKA>>)>
 			     <TELL ".\"" CR>)>)>
 	       <RTRUE>)
@@ -1252,14 +1240,11 @@ be defenseless! Are you sure you want to repair the
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
 	      ;(<VERB? HELP> <RFALSE>)
 	      (T <TELL <PICK-ONE ,WHY-ME> CR> <RFATAL>)>)
-       (<OR <AND ,PRSI <SET OBJ ,PRSI>
-		 <VERB? ASK-ABOUT CONFRONT> <DOBJ? ANTRIM>>
-	    <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		 <VERB? FIND WHAT>>>
+       (<SET OBJ <ASK-ABOUT? ,ANTRIM>>
 	<COND (<NOT <GRAB-ATTENTION ,ANTRIM>> <RTRUE>)>
 	<SAID-TO ,ANTRIM>
 	<COND (<EQUAL? .OBJ ,GLOBAL-BLY>
-	       %<XTELL
+	       <TELL
 "\"What a slave driver! Sometimes I call her 'Captain Bly'!\"" CR>)
 	      (<SET X <COMMON-ASK-ABOUT ,ANTRIM .OBJ>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
@@ -1302,7 +1287,7 @@ be defenseless! Are you sure you want to repair the
 	       <COND (<NOT <IN? ,HORVAK ,DOME-LAB>>
 		      <MOVE ,HORVAK ,DOME-LAB>
 		      <TELL "He heads for the " D ,DOME-LAB ". ">)>
-	       %<XTELL
+	       <TELL
 "It will take " D ,HORVAK " 4 turns to analyze the chemical contents of"
 THE-PRSO "." CR>)
 	      (<AND <VERB? FIX TAKE> <DOBJ? DART>>
@@ -1329,15 +1314,12 @@ THE-PRSO "." CR>)
 	       <TELL "er!\"" CR>)
 	      ;(<VERB? HELP> <RFALSE>)
 	      (T <TELL <PICK-ONE ,WHY-ME> CR> <RFATAL>)>)
-       (<OR <AND ,PRSI <SET OBJ ,PRSI>
-		 <VERB? ASK-ABOUT CONFRONT> <DOBJ? HORVAK>>
-	    <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		 <VERB? FIND WHAT>>>
+       (<SET OBJ <ASK-ABOUT? ,HORVAK>>
 	<COND (<NOT <GRAB-ATTENTION ,HORVAK>> <RTRUE>)>
 	<SAID-TO ,HORVAK>
 	<COND (<EQUAL? .OBJ ,SPECIAL-TOOL ,SPECIAL-TOOL-GLOBAL>
 	       <COND (,HORVAK-FIXED-AIR
-		      %<XTELL
+		      <TELL
 "\"I found it in the " D ,BLY-OFFICE ", "FN", when I ran in there to get
 her " D ,OXYGEN-GEAR ". I spotted it under her desk.\"" CR>)
 		     (T <DONT-KNOW-ANYTHING>)>)
@@ -1351,10 +1333,10 @@ her " D ,OXYGEN-GEAR ". I spotted it under her desk.\"" CR>)
 	       <PERFORM ,V?SEARCH ,HORVAK>
 	       <RTRUE>)
 	      (<EQUAL? .OBJ ,PHOTO>
-	       %<XTELL "\"I took it because I wanted a picture of her.\"" CR>)
+	       <TELL "\"I took it because I wanted a picture of her.\"" CR>)
 	      (<EQUAL? .OBJ ,SYRINGE ,ESCAPE-POD-UNIT>
 	       <COND (,GREENUP-GUILT
-		      %<XTELL
+		      <TELL
 "\"" FN ", the " D ,SYRINGE " contains a lot of arsenic, and some arsenic is
 missing from my " D ,CHEMICAL-SUPPLY-SHELVES "! If you'd been jabbed with that
 " D ,SYRINGE ", you'd be dead!\"" CR>)
@@ -1363,7 +1345,7 @@ missing from my " D ,CHEMICAL-SUPPLY-SHELVES "! If you'd been jabbed with that
 		      <PERFORM ,V?ANALYZE ,SYRINGE>
 		      <RTRUE>)>)
 	      (<AND <EQUAL? .OBJ ,MAGAZINE ,ARTICLE> <FSET? ,DART ,MUNGBIT>>
-	       %<XTELL
+	       <TELL
 "Doc quickly reads the " D ,ARTICLE ", then flashes you an excited glance.|
 \"" FN ", Thorpe's sea creatures evolved from AMINO-HYDROPHASE. If the
 Snark's his creation, then I know exactly what drug will
@@ -1374,21 +1356,21 @@ tranquilize it! Shall I make some up?\"">
 		      <RTRUE>)
 		     (<NOT <EQUAL? <META-LOC ,BLY> ,HERE>>
 		      <RTRUE>)>
-	       %<XTELL
+	       <TELL
 D ,BLY " still looks worried.
 \"" FN ", you should have a really high-powered weapon, too. You may run up
 against an enemy sub, if Thorpe himself is operating around here. Can you
 think of any device to use as a weapon of last resort?\"">
 	       <COND (<YES?>
-		      %<XTELL
+		      <TELL
 "\"Show me what device you have in mind, " FN ".\"" CR>
 		      <RTRUE>)>
 	       <COND (<FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT> <RTRUE>)>
 	       <SAID-TO ,TIP>
 	       <THIS-IS-IT ,BAZOOKA>
-	       %<XTELL "Once again, Tip has an idea." CR>
+	       <TELL "Once again, Tip has an idea." CR>
 	       <TELL-HINT 71 ;15 ,BAZOOKA ;<>>
-	       %<XTELL
+	       <TELL
 "\"Shall I have it mounted on the other " D ,CLAW " of the
 " D ,SUB "?\"">
 	       <COND (<YES?>
@@ -1415,19 +1397,19 @@ think of any device to use as a weapon of last resort?\"">
 		      <PERFORM ,V?ANALYZE ,SYRINGE>
 		      <RTRUE>)>)>)
        (<VERB? SEARCH>
-	%<XTELL
+	<TELL
 "\"Certainly not! The contents of my locker are my private property!\"" CR>)
        (<COMMON-OTHER ,HORVAK> <RTRUE>)>>
 
 <ROUTINE FIX-DART ()
  <COND (<NOT <FSET? ,DART ,MUNGBIT>>
-	%<XTELL "\"Hey, I already did that!\"" CR>)
+	<TELL "\"Hey, I already did that!\"" CR>)
        (T
 	<MOVE ,HORVAK ,DOME-LAB>
 	<MOVE ,DART ,HORVAK>
 	<ENABLE <QUEUE I-SYNTHESIS 5>>
 	<FSET ,HORVAK ,BUSYBIT>
-	%<XTELL "This will take 5 turns." CR>)>>
+	<TELL "This will take 5 turns." CR>)>>
 
 <OBJECT GLOBAL-SIEGEL
 	(IN GLOBAL-OBJECTS)
@@ -1467,7 +1449,7 @@ think of any device to use as a weapon of last resort?\"">
 in the " D ,COMM-BLDG " a little while ago. She may have checked
 it out. But I'll double-check it anyhow.\"" CR>)
 		     (T
-		      %<XTELL
+		      <TELL
 "\"Right, " FN ". No doubt you're testing all systems. I'll ">
 		      <COND (<NOT <EQUAL? ,HERE ,COMM-BLDG>>
 			     <TELL "report back and ">)>
@@ -1480,14 +1462,11 @@ it out. But I'll double-check it anyhow.\"" CR>)
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
 	      ;(<VERB? HELP> <RFALSE>)
 	      (T <TELL <PICK-ONE ,WHY-ME> CR> <RFATAL>)>)
-       (<OR <AND ,PRSI <SET OBJ ,PRSI>
-		 <VERB? ASK-ABOUT CONFRONT> <DOBJ? SIEGEL>>
-	    <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		 <VERB? FIND WHAT>>>
+       (<SET OBJ <ASK-ABOUT? ,SIEGEL>>
 	<COND (<NOT <GRAB-ATTENTION ,SIEGEL>> <RTRUE>)>
 	<SAID-TO ,SIEGEL>
 	<COND (<EQUAL? .OBJ ,GLOBAL-SONAR ,SONAR-EQUIPMENT ,SONAR-MAN>
-	       %<XTELL "\"I operate the " D ,SONAR-EQUIPMENT ".\"" CR>)
+	       <TELL "\"I operate the " D ,SONAR-EQUIPMENT ".\"" CR>)
 	      (<==? .OBJ ,BLACK-BOX>
 	       <COND (<AND <FSET? ,SIEGEL ,BUSYBIT> <I-SIEGEL-REPORTS>>
 		      <RTRUE>)
@@ -1538,10 +1517,7 @@ it out. But I'll double-check it anyhow.\"" CR>)
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
 	      ;(<VERB? HELP> <RFALSE>)
 	      (T <TELL <PICK-ONE ,WHY-ME> CR> <RFATAL>)>)
-       (<OR <AND ,PRSI <SET OBJ ,PRSI>
-		 <VERB? ASK-ABOUT CONFRONT> <DOBJ? GREENUP>>
-	    <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		 <VERB? FIND WHAT>>>
+       (<SET OBJ <ASK-ABOUT? ,GREENUP>>
 	<COND (<NOT <GRAB-ATTENTION ,GREENUP>> <RTRUE>)>
 	<SAID-TO ,GREENUP>
 	<COND (<AND <EQUAL? .OBJ ,SYRINGE ,ESCAPE-POD-UNIT>
@@ -1555,7 +1531,7 @@ it out. But I'll double-check it anyhow.\"" CR>)
 		      <RTRUE>)>)
 	      (<AND <OR ,GREENUP-TRAPPED ,GREENUP-CUFFED>
 		    ;<EQUAL? .OBJ ,MOTIVE ,SYRINGE ,ESCAPE-POD-UNIT>>
-	       %<XTELL
+	       <TELL
 "His only response is a sneer and silence." CR>)
 	      (<SET X <COMMON-ASK-ABOUT ,GREENUP .OBJ>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
@@ -1603,15 +1579,12 @@ it out. But I'll double-check it anyhow.\"" CR>)
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
 	      ;(<VERB? HELP> <RFALSE>)
 	      (T <TELL <PICK-ONE ,WHY-ME> CR> <RFATAL>)>)
-       (<OR <AND ,PRSI <SET OBJ ,PRSI>
-		 <VERB? ASK-ABOUT CONFRONT> <DOBJ? LOWELL>>
-	    <AND ,PRSO <IN? ,PRSO ,GLOBAL-OBJECTS> <SET OBJ ,PRSO>
-		 <VERB? FIND WHAT>>>
+       (<SET OBJ <ASK-ABOUT? ,LOWELL>>
 	<COND (<NOT <GRAB-ATTENTION ,LOWELL>> <RTRUE>)>
 	<SAID-TO ,LOWELL>
 	<COND (<EQUAL? .OBJ ,HORVAK ,GLOBAL-HORVAK>
 	       <DISCRETION ,LOWELL ,HORVAK>
-	       %<XTELL
+	       <TELL
 "\"He's dedicated to scientific research. He's a great marine
 biologist and enjoys his work here at the " D ,AQUADOME ", or he HAS enjoyed it
 until recently.|
@@ -1619,12 +1592,12 @@ I don't know why, but " D ,HORVAK " has become moody and introverted.
 I've seen him writing in a private diary.\"" CR>)
 	      (<AND <EQUAL? .OBJ ,DIARY> <NOT <FSET? ,DIARY ,TOUCHBIT>>>
 	       <DISCRETION ,LOWELL ,HORVAK>
-	       %<XTELL
+	       <TELL
 "\"It's not in the lab. " D ,HORVAK "'s always secretive about his diary.
 He would never leave it around where anyone might find it. It's
 probably in his locker, in the crew's dormitory.\"" CR>)
 	      (<EQUAL? .OBJ ,LAB-ASSISTANT>
-	       %<XTELL "\"I'm " D ,HORVAK "'s " D ,LAB-ASSISTANT ".\"" CR>)
+	       <TELL "\"I'm " D ,HORVAK "'s " D ,LAB-ASSISTANT ".\"" CR>)
 	      (<SET X <COMMON-ASK-ABOUT ,LOWELL .OBJ>>
 	       <COND (<==? .X ,M-FATAL> <RFALSE>) (T <RTRUE>)>)
 	      (T <DONT-KNOW ,LOWELL .OBJ>)>)
@@ -1651,7 +1624,7 @@ probably in his locker, in the crew's dormitory.\"" CR>)
 	<RFALSE>)
        (<AND <VERB? TELL-ABOUT> <DOBJ? PLAYER>>
 	<COND (<IN? ,MAGAZINE ,PLAYER>
-	       %<XTELL
+	       <TELL
 "He is a noted marine biologist.|
 The " D ,ARTICLE " mentions that he may have created synthetic
 forms of sea life by genetic engineering.|
@@ -1660,14 +1633,14 @@ gone into hiding to evade the resulting publicity.|
 He has told close friends he will soon marry an American woman named
 " D ,SHARON "." CR>)	;"He is a Cuban national.|"
 	      (<FSET? ,MAGAZINE ,TOUCHBIT>
-	       %<XTELL "Try looking in the " D ,MAGAZINE "." CR>)
+	       <TELL "Try looking in the " D ,MAGAZINE "." CR>)
 	      ;(T <RFALSE>)>)
        (T <GLOBAL-PERSON>)>>
 
 "People Functions"
 
 <GLOBAL WHY-ME
-	<LTABLE "\"If you think that will help, do it!\""
+	<PLTABLE "\"If you think that will help, do it!\""
 		"\"I think you can do that better yourself.\"">>
 
 <ROUTINE BRING-ME (WHAT WHO "AUX" L ;(C <GETP .WHO ,P?CHARACTER>))
@@ -1693,11 +1666,11 @@ He has told close friends he will soon marry an American woman named
 	<FCLEAR .WHAT ,INVISIBLE>
 	<FSET .WHAT ,TOUCHBIT>
 	<COND (<EQUAL? .L ,HERE> <TELL "\"Okay.\"">)
-	      (T %<XTELL "\"Here is" THE .WHAT ", " FN ".\" ">)>
+	      (T <TELL "\"Here is" THE .WHAT ", " FN ".\" ">)>
 	<COND (<FSET? .WHAT ,PERSON>
 	       <MOVE .WHAT ,HERE>
 	       <HE-SHE-IT .WHAT T>
-	       %<XTELL "'s wondering why you want to see ">
+	       <TELL "'s wondering why you want to see ">
 	       <HIM-HER-IT .WHAT>
 	       <TELL ".">)>
 	<CRLF>
@@ -1708,21 +1681,21 @@ He has told close friends he will soon marry an American woman named
        (T
 	<TELL "\"Sorry, " FN ", but I don't think I can.\"" CR>)>>
 
-<ROUTINE CARRY-CHECK (PERSON)
-	 <COND (T ;<FIRST? .PERSON>
-		<PRINT-CONT .PERSON T 0>
+<ROUTINE CARRY-CHECK (PER)
+	 <COND (T ;<FIRST? .PER>
+		<PRINT-CONT .PER T 0>
 		;<RTRUE>)>>
 
 <GLOBAL TOLD-SNARK-WENT <>>
-<ROUTINE COM-CHECK (PERSON)
- 	 <COND (<NOT <GRAB-ATTENTION .PERSON>> <RTRUE>)
+<ROUTINE COM-CHECK (PER)
+ 	 <COND (<NOT <GRAB-ATTENTION .PER>> <RTRUE>)
 	       (<VERB? ARM>
 		<COND (<DOBJ? LOCAL-SUB GLOBAL-SUB>
-		       %<XTELL
+		       <TELL
 "\"Good idea, "FN"! How do you want to do that?\"" CR>)>)
-	       (<VERB? COME>
+	       (<VERB? WALK-TO ;COME>
 		<COND (<DOBJ? GLOBAL-HERE>
-		       %<XTELL "\"I am here, "FN"!\"" CR>)>)
+		       <TELL "\"I am here, "FN"!\"" CR>)>)
 	       (<AND <DOBJ? DART BAZOOKA>
 		     <MOUNTING-VERB? ,PRSO>>
 		<SETG WINNER ,PLAYER>
@@ -1731,8 +1704,8 @@ He has told close friends he will soon marry an American woman named
 	       (<VERB? FIND>
 		<COND (<AND <DOBJ? GLOBAL-SNARK>
 			    ,MONSTER-GONE
-			    <OR <IS-CREW? .PERSON>
-				<EQUAL? .PERSON ,BLY ,GLOBAL-BLY>>>
+			    <OR <IS-CREW? .PER>
+				<EQUAL? .PER ,BLY ,GLOBAL-BLY>>>
 		       <SETG TOLD-SNARK-WENT T>
 		       <TELL-HINT 62 ,SNARK <>>)
 		      (T <RFATAL>)>)
@@ -1741,23 +1714,23 @@ He has told close friends he will soon marry an American woman named
 		       <COND (<==? ,WINNER ,HORVAK>
 			      <FCLEAR ,ARM ,MUNGBIT>
 			      <FSET ,GASH ,INVISIBLE>
-			      %<XTELL
+			      <TELL
 D ,HORVAK " quickly bandages your gash. Your arm is as good as new." CR>)
-			     (T %<XTELL
+			     (T <TELL
 "\"I think Doc can do that better himself.\"" CR>)>)>)
 	       (<VERB? ;GOODBYE ;HELLO THANKS> <RFATAL>)
 	       (<VERB? BRING SEND SEND-TO TAKE ;GET>
 		<COND (<IN? ,PRSO ,PLAYER>
 		       <SETG WINNER ,PLAYER>
-		       <PERFORM ,V?GIVE ,PRSO .PERSON>
+		       <PERFORM ,V?GIVE ,PRSO .PER>
 		       <RTRUE>)
 		      (<AND ;<DOBJ? DART> <FSET? ,PRSO ,TRYTAKEBIT>>
 		       <RFALSE>)
 		      (T
-		       <BRING-ME ,PRSO .PERSON>)>)
+		       <BRING-ME ,PRSO .PER>)>)
 	       (<VERB? EXAMINE>
 		<SETG WINNER ,PLAYER>
-		<PERFORM ,V?SHOW .PERSON ,PRSO>
+		<PERFORM ,V?SHOW .PER ,PRSO>
 		<RTRUE>)
 	       (<VERB? FOLLOW>
 		<COND (<DOBJ? PLAYER>
@@ -1765,84 +1738,84 @@ D ,HORVAK " quickly bandages your gash. Your arm is as good as new." CR>)
 "\"If you want me to go somewhere, just say so.\"" CR>)>)
 	       (<AND <VERB? GIVE> <IOBJ? PLAYER>>
 		<SETG WINNER ,PLAYER>
-		<PERFORM ,V?TAKE ,PRSO .PERSON>
+		<PERFORM ,V?TAKE ,PRSO .PER>
 		<RTRUE>)
 	       (<AND <VERB? SGIVE> <DOBJ? PLAYER>>
 		<SETG WINNER ,PLAYER>
-		<PERFORM ,V?TAKE ,PRSI .PERSON>
+		<PERFORM ,V?TAKE ,PRSI .PER>
 		<RTRUE>)
 	       (<VERB? DROP GIVE SGIVE WALK WALK-TO LEAVE THROUGH>
-		<COND (<NOT <==? .PERSON ,REMOTE-PERSON>> <RFATAL>)>)
+		<COND (<NOT <==? .PER ,REMOTE-PERSON>> <RFATAL>)>)
 	       (<VERB? HELLO GOODBYE>
-		<COND (<OR <NOT ,PRSO> <==? ,PRSO .PERSON>>
+		<COND (<OR <NOT ,PRSO> <==? ,PRSO .PER>>
 		       <SETG WINNER ,PLAYER>
-		       <PERFORM ,PRSA .PERSON>
+		       <PERFORM ,PRSA .PER>
 		       <RTRUE>)>)
 	       (<VERB? HELP>
 		<COND (<EQUAL? ,PRSO <> ,PLAYER>
 		       <SETG WINNER ,PLAYER>
-		       <PERFORM ,V?ASK .PERSON>
+		       <PERFORM ,V?ASK .PER>
 		       <RTRUE>)
-		      (<FSET? ,PRSO ,PERSON>
-		       %<XTELL "\"I don't need any help.\"" CR>)
+		      ;(<FSET? ,PRSO ,PERSON>
+		       <TELL "\"I don't need any help.\"" CR>)
 		      (T <RFATAL>)>)
 	       (<VERB? INVENTORY>
-		<COND (<NOT <CARRY-CHECK .PERSON>>
-		       <TELL D .PERSON " isn't holding anything." CR>)>
+		<COND (<NOT <CARRY-CHECK .PER>>
+		       <TELL D .PER " isn't holding anything." CR>)>
 		<RTRUE>)
 	       (<VERB? LISTEN>
 		<COND (<OR <DOBJ? PLAYER-NAME>
 			   <NOT <IN? ,PRSO ,GLOBAL-OBJECTS>>>
-		       %<XTELL "\"I'm trying to, " FN "!\"" CR>)>)
+		       <TELL "\"I'm trying to, " FN "!\"" CR>)>)
 	       (<VERB? SHOW>
 		<COND (<DOBJ? PLAYER>
-		       <COND (<IN? ,PRSI .PERSON>
+		       <COND (<IN? ,PRSI .PER>
 			      <SETG WINNER ,PLAYER>
-			      <PERFORM ,V?TAKE ,PRSI .PERSON>
+			      <PERFORM ,V?TAKE ,PRSI .PER>
 			      <RTRUE>)
 			     (T
-			      %<XTELL "\"I'm sure you can find ">
+			      <TELL "\"I'm sure you can find ">
 			      <HIM-HER-IT ,PRSI>
 			      <TELL ", " FN ".\"" CR>)>)>)
 	       (<VERB? TELL>
 		<COND (<DOBJ? PLAYER>
 		       <SETG WINNER ,PLAYER>
-		       <PERFORM ,V?ASK .PERSON>
+		       <PERFORM ,V?ASK .PER>
 		       <RTRUE>)>)
 	       (<VERB? TELL-ABOUT>
 		<COND (<DOBJ? PLAYER>
 		       <SETG WINNER ,PLAYER>
-		       <PERFORM ,V?ASK-ABOUT .PERSON ,PRSI>
+		       <PERFORM ,V?ASK-ABOUT .PER ,PRSI>
 		       <RTRUE>)>)
 	       (<OR ;<VERB? WAIT>
 		    <AND <VERB? WAIT-FOR> <DOBJ? PLAYER>>>
 		<SETG WINNER ,PLAYER>
-		<PERFORM ,V?$CALL .PERSON>
+		<PERFORM ,V?$CALL .PER>
 		<RTRUE>)
 	       (<VERB? WHAT TALK-ABOUT>
 		<SETG WINNER ,PLAYER>
-	        <PERFORM ,V?ASK-ABOUT .PERSON ,PRSO>
+	        <PERFORM ,V?ASK-ABOUT .PER ,PRSO>
 		<RTRUE>)
 	       (<VERB? YES NO>
 		<PRINTC %<ASCII !\">>
 		<COND (<VERB? YES> <TELL "Glad">) (T <TELL "Sorry">)>
-		%<XTELL " to hear it, " FN ".\"" CR>)>>
+		<TELL " to hear it, " FN ".\"" CR>)>>
 
 <ROUTINE COMMON-ASK-ABOUT (PER OBJ)
  ;<COND (,DEBUG <TELL "[COMMON-ASK-ABOUT: " D .PER "/" D .OBJ "]" CR>)>
  <COND (<EQUAL? .OBJ ,DEPTH ,CREW ,CREW-GLOBAL> <RFATAL>)
        (<EQUAL? .OBJ ,DEPTHFINDER> <RFATAL>)
        (<EQUAL? .OBJ ,GLOBAL-WEAPON ,MORE>
-	%<XTELL "\"Ask me about something specific, "FN".\"" CR>)
+	<TELL "\"Ask me about something specific, "FN".\"" CR>)
        (<OR <EQUAL? .OBJ ,BAY ,GLOBAL-SONAR ,SONAR-EQUIPMENT>
 	    <EQUAL? .OBJ ,GLOBAL-SUB ,LOCAL-SUB ,CLAW>>
-	%<XTELL "\"You know more about it than I do, " FN ".\"" CR>)
+	<TELL "\"You know more about it than I do, " FN ".\"" CR>)
        (<EQUAL? .OBJ .PER>
-	%<XTELL "\"I have no secrets. Anyone can see what I am.\"" CR>)
+	<TELL "\"I have no secrets. Anyone can see what I am.\"" CR>)
        (<EQUAL? .OBJ ,PLAYER>
-	%<XTELL "\"You're "FN" "LN", the famous young inventor.\"" CR>)
+	<TELL "\"You're "FN" "LN", the famous young inventor.\"" CR>)
        (<EQUAL? .OBJ ,AIRLOCK-ELECTRICITY>
-	%<XTELL "\"It powers the " D ,AIRLOCK-HATCH ".\"" CR>)
+	<TELL "\"It powers the " D ,AIRLOCK-HATCH ".\"" CR>)
        (<EQUAL? .OBJ ,VIDEOPHONE>	;"Player could mean PHOTO."
 	<COND (<GLOBAL-IN? ,VIDEOPHONE ,HERE>
 	       <SETG P-WON <>>
@@ -1855,19 +1828,19 @@ D ,HORVAK " quickly bandages your gash. Your arm is as good as new." CR>)
 	<TELL <GETP .OBJ ,P?TEXT> CR>)
        (<EQUAL? .OBJ ,DIARY>
 	<COND (<FSET? ,DIARY ,TOUCHBIT>
-	       %<XTELL "\"I think that it's pretty obvious.\"" CR>)>)
+	       <TELL "\"I think that it's pretty obvious.\"" CR>)>)
        (<EQUAL? .OBJ ,EVIDENCE ,BLACK-BOX>
 	<SHOULD-ASK ,BLY .PER>)
        (<EQUAL? .OBJ ,FINE-GRID>
 	<SHOULD-ASK ,TIP .PER>)
        (<EQUAL? .OBJ ,MAGAZINE ,ARTICLE>
-	%<XTELL "\"It's a magazine called 'SCIENCE WORLD.'\"" CR>)
+	<TELL "\"It's a " D ,MAGAZINE " called 'SCIENCE WORLD.'\"" CR>)
        (<EQUAL? .OBJ ,CONTROL-CIRCUITS-GAUGE>
 	<TELL
 "The " D ,CONTROL-CIRCUITS-GAUGE " is a thermometer for an important
 part of the engine." CR>)
        (<EQUAL? .OBJ ,OXYGEN-GEAR>
-	%<XTELL
+	<TELL
 "\"Your Dad made the rule about it, " FN ". Everyone in
 the " D ,AQUADOME " should carry one at all times, remember?|
 They're little canisters of oxygen that you can wear around
@@ -1879,47 +1852,47 @@ The canister is in the " D ,SUB ", just like in all " LN " submarines."
 ;" clipped under your pilot's seat">)>
 	<TELL "\"" CR>)
        (<IN? .OBJ .PER>
-	%<XTELL "\"I have it right here, "FN".\"" CR>)
+	<TELL "\"I have it right here, "FN".\"" CR>)
        (<OR <EQUAL? .OBJ ,BLACK-CIRCUITRY ,GLOBAL-SABOTAGE>
 	    <EQUAL? .OBJ ,AIR-SUPPLY-SYSTEM ,AIR-SUPPLY-SYSTEM-GLOBAL>>
-	%<XTELL "\"You know as much as I do.\"" CR>)
+	<TELL "\"You know as much as I do.\"" CR>)
        (<EQUAL? .OBJ ,PRIVATE-MATTER>
 	<COND (<==? .PER ,REMOTE-PERSON>	;<IN? .PER ,GLOBAL-OBJECTS>
-	       %<XTELL "\"Wait until you see me, " FN ".\"" CR>)
+	       <TELL "\"Wait until you see me, " FN ".\"" CR>)
 	      (T
 	       <MOVE ,PRIVATE-MATTER ,GLOBAL-OBJECTS>
-	       %<XTELL
+	       <TELL
 D .PER " says, \"I'm sorry, " FN ", but that's a " D ,PRIVATE-MATTER ".\""
 CR>)>)
        (<OR <EQUAL? .OBJ ,PROBLEM>
 	    <AND ,DEPTH-WARNING
-		 <EQUAL? .OBJ ,DEPTHFINDER-LIGHT ,ALARM>>
+		 <EQUAL? .OBJ ,DEPTHFINDER-LIGHT ,ALARM-SUB>>
 	    <AND <OR ,SONAR-WARNING ,SHIP-WARNING>
-		 <EQUAL? .OBJ ,SONARSCOPE-LIGHT ,ALARM>>>
+		 <EQUAL? .OBJ ,SONARSCOPE-LIGHT ,ALARM-SUB>>>
 	<COND (<OR ,DEPTH-WARNING ,SONAR-WARNING ,SHIP-WARNING>
-	       %<XTELL "\"I think you're going too close to "
+	       <TELL "\"I think you're going too close to "
 		       <COND (,DEPTH-WARNING "the bottom") (T "an obstacle")>
 		       ", " FN ".\"" CR>)
 	      (<AND ,DOME-AIR-BAD? <FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>>
 	       <BADGES-RED>
 	       <RTRUE>)
-	      (T %<XTELL D .PER " says, \"I don't know, " FN ".\"" CR>)>)
+	      (T <TELL D .PER " says, \"I don't know, " FN ".\"" CR>)>)
        (<EQUAL? .OBJ ,BADGE-GLOBAL ,BADGE-GLOBAL-2 ,BADGE-GLOBAL-3>
 	<PRINTC %<ASCII !\">>
 	<EXAMINE-BADGE>
 	<TELL "\"" CR>
 	<RTRUE>)
        (<EQUAL? .OBJ ,GLOBAL-SONAR ,SONAR-MAN>
-	%<XTELL "\"" D ,SIEGEL " operates the " D ,SONAR-EQUIPMENT ".\"" CR>)
+	<TELL "\"" D ,SIEGEL " operates the " D ,SONAR-EQUIPMENT ".\"" CR>)
        (<EQUAL? .OBJ ,LAB-ASSISTANT>
-	%<XTELL
+	<TELL
 "\"" D ,LOWELL " is " D ,HORVAK "'s " D ,LAB-ASSISTANT ".\"" CR>)
        (<EQUAL? .OBJ ,ALARM>
 	<COND (,ALARM-RINGING
 	       <WHY-NOT-VP>)>)
        (<EQUAL? .OBJ ,SYRINGE ,ESCAPE-POD-UNIT ,GLOBAL-GREENUP>
 	<COND (,GREENUP-GUILT
-	       %<XTELL
+	       <TELL
 "\"I never suspected " D ,GREENUP " of being a " D ,TRAITOR ".\"" CR>
 	       <COND (<AND <IN? ,GREENUP ,HERE>
 			   <NOT <FSET? ,GREENUP ,MUNGBIT>>
@@ -1931,7 +1904,7 @@ CR>)>)
 	      (<EQUAL? .OBJ ,SYRINGE ,ESCAPE-POD-UNIT>
 	       <TELL "\"Maybe " D ,HORVAK " can analyze it.\"" CR>)>)
        (<AND <FSET? ,ARM ,MUNGBIT> <EQUAL? .OBJ ,ARM ,GASH>>
-	%<XTELL "\"That looks pretty serious, "FN".\"" CR>)
+	<TELL "\"That looks pretty serious, "FN".\"" CR>)
        (<OR <IS-CREW? .PER> <EQUAL? .PER ,BLY ;,GLOBAL-BLY>>
 	<COND (<AND <EQUAL? .OBJ ,ELECTROLYTE-RELAY> ,SUB-IN-DOME>
 	       <TELL "\"It belongs in the " D ,EMPTY-SPACE ".\"" CR>)
@@ -1939,7 +1912,7 @@ CR>)>)
 		    ,SUB-IN-DOME>
 	       <COND (<OR <FSET? ,SPECIAL-TOOL ,INVISIBLE>
 			  <FSET? ,ELECTROLYTE-RELAY ,MUNGBIT>>
-		      %<XTELL
+		      <TELL
 "\"The " D ,SPECIAL-TOOL " should be on that hook.\"" CR>
 		      <RTRUE>)>
 	       <TELL "\"I'm sure glad ">
@@ -1953,7 +1926,7 @@ CR>)>)
 
 <ROUTINE SHOULD-ASK (WHO "OPTIONAL" (PER <>))
 	<COND (.PER <TELL D .PER " says, ">)>
-	%<XTELL
+	<TELL
 "\"I think you should ask " D .WHO " about that.\"" CR>>
 
 <ROUTINE COMMON-OTHER (PER "AUX" (LPER <>))
@@ -1970,75 +1943,75 @@ CR>)>)
 	     <NOT <DOBJ? BADGE-PLAYER>>
 	     <VERB? GIVE>>
 	<MOVE ,PRSO .LPER>
-	%<XTELL "\"Hey, thanks, " FN "!\"" CR>)
+	<TELL "\"Hey, thanks, " FN "!\"" CR>)
        (<AND <EQUAL? ,PRSO .PER> <VERB? HELP>>
 	<COND (<AND ,DOME-AIR-BAD? <FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>>
-	       %<XTELL
+	       <TELL
 "It would help more to fix the " D ,AIR-SUPPLY-SYSTEM "." CR>)
 	      (<NOT <IN? .PER ,GLOBAL-OBJECTS>>
-	       %<XTELL
-PRSO " looks offended. \"I'm quite capable by myself, you know.\"" CR>)>)
+	       <TELL
+D .PER " looks offended. \"I'm quite capable by myself, you know.\"" CR>)>)
        (<AND <EQUAL? ,PRSO .PER> <VERB? RUB>>
-	%<XTELL
+	<TELL
 D .PER " looks bewildered. \"What are you trying to do?\"" CR>)
        (<AND <EQUAL? ,PRSO .PER> <VERB? SHOW>>
 	<PERFORM ,V?ASK-ABOUT ,PRSO ,PRSI>
 	<RTRUE>)>>
 
-<ROUTINE DESCRIBE-COLLAPSE (PERSON)
+<ROUTINE DESCRIBE-COLLAPSE (PER)
  <COND (<FSET? ,BLY ,MUNGBIT>	;,DOME-AIR-BAD?
-	<COND (<EQUAL? .PERSON ,TIP>
+	<COND (<EQUAL? .PER ,TIP>
 	       <COND (<FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>
-		      <DESCRIBE-PERSON .PERSON "looking at you anxiously">)
+		      <DESCRIBE-PERSON .PER "looking at you anxiously">)
 		     (T
-		      <DESCRIBE-PERSON .PERSON>)>)
-	      (<EQUAL? .PERSON ,BLY ,LOWELL ,GREENUP>
+		      <DESCRIBE-PERSON .PER>)>)
+	      (<EQUAL? .PER ,BLY ,LOWELL ,GREENUP>
 	       <COND (<FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>
-		      <DESCRIBE-PERSON .PERSON "collapsing on the floor">)
+		      <DESCRIBE-PERSON .PER "collapsing on the floor">)
 		     (T
-		     <DESCRIBE-PERSON .PERSON "recovering from collapse">)>)
+		     <DESCRIBE-PERSON .PER "recovering from collapse">)>)
 	      (T
 	       <COND (<FSET? ,AIR-SUPPLY-SYSTEM ,MUNGBIT>
 		      <COND (,BADGES-RED-SAID?
-			     <DESCRIBE-PERSON .PERSON "using Oxygen Gear">)
+			     <DESCRIBE-PERSON .PER "using Oxygen Gear">)
 			    (T
-			     <DESCRIBE-PERSON .PERSON
+			     <DESCRIBE-PERSON .PER
 					      "looking at you anxiously">)>)
 		     (T
-		     <DESCRIBE-PERSON .PERSON>)>)>)
-       (T <DESCRIBE-PERSON .PERSON>)>>
+		     <DESCRIBE-PERSON .PER>)>)>)
+       (T <DESCRIBE-PERSON .PER>)>>
 
-<ROUTINE DESCRIBE-PERSON (PERSON "OPTIONAL" (STR <>))
- <COND (<AND <IS-CREW? .PERSON>
+<ROUTINE DESCRIBE-PERSON (PER "OPTIONAL" (STR <>))
+ <COND (<AND <IS-CREW? .PER>
 	     <CREW-5-TOGETHER?>
 	     <NOT <FSET? ,BLY ,MUNGBIT>>>
-	<COND (<==? .PERSON ,LOWELL>
+	<COND (<==? .PER ,LOWELL>
 	       <TELL "The five " D ,CREW " members are here." CR>)>)
-       (T <TELL D .PERSON " is "
+       (T <TELL D .PER " is "
 		<COND (<NOT .STR> "here") (T .STR)>
 		"." CR>
 	;<COND (,DEBUG <TELL "[now calling CARRY-CHECK:]" CR>)>
-	;<CARRY-CHECK .PERSON>)>>
+	;<CARRY-CHECK .PER>)>>
 
 <ROUTINE DISCRETION (P1 P2 "OPTIONAL" (P3 <>))
 	 <COND (<AND <==? ,HERE <META-LOC .P2>>
 		     .P3 <==? ,HERE <META-LOC .P3>>>
-	        %<XTELL D .P1 " looks briefly toward " D .P2 " and " D .P3
+	        <TELL D .P1 " looks briefly toward " D .P2 " and " D .P3
 " and then speaks in a whisper." CR>)
 	       (<==? ,HERE <META-LOC .P2>>
-	        %<XTELL D .P1 " looks briefly toward " D .P2
+	        <TELL D .P1 " looks briefly toward " D .P2
 " and then speaks in a whisper." CR>)
 	       (<AND .P3 <==? ,HERE <META-LOC .P3>>>
-	        %<XTELL D .P1 " looks briefly toward " D .P3
+	        <TELL D .P1 " looks briefly toward " D .P3
 " and then speaks in a whisper." CR>)>>
 
-<ROUTINE NOT-IMPORTANT (CHAR) <DONT-KNOW .CHAR ,PROBLEM>>
+"<ROUTINE NOT-IMPORTANT (CHAR) <DONT-KNOW .CHAR ,PROBLEM>>"
 
 <ROUTINE DONT-KNOW (CHAR OBJ)
 	<TELL
 D .CHAR " says, \"I don't think that's important right now, " FN ".\"" CR>>
 
-<ROUTINE FOLLOWED? (PERSON "AUX" (L <LOC .PERSON>))
+;<ROUTINE FOLLOWED? (PER "AUX" (L <LOC .PER>))
 	 <COND (<==? .L ,HERE> <RTRUE>)
 	       (<NOT <==? <BAND <GETP .L ,P?CORRIDOR>
 				<GETP ,HERE ,P?CORRIDOR>> 0>>
@@ -2052,21 +2025,8 @@ D .CHAR " says, \"I don't think that's important right now, " FN ".\"" CR>>
        (<AND <VERB? EXAMINE>
 	     <FSET? ,PRSO ,PERSON>
 	     <SET L <GET ,CHARACTER-TABLE <GETP ,PRSO ,P?CHARACTER>>>>
-	<COND ;(<AND <EQUAL? ,REMOTE-PERSON ,PRSO>
-		    <EQUAL? ,REMOTE-PERSON-ON ,VIDEOPHONE>>
-	       <COND (T <SET L <GETP .L ,P?TEXT>>
-		      <TELL .L CR>)
-		     ;(T <TELL
-"There's nothing special about" THE-PRSO "." CR>)>)
-	      (<NOT <CORRIDOR-LOOK .L>>
-	       <NOT-HERE ,PRSO>
-	       ;<TELL "You can't see " D ,PRSO " here!" CR>)>)
-       ;(<VERB? PHONE>
-	<COND (<AND <FSET? ,PRSO ,PERSON>
-		    <SET L <GET ,CHARACTER-TABLE <GETP ,PRSO ,P?CHARACTER>>>>
-	       <PERFORM ,PRSA .L ,PRSI>
-	       <RTRUE>)
-	      (T <RFALSE>)>)
+	<COND (<NOT <CORRIDOR-LOOK .L>>
+	       <NOT-HERE ,PRSO>)>)
        (<AND <VERB? ASK-ABOUT ASK-FOR HELLO REPLY TELL TELL-ABOUT>
 	     ,PRSO
 	     <FSET? ,PRSO ,PERSON>
@@ -2079,10 +2039,6 @@ D .CHAR " says, \"I don't think that's important right now, " FN ".\"" CR>>
 	     <IN? ,PRSI ,GLOBAL-OBJECTS>>
 	<PERFORM ,PRSA ,PRSO
 		 <GET ,CHARACTER-TABLE <GETP ,PRSI ,P?CHARACTER>>>
-	<RTRUE>)
-       ;(<VERB? TELL>
-	<TELL "You can't speak to someone who isn't here." CR>
-	<SETG P-CONT <>>
 	<RTRUE>)
        (T
 	<SETG P-CONT <>>

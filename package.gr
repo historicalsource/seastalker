@@ -1,0 +1,302 @@
+@style(spacing 1)
+@title (SEASTALKER - PACKAGE)
+@pageheading(DRAFT)
+
+@majorheading (SEASTALKER DATA CARDS)
+
+@heading (PLACES)
+
+@begin (itemize)
+
+FROBTON BAY -
+"Frobton Bay is roughly circular in shape. One arm of the bay ends at
+North. The other arm of the bay ends at East. The harbor is protected by
+a concrete seawall extending from one arm to the other. The opening in
+this sea wall -- through which all vessels must pass in order to enter
+or leave the bay -- lies NE of the test tank, about 30 grid squares away.@*
+North of Inventions Unlimited, along the shore of the bay, lies the town of
+Frobton, fronted by its commercial docks and fisheries -- then a
+boatyard, and finally the North Point lighthouse.@*
+East of Inventions Unlimited is a marina, a resort area, and the East Point
+Yacht Club.@*
+Frobton is a busy seaport. The waters are dotted with pleasure boats,
+fishing craft and commercial shipping. Vessels are constantly moving
+into and out of the harbor. Observe all Rules of the Road -- unless you
+prefer to submerge."
+
+INVENTIONS UNLIMITED -
+This vast scientific enterprise was originally founded by your father,
+himself a world-famous inventor. You have since added even greater luster
+to the family name with your own numerous and unique inventions.@*
+The purpose of Inventions Unlimited is to advance the frontiers of human
+knowledge in every field of science, and to increase our awareness of and
+adjustment to the physical world on land, under the sea, in the air, and
+beyond Earth's own life-supporting atmosphere into the remotest reaches of
+Outer Space.@*
+There are five main units of Inventions Unlimited -- namely, the original
+research laboratory near the town of Frobton on the east coast of the
+United States; the Psycho-Biological Laboratory in Arizona; the undersea
+research station known as the Aquadome; the IU spaceport on a previously
+uninhabited island in the Caribbean; and the IU Satellite Network, consisting
+of an inhabited orbital space station and two communication satellites.
+Together, these three satellites provide the IU Videocom Network with
+global television and radio communication.
+
+@end (itemize)
+@heading (THINGS)
+@begin (itemize)
+
+COMPUTESTOR -
+The Computestor is for troubleshooting any invention, machine or system.
+It is connected by wires to all the ones in the lab.
+To consult it, you type "ASK COMPUTESTOR ABOUT (a device)."
+
+MICROWAVE SECURITY SCANNER -
+This device is located at the East Wall of your laboratory. It sweeps
+the entire grounds of the research facility with harmless microwaves.
+All legitimate personnel carry special identification amulets which are
+automatically "read" by the microwaves. But any human configuration
+not so equipped will cause the scanner to beep loudly.
+
+POWER SUPPLY -
+Inventions Unlimited generates its own electrical power by nuclear fusion.
+This power is transmitted to your lab via the building's Electrical
+Power Panel. This panel is located in the corridor just east of your
+lab.
+
+CIRCUIT BREAKER -
+This breaker controls the power supply to the Videoscope and other
+equipment related to the private Television Network.
+
+RADIO - for communication while on the surface
+
+SONARPHONE -
+Since ordinary radio waves cannot travel very far through water, a
+submerged submarine must rely on the transmission and reception of sonar
+waves for most underwater communication. This is done by a sonar
+transceiver, entirely separate from the sonarscope used for ranging and
+searching the underwater environment.@*
+The sonar transceiver has a sonarphone to speak over, plus a loudspeaker
+and headset. The speaker and headset are automatically activated by
+incoming signals.
+
+HYDROPHONE -
+This device picks up and amplifies all sounds in the surrounding
+undersea environment -- including possibly meaningful noises emitted by
+whales, dolphins, and other aquatic mammals. Inside the submarine, these
+sounds can be heard over either a loudspeaker or earphones.
+
+SUBMARINE -
+This revolutionary new undersea craft has a special monocoque hull
+design which can withstand tremendous pressure. If your computations are
+right, it will be strong enough to explore any ocean trench
+-- and its searchlight will be able to pierce the
+sub-ocean darkness for 1000 meters in any direction.@*
+Its extensor claws, jointed like a lazy tongs, will be able to seize and
+transport not only mineral samples but also live biological specimens of
+considerable strength and size. However, you purposely made the pilot
+model of small, two-seater size so that Tip and you can test it thoroughly
+before undertaking larger commercial versions.@*
+
+REACTOR -
+The craft is powered by a midget plasma-fusion reactor. This generates
+the electricity needed to power the Bioceptor's hydrojet propulsion
+system. The secret of the midget reactor is a special catalyst capsule.
+This capsule must be inserted into the reactor by the push of a lever in
+order to start the fusion process.
+
+EMERGENCY OXYGEN GEAR -
+This is a little canister of oxygen that you can wear slung around
+your neck. When you turn the valve, you can suck air through a rubber
+straw at the top.
+Two canisters are in the "Scimitar", just like in all Inventions Unlimited
+submarines.
+
+SEARCH BEAM - 
+A yellow search light is switched on automatically by an
+electronic eye in the hull, when you descend beyond the depth
+to which daylight easily penetrates. You can aim it left or right
+(also called port or starboard) to illuminate objects up to 1000 meters away.
+
+DEPTH FINDER -
+This device uses echo-sounding to determine the depth of the water
+below the sub. It is automatically activated whenever the sub is in
+motion. The depth is displayed in the form of a digital readout.@*
+During a dive, an orange warning light comes on and a warning buzzer is
+heard when the sub comes within 10 meters of the bottom.
+The light turns red, and the buzzer becomes louder and shriller when the
+sub comes within 5 meters of the bottom.
+
+EXTENSOR CLAWS -
+These are the remote-controlled manipulating devices that make your
+revolutionary new submarine a true hunter and prober of the ocean depths.
+The claws are mounted on arms, which are jointed like lazy tongs and
+can be extended out to a maximum length of 10 meters from the hull of the
+submarine. The Ultramarine Bioceptor is equipped with two such claws.
+They can, of course, be swiveled and aimed in any direction.
+
+EXTENSOR CLAW CONTROLS - (extend, retract, take, drop, aim, shoot)
+
+REMOTE-CONTROL BUTTON - for signalling gates and airlocks to open or close
+
+VIDEO CAMERAS -
+There are four video cameras installed in the hull of the Bioceptor.
+They are specially designed for underwater operation at great depths,
+and they have both infra-red sensitivity and image-enhancement features
+in order to obtain the best possible picture under the darkest, most adverse
+conditions.@*
+The cameras are so positioned on the hull as to command a full spherical
+view of the undersea environment. They are also equipped for immediate
+closed-circuit viewing on monitor screens inside the cabin, or for
+videotaping and playback.
+
+SONARSCOPE -
+The sonarscope shows you solid objects at the same depth as the "Scimitar"
+within 2500 meters in any direction.
+A yellow warning light indicates that the bearing of an underwater blip
+is not changing, even though your sub and/or the object causing the blip
+are moving. This means you are on a collision course!
+The light will turn red and a loud alarm buzzer will sound when you
+and the approaching object are within one turn of a collision!
+
+SONAR TRANSDUCER -
+This is the device that converts electrical oscillations into
+ultrasonic search pulses which are beamed out through the water and
+reflected from surrounding objects to produce "blips" on the sonarscope.@*
+A similar but separate transducer for the sonarphone system emits a
+continuous ultrasonic signal which can be used as an underwater carrier wave
+and modulated to transmit voice communication.
+
+TEST BUTTON -
+All of your inventions, such as the Videocoms and the Ultramarine Bioceptor,
+have a built-in capability of testing themselves to discover the cause of
+any possible operating trouble. This troubleshooting circuitry is activated by
+pushing a test button. The results of the test are instantly displayed in
+the form of an electronic readout.
+
+ENGINE COMPARTMENT -
+"It is located via an access door in the bulkhead just below and to the
+right of control panel."@*
+"The space is dimly illuminated by small work lights."@*
+"CRAWL CAREFULLY: Too large a waist or hip circumference, or
+too violent wriggling may pose SERIOUS DANGERS!"
+1-- Tight space presents risk of knocking delicate bearings out of alignment.
+2-- Hot, sharp or moving parts present danger of personal injury.
+
+ESCAPE POD EJECTOR UNIT -
+This unit includes three parts:@*
+(1) an electronic monitor and alarm, designed to alert the user to any
+deterioration in the environment - oxygen, air pressure or whatever;@*
+(2) a hypodermic stimulant, designed to jab the user in the buttock
+in case s/he has passed out and does not respond to the warning alarm
+within two minutes; and@*
+(3) a pod and ejector system, designed to enclose the user in a watertight
+pod and eject him/her from the sub unless s/he manually deactivates
+the escape system within two minutes after the stimulant has been
+administered.@*
+The pod will contain a 12-hour air supply and S.O.S@. sonar signal
+transmitter. If reliably installed, these pods will offer you and Tip
+a chance to survive if a battle turns out disastrously.
+
+AQUATIC DART GUN - 
+The aquatic dart gun was originally designed for use as a handgun by
+individual divers in order to capture or temporarily immobilize large fish
+or other undersea creatures for purposes of scientific study. The dart is
+projected from the gun by means of a carbon-dioxide cartridge.@*
+Each dart contains a medical substance known as a "tranquilizer" which
+tends to soothe and make drowsy any creature into which it is injected.@*
+In this adventure, the dart gun is adapted by certain small changes so that
+it can be held and fired by one of the extensor claws on your new submarine,
+the Ultramarine Bioceptor.
+
+PROSPECTING BAZOOKA OR 49-ER -
+Originally invented by you for use by individual miners and prospectors
+on land, you have since adapted it for purposes of prospecting for undersea
+minerals. Unlike the military weapon, the prospecting bazooka has a rifled
+launching tube and a screw-threaded projectile which has sufficient rocket
+power to bore a dozen feet into bedrock. The projectile is hollow and yields
+a core sample which can be reeled or winched up to the surface of the sea bed
+by means of a slender steel and nylon cable.
+The 49-er is usually fired by the diver from a shoulder-held position.
+@end (itemize)
+@heading (PEOPLE)
+@begin (itemize)
+
+TIP BERKELEY -
+Tip is your closest pal and constant companion. A 19-year-old native
+Californian, he's an expert flier and often serves as test pilot of your
+futuristic aerospace craft, as well as land vehicles and undersea craft.@*
+Blond-haired, muscular, compactly built and good-natured if sometimes
+quick-tempered, he's more of a jock than a theoretical science buff of
+your caliber. Nevertheless, his rollicking high spirits and bulldog
+courage in tight spots make him an ideal sidekick and participant in all
+of your thrilling adventures.
+
+SHANA KEMP -
+Shana is 21, red-haired, highly attractive and scarcely a year out of
+college.@*
+She acquired a degree in biochemistry at MIT, where her keen
+intelligence and inquiring mind quickly gained her a working familiarity
+with most other fields of science. Her late father, a professor of the
+history of science, was an old friend of your father. This led to her
+hiring at Inventions Unlimited, where she has since become a valued
+associate of you, the famous young inventor.
+
+LOU PERELLI -
+Lou Perelli was trained as a military
+intelligence officer and later, after leaving the Army, became a private
+security expert before joining Inventions Unlimited. He has since undergone
+further training by both the FBI and CIA, and has a first-hand expertise
+in all phases of police work and counterespionage.
+
+COMMANDER ZOE BRENT -
+Small, slim, with curly dark hair and the delicate beauty of a China
+doll, Zoe Brent is astonishingly strong and agile for her size and sex.
+Going by looks alone, it would be easy to forget that she's been a
+champion athlete since girlhood and is every bit as much physical as she
+is mental in her behavior and outlook.@*
+Already an Olympic-class swimmer and expert scuba diver while still in
+her teens, Zoe Brent joined the Naval ROTC program at UCLA and was
+commissioned Ensign USN. She then served two years on active duty and
+underwent training at the Navy's Frogman School. Later she got her
+doctorate in marine biology at Caltech and did research at Scripps
+Institute of Oceanography before joining Inventions Unlimited.@*
+Now 29, she has been in command of the Aquadome for the past three
+months. Reportedly not all personnel are happy to be serving under her.
+Aside from sexist prejudice, perhaps her own superb mental and physical
+capabilities, combined with her eagerness to carry out important
+undersea research, may tend to make her somewhat impatient and
+short-tempered with more plodding subordinates.
+
+MICK CASEY -
+Mick Casey is a frogman-technician who's also a laser expert.
+
+WALT NOVAK -
+Walt Novak is a young marine biochemist.
+
+DOCTOR JEROME THORP -
+Dr@. Jerome Thorp is a distinguished marine biologist.@*
+"This is a copy of a magazine called 'Science World.' It is a popular
+magazine, not aimed just at scientists. It reports on interesting new
+scientific developments.@*
+The cover bears a picture of Dr@. Jerome Thorp, noted marine biologist,
+surrounded by an artist's imaginative drawings of weird new undersea
+life forms. The cover blurb says:@*
+HOT FLASH FROM THE MARINE BIOLOGY FRONT!@*
+... NEW SEA CREATURES SPAWNED BY TEST TUBE?@*
+The cover story is about Dr@. Thorp, who has
+reportedly created synthetic forms of marine life by means of genetic
+engineering. Reading further, you learn (1) that Dr@. Thorp has
+disappeared and apparently gone into hiding to duck the publicity
+resulting from his sensational feat; and (2) that before going into hiding,
+Thorp confided to close friends that he would soon marry a young
+American woman, Shana Kemp."@*
+"Size and appearance of synthetic creatures unknown.@*
+Their movements are said to be stimulated by ultrasonic pulses. Reportedly
+they can be trained to respond to such pulses.@*
+Because of secrecy, many scientists are skeptical of Thorp's experiments.@*
+Earlier technical papers by Thorp claimed that one-celled organisms
+had evolved in his lab from a bio-chemical called AMINO-HYDROPHASE or AH.@*
+If present rumors are true, these synthetic sea creatures presumably
+must also be based on the AH molecule."
+@end (itemize)
